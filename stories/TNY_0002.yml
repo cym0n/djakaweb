@@ -1,0 +1,21 @@
+name: Timelord Enterprise
+type: place
+description:
+    START: |
+        Azienda di {0000.name}
+messages: 
+actions:
+    ASSAULT:
+        ANY:
+          - DO KILL 0000
+    SPY:
+        ANY: KO
+    RESEARCH:
+        ANY: KO
+    INSPECT:
+        ANY: KO
+    INFILTRATE:
+        ANY: KO
+    VISIT:
+        ANY: 
+          - ADD 0001

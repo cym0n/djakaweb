@@ -1,0 +1,63 @@
+name: Schollen Enterprise 
+type: place
+description:
+    START: |
+        La {name} produce componenstica per macchinari industriali. In mano alla famiglia Schollen dalla sua nascita, nel 1800, è sempre stata cruciale per lo sviluppo di Loose Bricks. La sua attuale politica di assumere principalmente extra-comunitari ha fatto si che si formassero comitati di protesta contrari al suo operato.
+    ASSAULTED: |
+        Dopo l'assalto che la squadra ha portato all'edificio sono tutti molto nervosi ed è difficile svolgere indagini.
+    INFILTRATED: |
+        C'è un nostro uomo all'interno.
+messages: 
+    SPY: |
+        La sorveglianza della {name} non ha portato risultati. Il viavai di persone è troppo confuso, malintenzionati potrebbero nascondere facilmente le loro attività.
+    ASSAULT: |
+        L'assalto alla {name} ha gettato la zona nel caos. L'operaio {0004.name} è morto e tutti sono molto nervosi ora. E' stata aperta un'inchiesta per capire l'operato della squadra e la missione rischia di fallire.
+    SEARCH: |
+        La {name} è molto vasta e piena di luoghi dove si possono nascondere cose. I camion che trasportano materiali dentro e fuori possono essere facilmente usati per spostare oggetti senza essere notati.
+    VISIT: |
+        Una visita alla {name} non ha rivelato niente di sospetto. 
+        Abbiamo però individuato gli operai che potrebbero essere potenzialmente coinvolti nella cella terroristica: {0004.name}, {0005.name}, {0006.name}
+    INSPECTION: |
+        L'ispezione a {name} non ha portato risultati. '
+    INFILTRATE: |
+        Abbiamo infiltrato un nostro uomo in {name}. Questo ci ha permesso di venire in contatto con alcuni operai: {0004.name}, {0005.name}, {0006.name}
+actions:
+    ASSAULT:
+        ANY:
+            - TAG ASSAULTED
+            - DO KILL 0004
+            - DO ANGRY 0005
+            - DO ANGRY 0006
+            - DO ALARM 0003
+            - DO MOVE 0007
+            - TELL ASSAULT    
+            - DANGER 60
+    SPY:
+        ANY:
+            - TELL SPY
+    RESEARCH:
+        ANY:
+            - TELL SEARCH
+    INSPECT:
+        ASSAULTED: KO
+        INFILTRATED:
+            - DO FINDFACTORY 0007
+        ANY:
+            - TELL INSPECTION
+    INFILTRATE:
+        ASSAULTED: KO
+        ANY:
+            - ADD 0004
+            - ADD 0005
+            - ADD 0006
+            - DO FRIEND 0004
+            - DO FRIEND 0006
+            - TAG INFILTRATED
+            - TELL INFILTRATE
+    VISIT:
+        ASSAULTED: KO
+        ANY:
+            - TELL VISIT
+            - ADD 0004
+            - ADD 0005
+            - ADD 0006

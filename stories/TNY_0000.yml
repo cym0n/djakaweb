@@ -1,0 +1,49 @@
+name: Hernst Gallifrey
+type: person
+description:
+    START: |
+        Sospetto neonazista
+    FAILED: |
+        Tentativo fallito
+messages: 
+actions:
+    KILL:
+        DEAD: KO 
+        ANY:
+            - TELL FAILED
+    TAKE:
+        DEAD: KO 
+        TAKEN: KO
+        ANGRY: KO
+        GUILTY: 
+            - TAG TAKEN
+        ANY:
+            - TELL FAILED
+    INTERROGATE:
+        DEAD: KO
+        ANY: KO
+    RESEARCH:
+        ANY:
+            - ADD 0001
+    BRIBE:
+        DEAD: KO 
+        ANY: KO
+    SPY:
+        DEAD: KO 
+        ANY:
+            - ADD 0001
+m2m:
+    GUILTY:
+        GUILTY: KO
+        ANY:
+            - TAG GUILTY
+    ANGRY:
+        DEAD: KO
+        ANY: 
+            - TAG ANGRY
+    KILL:
+        ANGRY: 
+            - TAG DEAD
+        ANY: KO
+        
+

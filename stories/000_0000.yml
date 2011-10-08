@@ -1,0 +1,63 @@
+name: Abdul Sarafa
+type: person
+description:
+    START: |
+        Imam della comunità di Loose Bricks, è la massima autorità islamica del luogo e ha il pieno controllo della moschea.
+    TAKEN: |
+        Attualmente è detenuto nella nostra base
+    DEAD: |
+        Attualmente è morto
+messages: 
+    WATCH: |
+        {name} non sembra avere contatti con gruppi terroristici noti.
+        Il suo braccio destro è {0003.name}. 
+    WARD: |
+        Osservando i movimenti di {name} abbiamo individuato in {0003.name} il suo braccio destro.
+    TAKEN: |
+        {name} è stato portato cella della nostra base.
+    WEEPING: |
+        Abbiamo interrogato {name} nella nostra sede, ma a causa del panico non è stato possibile ottenere informazioni.
+    INTERROGATE: |
+        Interrogato, {name} si è dichiarato estraneo a qualsiasi atto di terrorismo e ha accusato i nostri uomini di razzismo.
+    BRIBE: |
+        {name} ha rifiutato sdegnato qualsiasi offerta in denaro.
+actions:
+    KILL:
+        DEAD: KO 
+        ANY:
+            - TAG DEAD
+            - DO ALARM 0003
+            - DANGER 40
+    TAKE:
+        DEAD: KO 
+        TAKEN: KO
+        ANY:
+            - TAG TAKEN
+            - TELL TAKEN
+            - DO ALARM 0003
+            - DANGER 40
+    INTERROGATE:
+        DEAD: KO
+        TAKEN: 
+            - TELL WEEPING
+        ANY:
+            - TELL INTERROGATE
+            - DANGER 10
+    RESEARCH:
+        ANY:
+            - TELL WATCH
+            - ADD 0003
+    BRIBE:
+        DEAD: KO 
+        ANY:
+            - TELL BRIBE
+    SPY:
+        DEAD: KO 
+        ANY:
+            - TELL WARD
+            - ADD 0003
+m2m:
+    KILL:
+        DEAD: KO
+        ANY:
+            - TAG DEAD

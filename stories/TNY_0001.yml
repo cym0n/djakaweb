@@ -1,0 +1,34 @@
+name: Lily Gallifrey
+type: person
+description:
+    START: |
+        Moglie di {0000.name}
+    FAILED: |
+        Tentativo fallito
+messages: 
+actions:
+    KILL:
+        DEAD: KO 
+        ANY:
+           - TAG DEAD
+           - DO ANGRY 0000
+    TAKE:
+        DEAD: KO 
+        TAKEN: KO
+        ANY:
+           - TAG TAKEN
+           - DO ANGRY 0000
+    INTERROGATE:
+        DEAD: KO
+        ANY: 
+            - DO GUILTY 0000
+    RESEARCH:
+        ANY: KO
+    BRIBE:
+        DEAD: KO 
+        ANY: KO
+    SPY:
+        DEAD: KO 
+        ANY: KO
+m2m:
+

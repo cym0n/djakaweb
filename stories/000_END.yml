@@ -1,0 +1,13 @@
+END1:
+    0003: DEAD
+    0005: DEAD
+END2:
+    0003: TAKEN
+    0005: DEAD
+END3:
+    0003: TAKEN
+    0005: TAKEN
+END3:
+    0003: DEAD
+    0005: TAKEN
+
