@@ -25,16 +25,20 @@ get '/login/:id' => sub {
 	else
 	{
 		$game = DjakaWeb::Elements::Game->new({'id' => $game_id});
-		return redirect '/game/' . $game->id();
+		session 'game' => $game;
+		return redirect '/game';
 	}
 };
 
-get '/game/:game' => sub {
-	template 'interface';
-
-
-
+get '/game' => sub {
+	my $game = session('game');
+	template 'interface' => {'game_id' => $game->id()};
 };
+get '/second' => sub {
+	my $game = session('game');
+	template 'interface' => {'game_id' => $game->id()};
+};
+
 
 
 
