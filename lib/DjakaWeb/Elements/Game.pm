@@ -1,7 +1,6 @@
 package DjakaWeb::Elements::Game;
 
 use Moose;
-use Dancer;
 use Dancer::Plugin::DBIC;
 use DjakaWeb::DjakartaDB;
 use DjakaWeb::StoryManager;
@@ -91,7 +90,19 @@ sub getElements
 	my %out;
 	for(@types)
 	{
-		$out{$_} = $schema->resultset('GamesStatus')->getElements($self->id(), $_);
+		my $t = $_;
+		my @els_def;
+		my $els = $schema->resultset('GamesStatus')->getElements($self->id(), $_);
+		for(@{$els})
+		{
+			my $el = $_;
+			my $el_name = DjakaWeb::StoryManager::getAttribute($self->mission(), $el, 'name');
+			my $el_data = { 'id' => $el,
+				            'name' => $el_name};
+			push @els_def, $el_data;
+		}
+		$out{$t} = \@els_def;
+
 	}
 	return %out;
 }
@@ -105,7 +116,7 @@ sub getActions
 	{
 		$status = 'ANY';
 	}
-	my %actions = Djakarta::StoryManager::getActions($self->mission(), $element, $status);
+	my %actions = DjakaWeb::StoryManager::getActions($self->mission(), $element, $status);
 	return %actions;
 }
 

@@ -77,11 +77,17 @@
 	height: 70px;
 	margin-right: 5px;
 }
-
 .element_name
 {
 	float: left;
 	width: 140px;
 	
+}
+.no_elements
+{
+	height: 80px;
+	color: #BDBDBD;
+	line-height: 80px;
+	padding-left: 64px;
 }
 

@@ -32,8 +32,11 @@ get '/login/:id' => sub {
 
 get '/game' => sub {
 	my $game = session('game');
+	my %elements = $game->getElements();
+	#print keys %{$elements{'person'}[0]};
 	template 'interface' => {'game_id' => $game->id(),
-							 'user_id' => $game->user()};
+							 'user_id' => $game->user(),
+						 	 'elements' => \%elements};
 };
 
 dance;

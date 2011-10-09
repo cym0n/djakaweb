@@ -22,65 +22,30 @@
 		</div>
 	</div>
 	<div class="elements">
+		<% types = [ 'person', 'place', 'object' ] %>
+		<% portraits = {
+		    person = 'dummy.gif',
+     		place  = 'dummy_place.jpg',
+     		object = 'dummy_object.jpg'
+   			}
+		%>
+		<% FOREACH t IN types %>
 		<div class="box element">
+			<% IF elements.$t.size %>
+			<% FOREACH p IN elements.$t %>
 			<div class="element_badge">
-				<img src="/res/images/dummy.gif" />
+				<img src="/res/images/<% portraits.$t %>" />
 				<div class="element_name">
-					Lorem Ipsum Mc Dolor assent
+					<% p.name %>
 				</div>
 			</div>
-			<div class="element_badge">
-					<img src="/res/images/dummy.gif" />
-				<div class="element_name">
-					Lorem Ipsum Mc Dolor assent
-				</div>
+			<% END %>
+			<% ELSE %>
+			<div class="no_elements">
+				No elements
 			</div>
-			<div class="element_badge">
-					<img src="/res/images/dummy.gif" />
-				<div class="element_name">
-					Lorem Ipsum Mc Dolor assent
-				</div>
-			</div>
-			<div class="element_badge">
-					<img src="/res/images/dummy.gif" />
-				<div class="element_name">
-					Lorem Ipsum Mc Dolor assent
-				</div>
-			</div>
+			<% END %>
 		</div>
-		<div class="box element">
-				<div class="element_badge">
-				<img src="/res/images/dummy_place.jpg" />
-				<div class="element_name">
-					Lorem Ipsum Mc Dolor assent
-				</div>
-			</div>
-			<div class="element_badge">
-					<img src="/res/images/dummy_place.jpg" />
-				<div class="element_name">
-					Lorem Ipsum Mc Dolor assent
-				</div>
-			</div>
-			<div class="element_badge">
-					<img src="/res/images/dummy_place.jpg" />
-				<div class="element_name">
-					Lorem Ipsum Mc Dolor assent
-				</div>
-			</div>
-		</div>
-		<div class="box element">
-			<div class="element_badge">
-				<img src="/res/images/dummy_thing.jpg" />
-				<div class="element_name">
-					Lorem Ipsum Mc Dolor assent
-				</div>
-			</div>
-			<div class="element_badge">
-				<img src="/res/images/dummy_thing.jpg" />
-				<div class="element_name">
-					Lorem Ipsum Mc Dolor assent
-				</div>
-			</div>
-		</div>
+		<% END %>
 	</div>
 </div>
