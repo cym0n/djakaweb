@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-type" content="text/html; charset=<% settings.charset %>" />
-	<title>DjakaWeb</title>
+	<title><% page_title %></title>
 	<link rel="stylesheet" href="<% request.uri_base %>/res/css/djaka.css" />
 </head>
 <body>

@@ -1,0 +1,87 @@
+.left_column
+{
+	width: 180px;
+	float: left;
+	margin-right: 10px;
+}
+.central_body
+{
+	float: left;
+	width: 770px;
+}
+.blue
+{
+	border: 1px solid #003BEB;
+}
+.red
+{
+	border: 1px solid #FF471A;
+}
+.purple
+{
+	border: 1px solid #FF471A;
+}
+.box
+{
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+#footer
+{
+	clear: both;
+	padding-top: 20px;
+}
+#badge
+{
+	background: #668CFF;
+	height: 120px;
+	padding: 20px;
+}
+#messages
+{
+	background: #FFFF99;
+	/*width: 770px;*/
+	height: 230px;
+	padding: 10px;
+	overflow: auto;
+}
+#danger_bar
+{
+	background: #000000;
+	/*width: 800px;*/
+	height: 30px;
+}
+#danger_level
+{
+	background: #FF0000;
+	/*width: 400px;*/
+	height: 31px;
+}
+.element
+{
+	width: 234px;
+	float: left;
+	border: 1px solid #000;
+	padding: 5px;
+}
+.element_badge
+{
+	padding: 5px;
+	clear: both;
+	height: 70px;
+}
+.element_badge img
+{
+	float: left;
+	width: 70px;
+	height: 70px;
+	margin-right: 5px;
+}
+
+.element_name
+{
+	float: left;
+	width: 140px;
+	
+}
+

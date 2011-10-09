@@ -2,11 +2,85 @@
 	<h1>The DJAKARTA GAME</h1>
 </div>
 <div class="left_column">
-	<div>Playing <% game_id %>
+	<div class="box blue">
+		<div id="badge">
+			User: <% user_id %><br />
+			Game: <% game_id %>
+		</div>
+	</div>
 </div>
 <div class="central_body">
-	Thanks for playing<br />
-	Click <a href="/second">here</a>
-	
-
+	<div class="box red">
+		<div id="messages">
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vulputate massa vel mauris placerat condimentum. Vestibulum adipiscing, nunc sed hendrerit aliquet, eros libero pretium nisl, vel condimentum augue eros in lorem. Maecenas eu risus lacus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sodales dictum nisl. Duis placerat scelerisque nunc eu gravida. Etiam vitae elit sed lectus sodales mollis. Proin a lectus et neque lacinia tempor id sed elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean faucibus volutpat felis nec viverra. Suspendisse at elit nisl. Vivamus facilisis tempor nisi, non dictum nisi tincidunt non. Pellentesque ut tristique sapien. Nullam quis enim sit amet eros elementum pharetra at ut nibh.<br />
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vulputate massa vel mauris placerat condimentum. Vestibulum adipiscing, nunc sed hendrerit aliquet, eros libero pretium nisl, vel condimentum augue eros in lorem. Maecenas eu risus lacus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sodales dictum nisl. Duis placerat scelerisque nunc eu gravida. Etiam vitae elit sed lectus sodales mollis. Proin a lectus et neque lacinia tempor id sed elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean faucibus volutpat felis nec viverra. Suspendisse at elit nisl. Vivamus facilisis tempor nisi, non dictum nisi tincidunt non. Pellentesque ut tristique sapien. Nullam quis enim sit amet eros elementum pharetra at ut nibh.
+		</div>
+	</div>
+	<div class="box purple">
+		<div id="danger_bar">
+			<div id="danger_level" style="width:30%">&nbsp;</div>
+		</div>
+	</div>
+	<div class="elements">
+		<div class="box element">
+			<div class="element_badge">
+				<img src="/res/images/dummy.gif" />
+				<div class="element_name">
+					Lorem Ipsum Mc Dolor assent
+				</div>
+			</div>
+			<div class="element_badge">
+					<img src="/res/images/dummy.gif" />
+				<div class="element_name">
+					Lorem Ipsum Mc Dolor assent
+				</div>
+			</div>
+			<div class="element_badge">
+					<img src="/res/images/dummy.gif" />
+				<div class="element_name">
+					Lorem Ipsum Mc Dolor assent
+				</div>
+			</div>
+			<div class="element_badge">
+					<img src="/res/images/dummy.gif" />
+				<div class="element_name">
+					Lorem Ipsum Mc Dolor assent
+				</div>
+			</div>
+		</div>
+		<div class="box element">
+				<div class="element_badge">
+				<img src="/res/images/dummy_place.jpg" />
+				<div class="element_name">
+					Lorem Ipsum Mc Dolor assent
+				</div>
+			</div>
+			<div class="element_badge">
+					<img src="/res/images/dummy_place.jpg" />
+				<div class="element_name">
+					Lorem Ipsum Mc Dolor assent
+				</div>
+			</div>
+			<div class="element_badge">
+					<img src="/res/images/dummy_place.jpg" />
+				<div class="element_name">
+					Lorem Ipsum Mc Dolor assent
+				</div>
+			</div>
+		</div>
+		<div class="box element">
+			<div class="element_badge">
+				<img src="/res/images/dummy_thing.jpg" />
+				<div class="element_name">
+					Lorem Ipsum Mc Dolor assent
+				</div>
+			</div>
+			<div class="element_badge">
+				<img src="/res/images/dummy_thing.jpg" />
+				<div class="element_name">
+					Lorem Ipsum Mc Dolor assent
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

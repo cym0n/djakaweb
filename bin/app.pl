@@ -32,16 +32,8 @@ get '/login/:id' => sub {
 
 get '/game' => sub {
 	my $game = session('game');
-	template 'interface' => {'game_id' => $game->id()};
+	template 'interface' => {'game_id' => $game->id(),
+							 'user_id' => $game->user()};
 };
-get '/second' => sub {
-	my $game = session('game');
-	template 'interface' => {'game_id' => $game->id()};
-};
-
-
-
-
-
 
 dance;
