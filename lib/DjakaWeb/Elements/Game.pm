@@ -233,7 +233,7 @@ sub do
 sub getAllStory()
 {
 	my $self = shift;
-	return $schema->resultset('Story')->getAllStory($self->id());
+	return $schema->resultset('Story')->getAllStory($self->id(), 'desc');
 }
 
 sub check_victory()

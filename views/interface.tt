@@ -12,8 +12,10 @@
 <div class="central_body">
 	<div class="box red">
 		<div id="messages">
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vulputate massa vel mauris placerat condimentum. Vestibulum adipiscing, nunc sed hendrerit aliquet, eros libero pretium nisl, vel condimentum augue eros in lorem. Maecenas eu risus lacus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sodales dictum nisl. Duis placerat scelerisque nunc eu gravida. Etiam vitae elit sed lectus sodales mollis. Proin a lectus et neque lacinia tempor id sed elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean faucibus volutpat felis nec viverra. Suspendisse at elit nisl. Vivamus facilisis tempor nisi, non dictum nisi tincidunt non. Pellentesque ut tristique sapien. Nullam quis enim sit amet eros elementum pharetra at ut nibh.<br />
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vulputate massa vel mauris placerat condimentum. Vestibulum adipiscing, nunc sed hendrerit aliquet, eros libero pretium nisl, vel condimentum augue eros in lorem. Maecenas eu risus lacus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis sodales dictum nisl. Duis placerat scelerisque nunc eu gravida. Etiam vitae elit sed lectus sodales mollis. Proin a lectus et neque lacinia tempor id sed elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean faucibus volutpat felis nec viverra. Suspendisse at elit nisl. Vivamus facilisis tempor nisi, non dictum nisi tincidunt non. Pellentesque ut tristique sapien. Nullam quis enim sit amet eros elementum pharetra at ut nibh.
+			<% FOREACH s IN story %>
+				<% s.content %>
+				<br />----<br />
+			<% END %>
 		</div>
 	</div>
 	<div class="box purple">

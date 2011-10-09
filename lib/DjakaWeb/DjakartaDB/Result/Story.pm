@@ -79,14 +79,9 @@ sub getAllStory
 {
 	my $self = shift;
 	my $game = shift;
-	my @story = $self->search({game_id => $game}, {order_by => { -asc => 'timestamp' }});
-	my $global = "";
-	for(@story)
-	{
-		$global .= $_->content();
-		$global .= "-----\n";
-	}
-	return $global;
+	my $order = shift;
+	my @story = $self->search({game_id => $game}, {order_by => { -$order => 'timestamp' }});
+	return \@story;
 }
 
 
