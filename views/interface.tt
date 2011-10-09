@@ -20,7 +20,7 @@
 	</div>
 	<div class="box purple">
 		<div id="danger_bar">
-			<div id="danger_level" style="width:30%">&nbsp;</div>
+			<div id="danger_level" style="width:<% danger %>%">&nbsp;</div>
 		</div>
 	</div>
 	<div class="elements">
@@ -31,8 +31,15 @@
      		object = 'dummy_object.jpg'
    			}
 		%>
+		<% titles = {
+		    person = 'Persone',
+     		place  = 'Luoghi',
+     		object = 'Oggetti'
+   			}
+		%>
 		<% FOREACH t IN types %>
 		<div class="box element">
+			<div class="box_title"><% titles.$t %></div>
 			<% IF elements.$t.size %>
 			<% FOREACH p IN elements.$t %>
 			<div class="element_badge">

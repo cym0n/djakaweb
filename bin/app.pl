@@ -4,41 +4,37 @@ use Dancer::Plugin::DBIC;
 use Dancer::Template::TemplateToolkit;
 use DjakaWeb;
 use DjakaWeb::Elements::Game;
+use DjakaWeb::Controllers;
 
- set layout => 'djaka';
+set layout => 'djaka';
 
-get '/home' => sub {
-	my $user = schema->resultset('Game')->find('1');
-	return $user->mission_id();
-
+before sub {
+	if(request->path_info !~ /courtesy/ && request->path_info !~ /login/)
+	{
+		if(! session('game'))
+		{
+			 request->path_info('/courtesy/not_logged');
+    	};
+	}
 };
 
 get '/login/:id' => sub {
-    my $id = params->{id};
-	my $game_id = schema->resultset('Game')->get_active_game($id);
-	my $game;
-	if(! $game_id)
+	if(DjakaWeb::Controllers::login_stub(params->{id}))
 	{
-		$game = DjakaWeb::Elements::Game->new({'user' => $id, 'mission' => '000'});
-		return redirect '/newgame/' . $game->id();
+		return redirect '/game';
 	}
 	else
 	{
-		$game = DjakaWeb::Elements::Game->new({'id' => $game_id});
-		session 'game' => $game;
 		return redirect '/game';
 	}
 };
 
+get '/courtesy/not_logged' => sub {
+	template 'not_logged';
+};
+
 get '/game' => sub {
-	my $game = session('game');
-	my %elements = $game->getElements();
-	my $story = $game->getAllStory();
-	#print keys %{$elements{'person'}[0]};
-	template 'interface' => {'game_id' => $game->id(),
-							 'user_id' => $game->user(),
-						 	 'elements' => \%elements,
-						 	 'story' => $story};
+	template 'interface' => DjakaWeb::Controllers::get_data_for_interface();
 };
 
 dance;
