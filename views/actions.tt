@@ -1,0 +1,5 @@
+<ul>
+	<% FOREACH a IN actions %>
+	<li><% a %></li>
+	<% END %>
+</ul>

@@ -45,7 +45,7 @@
 			<div class="element_badge">
 				<img src="/res/images/<% portraits.$t %>" />
 				<div class="element_name">
-					<% p.name %>
+					<a id="<% p.id %>" class="actions_trigger" href="#" rel="#actions"><% p.name %></a>
 				</div>
 			</div>
 			<% END %>
@@ -58,3 +58,8 @@
 		<% END %>
 	</div>
 </div>
+<% INCLUDE footer.tt %>
+<div class="simple_overlay" id="actions">
+	<div>Here comes the actions</div>
+</div>
+

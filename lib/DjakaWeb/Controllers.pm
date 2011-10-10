@@ -38,6 +38,16 @@ sub get_data_for_interface
 			'danger' => $game->danger()};
 }
 
+sub get_actions_menu
+{
+	my $element = shift;
+	my $game = session('game');
+	my %actions = $game->getActions($element);
+	my @labels = keys %actions;
+	return {'actions' => \@labels, 
+			'layout'  => 0};
+}
+
 
 
 

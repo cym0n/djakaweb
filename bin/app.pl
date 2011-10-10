@@ -29,12 +29,31 @@ get '/login/:id' => sub {
 	}
 };
 
-get '/courtesy/not_logged' => sub {
-	template 'not_logged';
-};
+
 
 get '/game' => sub {
 	template 'interface' => DjakaWeb::Controllers::get_data_for_interface();
 };
+
+
+
+
+
+#AJAX CALLS
+get '/service/actions/:id' => sub {
+	template 'actions' => DjakaWeb::Controllers::get_actions_menu(params->{id});
+};
+
+
+
+
+
+#COURTESY PAGES
+get '/courtesy/not_logged' => sub {
+	template 'not_logged';
+};
+
+
+
 
 dance;

@@ -97,3 +97,14 @@
 	padding-left: 64px;
 }
 
+.simple_overlay {
+	display:none;
+	
+	z-index:10000;
+	
+	background-color:#FFF;
+	
+	width:1:75px;	
+	min-height:200px;
+	border:1px solid #666;
+}
