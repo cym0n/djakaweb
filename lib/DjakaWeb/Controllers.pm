@@ -49,6 +49,24 @@ sub get_actions_menu
 			'element' => $element};
 }
 
+sub play
+{
+	my $game = session('game');
+	my $element = shift;
+	my $action = shift;
+	$game->do($element, $action, 'human');
+	if($game->gameover)
+	{
+		session 'end' => 'GAMEOVER';
+	}
+	else
+	{
+		if(my $tag = $game->check_victory())
+		{
+			session 'end' => $tag;
+		}
+	}
+}
 
 
 

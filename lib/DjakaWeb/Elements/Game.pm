@@ -1,5 +1,6 @@
 package DjakaWeb::Elements::Game;
 
+use Dancer;
 use Moose;
 use Dancer::Plugin::DBIC;
 use DjakaWeb::DjakartaDB;
@@ -161,6 +162,11 @@ sub modify_danger
 	$self->danger($self->danger() + $danger);
 	$self->DBData()->modify_danger($danger);
 }
+sub gameover
+{
+	my $self = shift;
+	return ($self->danger() > config->{'danger_threshold'});
+}
 
 sub do
 {
@@ -244,7 +250,7 @@ sub check_victory()
 	{
 		my $tag = $_;
 		my $check = 1;
-		for(keys %{$victories->{$tag}})
+		for(keys %{$victories->{$tag}->{'conditions'}})
 		{
 			my $status = $schema->resultset('GamesStatus')->getStatus($self->id(), $_);
 			$status = $status ? $status : "";

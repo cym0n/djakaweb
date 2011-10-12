@@ -16,6 +16,20 @@ before sub {
 			 request->path_info('/courtesy/not_logged');
     	};
 	}
+	if(request->path_info !~ /win/ && request->path_info !~ /gameover/)
+	{
+		if(session('end') =~ /GAMEOVER/)
+		{
+			redirect '/gameover';
+		}
+		else
+		{
+			if(session('end'))
+			{
+				redirect '/win';
+			}
+		}
+	}
 };
 
 get '/login/:id' => sub {
@@ -29,18 +43,25 @@ get '/login/:id' => sub {
 	}
 };
 
-
-
 get '/game' => sub {
 	template 'interface' => DjakaWeb::Controllers::get_data_for_interface();
 };
 
 get '/do/:action/:element' => sub {
-	my $game = session('game');
-	$game->do(params->{element}, params->{action}, 'human');
+	DjakaWeb::Controllers::play(params->{element}, params->{action});
 	return redirect '/game';
 };
 
+get '/gameover' => sub {
+	if(session('end') =~ /GAMEOVER/)
+	{
+		template 'gameover';
+	}
+	else
+	{
+		redirect '/game';
+	}
+};
 
 
 

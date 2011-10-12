@@ -1,13 +1,24 @@
 END1:
-    0003: DEAD
-    0005: DEAD
+    condition:
+        0003: DEAD
+        0005: DEAD
+    text: |
+        Con la morte di {0003.name} e {0005.name} la minaccia terroristica può dirsi sventata. Purtroppo però non abbiamo informazioni di chi fosse dietro la cellula.
 END2:
-    0003: TAKEN
-    0005: DEAD
+    condition:
+        0003: TAKEN
+        0005: DEAD
+    text: |
+        La cattura di {0003.name} rappresenta un colpo importante al terrorismo. Grazie a lui probabilmente risaliremo a qualche elemento importante dei gruppi attivi in medioriente.
 END3:
-    0003: TAKEN
-    0005: TAKEN
+    condition:
+        0003: TAKEN
+        0005: TAKEN
+    text: |
+        Abbiamo catturato tutti i terroristi! Ottimo lavoro, potremo ottenere da loro molte preziose informazioni.
 END3:
-    0003: DEAD
-    0005: TAKEN
-
+    condition:
+        0003: DEAD
+        0005: TAKEN
+    text: |
+        {0005.name} era solo una pedina, di certo non conosce tutto ciò che sapeva {0003.name}. Ma almeno la minaccia terroristica è stata neutralizzata.

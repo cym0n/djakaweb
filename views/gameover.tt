@@ -1,0 +1,21 @@
+<div class="header">
+	<h1>The DJAKARTA GAME</h1>
+</div>
+<!--div class="left_column">
+	<div class="box blue">
+		<div id="badge">
+			User: <% user_id %><br />
+			Game: <% game_id %>
+		</div>
+	</div>
+</div-->
+<div class="central_body">
+	<div class="box red">
+		<div id="messages">
+			Le tue azioni sconsiderate hanno esposto troppo la nostra organizzazione. I nostri nemici hanno reagito ai nostri goffi tentativi di fermarli e dei civili sono rimasti coinvolti.<br />
+			L'incarico ti viene tolto!
+		</div>
+	</div>
+</div>
+<% INCLUDE footer.tt %>
+
