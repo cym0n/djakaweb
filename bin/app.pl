@@ -35,6 +35,12 @@ get '/game' => sub {
 	template 'interface' => DjakaWeb::Controllers::get_data_for_interface();
 };
 
+get '/do/:action/:element' => sub {
+	my $game = session('game');
+	$game->do(params->{element}, params->{action}, 'human');
+	return redirect '/game';
+};
+
 
 
 

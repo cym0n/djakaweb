@@ -45,7 +45,8 @@ sub get_actions_menu
 	my %actions = $game->getActions($element);
 	my @labels = keys %actions;
 	return {'actions' => \@labels, 
-			'layout'  => 0};
+			'layout'  => 0,
+			'element' => $element};
 }
 
 

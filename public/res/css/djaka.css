@@ -105,6 +105,25 @@
 	background-color:#FFF;
 	
 	width:1:75px;	
-	min-height:200px;
 	border:1px solid #666;
+}
+
+#actions ul
+{
+	padding-top: 4px;
+	padding-left: 14px;
+	padding-right: 14px;
+	margin: 0px;
+	margin-bottom: 15px;
+}
+#actions li
+{
+	list-style-type: none;
+	line-height: 32px;
+	border-bottom: 1px solid #bdbdbd;
+}
+#actions li a
+{
+	text-decoration: none;
+	color: #000;
 }

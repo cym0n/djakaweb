@@ -1,5 +1,5 @@
 <ul>
 	<% FOREACH a IN actions %>
-	<li><% a %></li>
+	<li><a href="/do/<% a %>/<% element %>"><% a %></a></li>
 	<% END %>
 </ul>
