@@ -1,0 +1,12 @@
+<% translate = {
+	BRIBE = 'Corrompere',
+	SPY = 'Sorvegliare',
+	KILL = 'Uccidere',
+	INTERROGATE = 'Interrogare',
+	RESEARCH = 'Fare ricerche',
+	VISIT = 'Visitare',
+	ASSAULT = 'Assaltare',
+	INSPECT = 'Ispezionare',
+	INFILTRATE = 'Infiltrare',
+	}
+%>
