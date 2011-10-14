@@ -7,11 +7,25 @@ use DjakaWeb::Elements::Game;
 sub login_stub
 {
 	my $user_id = shift;
-	my $game_id = schema->resultset('Game')->get_active_game($user_id);
+	my $user;
+	if(! $user_id)
+	{
+	 	$user = schema->resultset('User')->newUser($user_id);
+	}
+	else
+	{
+		$user = schema->resultset('User')->find($user_id);
+	}
+	if(! $user)
+	{
+		return -1; #login failed
+	}
+	session 'user' => $user;
+	my $game_id = schema->resultset('Game')->get_active_game($user->id());
 	my $game;
 	if(! $game_id)
 	{
-		$game = DjakaWeb::Elements::Game->new({'user' => $user_id, 'mission' => '000'});
+		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000'});
 		session 'game' => $game;
 		return 0; #new game
 	}
@@ -28,11 +42,12 @@ sub login_stub
 sub get_data_for_interface
 {
 	my $game = session('game');
+	my $user = session('user');
 	my %elements = $game->getElements();
 	my $story = $game->getAllStory();
 	#print keys %{$elements{'person'}[0]};
 	return {'game_id' => $game->id(),
-		    'user_id' => $game->user(),
+		    'user_id' => $user->id(),
 		 	'elements' => \%elements,
 			'story' => $story,
 			'danger' => $game->danger()};

@@ -12,7 +12,7 @@ __PACKAGE__->load_components("InflateColumn::DateTime");
 
 =head1 NAME
 
-Djakarta::DjakartaDB::Result::Game
+DjakaWeb::DjakartaDB::Result::Game
 
 =cut
 
@@ -63,8 +63,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-10-01 11:49:14
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iR4eHuMpGS5hIKGgUa1uyg
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-10-14 23:40:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GCJsKE438ub+BSUracZn2g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

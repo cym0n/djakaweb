@@ -3,7 +3,6 @@ package DjakaWeb::Elements::Game;
 use Dancer;
 use Moose;
 use Dancer::Plugin::DBIC;
-use DjakaWeb::DjakartaDB;
 use DjakaWeb::StoryManager;
 
 

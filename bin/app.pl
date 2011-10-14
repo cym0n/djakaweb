@@ -32,14 +32,19 @@ before sub {
 	}
 };
 
-get '/login/:id' => sub {
-	if(DjakaWeb::Controllers::login_stub(params->{id}))
+get '/login/:id?' => sub {
+	 my $login = DjakaWeb::Controllers::login_stub(params->{id});
+	if($login == 0)
 	{
 		return redirect '/game';
 	}
-	else
+	elsif($login == 1)
 	{
 		return redirect '/game';
+	}
+	elsif($login == -1)
+	{
+		return redirect '/courtesy/login_failed';
 	}
 };
 
@@ -78,6 +83,9 @@ get '/service/actions/:id' => sub {
 #COURTESY PAGES
 get '/courtesy/not_logged' => sub {
 	template 'not_logged';
+};
+get '/courtesy/login_failed' => sub {
+	template 'login_failed';
 };
 
 
