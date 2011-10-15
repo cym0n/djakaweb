@@ -81,13 +81,6 @@ sub write_danger
 	$self->update({danger => $danger});	
 	return $self->danger();
 }
-sub modify_danger
-{
-	my $self = shift;
-	my $delta = shift;
-	$self->update({danger => $self->danger() + $delta});	
-	return $self->danger();
-}
 
 
 __PACKAGE__->resultset_class('DjakaWeb::DjakartaDB::Game::ResultSet');

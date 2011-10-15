@@ -17,11 +17,8 @@ has 'mission' => (
 );
 has 'danger' => (
       is     => 'rw',
+	  trigger => \&_update_danger
 );
-has 'active' => (
-      is     => 'rw',
-);
-
 has 'DBData' => (
 	  is     => 'ro',
 );
@@ -45,7 +42,6 @@ around BUILDARGS => sub {
 		my $start_danger = DjakaWeb::StoryManager::getStartDanger($params{'mission'});
 		my $new_game = $schema->resultset('Game')->initGame($params{'user'}, $params{'mission'}, $start_danger);
 		$params{'id'} = $new_game->id();
-		$params{'active'} = 1;
 		$params{'danger'} = $start_danger;
 		$params{'DBData'} = $new_game;
 		my %flags;
@@ -61,7 +57,6 @@ around BUILDARGS => sub {
 		my $game = $schema->resultset('Game')->find($params{'id'});
 		$params{'user'} = $game->user_id();
 		$params{'mission'} = $game->mission_id();
-		$params{'active'} = $game->active();
 		$params{'danger'} = $game->danger();
 		$params{'DBData'} = $game;
 		my %flags;
@@ -151,15 +146,18 @@ sub set_danger
 	my $self = shift;
 	my $danger = shift;
 	$self->danger($danger);
-	$self->DBData()->write_danger($danger);
-
 }
+
 sub modify_danger
 {
 	my $self = shift;
 	my $danger = shift;
 	$self->danger($self->danger() + $danger);
-	$self->DBData()->modify_danger($danger);
+}
+sub _update_danger
+{
+	my $self = shift;
+	$self->DBData()->write_danger($self->danger());
 }
 sub gameover
 {

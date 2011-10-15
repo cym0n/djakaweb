@@ -10,7 +10,7 @@ sub login_stub
 	my $user;
 	if(! $user_id)
 	{
-	 	$user = schema->resultset('User')->newUser($user_id);
+	 	$user = schema->resultset('User')->newUser();
 	}
 	else
 	{
@@ -25,6 +25,7 @@ sub login_stub
 	my $game;
 	if(! $game_id)
 	{
+		#At this time, when no game exists, a new one with mission 000 is created
 		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000'});
 		session 'game' => $game;
 		return 0; #new game
