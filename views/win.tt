@@ -2,62 +2,14 @@
 	<h1>The DJAKARTA GAME</h1>
 </div>
 <div class="left_column">
-	<div class="box blue">
-		<div id="badge">
-			User: <% user_id %><br />
-			Game: <% game_id %>
-		</div>
-	</div>
 </div>
 <div class="central_body">
 	<div class="box red">
 		<div id="messages">
-			<% FOREACH s IN story %>
-				<% s.content %>
-				<br />----<br />
-			<% END %>
+			<% tag %>
 		</div>
 	</div>
-	<div class="box purple">
-		<div id="danger_bar">
-			<div id="danger_level" style="width:<% danger %>%">&nbsp;</div>
-		</div>
-	</div>
-	<div class="elements">
-		<% types = [ 'person', 'place', 'object' ] %>
-		<% portraits = {
-		    person = 'dummy.gif',
-     		place  = 'dummy_place.jpg',
-     		object = 'dummy_object.jpg'
-   			}
-		%>
-		<% titles = {
-		    person = 'Persone',
-     		place  = 'Luoghi',
-     		object = 'Oggetti'
-   			}
-		%>
-		<% FOREACH t IN types %>
-		<div class="box element">
-			<div class="box_title"><% titles.$t %></div>
-			<% IF elements.$t.size %>
-			<% FOREACH p IN elements.$t %>
-			<div class="element_badge">
-				<img src="/res/images/<% portraits.$t %>" />
-				<div class="element_name">
-					<a id="<% p.id %>" class="actions_trigger" href="#" rel="#actions"><% p.name %></a>
-				</div>
-			</div>
-			<% END %>
-			<% ELSE %>
-			<div class="no_elements">
-				No elements
-			</div>
-			<% END %>
-		</div>
-		<% END %>
-	</div>
-</div>
+<div>
 <% INCLUDE footer.tt %>
 <div class="simple_overlay" id="actions">
 	<div>Here comes the actions</div>

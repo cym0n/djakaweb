@@ -67,6 +67,16 @@ get '/gameover' => sub {
 		redirect '/game';
 	}
 };
+get '/win' => sub {
+	if(session('end'))
+	{
+		template 'win' => { 'tag' => session('end')};
+	}
+	else
+	{
+		redirect '/game';
+	}
+};
 
 
 

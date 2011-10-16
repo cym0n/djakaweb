@@ -247,11 +247,11 @@ sub check_victory()
 	{
 		my $tag = $_;
 		my $check = 1;
-		for(keys %{$victories->{$tag}->{'conditions'}})
+		for(keys %{$victories->{$tag}->{'condition'}})
 		{
 			my $status = $schema->resultset('GamesStatus')->getStatus($self->id(), $_);
 			$status = $status ? $status : "";
-			if(! ($status eq $victories->{$tag}->{$_}))
+			if(! ($status eq $victories->{$tag}->{'condition'}->{$_}))
 			{ 
 				$check = 0;
 				last;
