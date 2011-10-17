@@ -69,26 +69,7 @@ __PACKAGE__->set_primary_key("id");
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
-sub read_danger
-{
-	my $self = shift;
-	return $self->danger();
-}
-sub write_danger
-{
-	my $self = shift;
-	my $danger = shift;
-	$self->update({danger => $danger});	
-	return $self->danger();
-}
-
-
-__PACKAGE__->resultset_class('DjakaWeb::DjakartaDB::Game::ResultSet');
-
-package DjakaWeb::DjakartaDB::Game::ResultSet;
-use base 'DBIx::Class::ResultSet';
-
-sub initGame
+sub init
 {
 	my $self = shift;
 	my $user = shift;
@@ -97,6 +78,7 @@ sub initGame
 	my $game = $self->create({ user_id => $user, mission_id => $mission, danger => $danger, active => 1 });
 	return $game;
 }
+
 sub get_active_game
 {
 	my $self = shift;
@@ -110,6 +92,19 @@ sub get_active_game
 	{
 		return $game[0]->id();
 	}
+}
+
+__PACKAGE__->resultset_class('DjakaWeb::DjakartaDB::Game::ResultSet');
+
+package DjakaWeb::DjakartaDB::Game::ResultSet;
+use base 'DBIx::Class::ResultSet';
+
+sub write_danger
+{
+	my $self = shift;
+	my $danger = shift;
+	$self->update({danger => $danger});	
+	return $self->danger();
 }
 
 

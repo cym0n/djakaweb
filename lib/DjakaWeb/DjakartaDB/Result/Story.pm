@@ -61,12 +61,7 @@ __PACKAGE__->set_primary_key("id");
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
-__PACKAGE__->resultset_class('DjakaWeb::DjakartaDB::Story::ResultSet');
-
-package DjakaWeb::DjakartaDB::Story::ResultSet;
-use base 'DBIx::Class::ResultSet';
-
-sub writeStory
+sub write_story
 {
 	my $self = shift;
 	my $game = shift;
@@ -75,12 +70,16 @@ sub writeStory
 	$self->create({ game_id => $game, content => $text, timestamp => \'datetime(\'now\',\'localtime\')' });
 }
 
-sub getAllStory
+__PACKAGE__->resultset_class('DjakaWeb::DjakartaDB::Story::ResultSet');
+
+package DjakaWeb::DjakartaDB::Story::ResultSet;
+use base 'DBIx::Class::ResultSet';
+
+sub get_all_story
 {
 	my $self = shift;
-	my $game = shift;
 	my $order = shift;
-	my @story = $self->search({game_id => $game}, {order_by => { -$order => 'timestamp' }});
+	my @story = $self->search(undef, {order_by => { -$order => 'timestamp' }});
 	return \@story;
 }
 

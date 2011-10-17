@@ -26,13 +26,13 @@ sub login_stub
 	if(! $game_id)
 	{
 		#At this time, when no game exists, a new one with mission 000 is created
-		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000'});
+		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000', 'schema' => schema});
 		session 'game' => $game;
 		return 0; #new game
 	}
 	else
 	{
-		$game = DjakaWeb::Elements::Game->new({'id' => $game_id});
+		$game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'schema' => schema});
 		session 'game' => $game;
 		return 1; #existing game	
 		#return redirect '/game';

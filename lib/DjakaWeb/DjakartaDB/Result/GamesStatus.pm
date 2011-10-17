@@ -31,12 +31,6 @@ __PACKAGE__->table("GAMES_STATUS");
   is_nullable: 0
   size: 4
 
-=head2 object_type
-
-  data_type: 'varchar'
-  is_nullable: 1
-  size: 10
-
 =head2 active
 
   data_type: 'integer'
@@ -55,8 +49,6 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_nullable => 0 },
   "object_code",
   { data_type => "varchar", is_nullable => 0, size => 4 },
-  "object_type",
-  { data_type => "varchar", is_nullable => 1, size => 10 },
   "active",
   { data_type => "integer", is_nullable => 1 },
   "status",
@@ -65,18 +57,13 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("game_id", "object_code");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-10-14 23:40:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lKCEyl1n/Q86bGWsnvmgSA
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-10-18 00:07:09
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bnu+fGT1So+qtfZbR4KZJg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
-__PACKAGE__->resultset_class('DjakaWeb::DjakartaDB::GamesStatus::ResultSet');
-
-package DjakaWeb::DjakartaDB::GamesStatus::ResultSet;
-use base 'DBIx::Class::ResultSet';
-
-sub initGame
+sub init
 {
 	my $self = shift;
 	my $game = shift;
@@ -94,13 +81,15 @@ sub initGame
 	}
 }
 
-sub getElements
+__PACKAGE__->resultset_class('DjakaWeb::DjakartaDB::GamesStatus::ResultSet');
+
+package DjakaWeb::DjakartaDB::GamesStatus::ResultSet;
+use base 'DBIx::Class::ResultSet';
+
+sub active_only
 {
 	my $self = shift;
-	my $game = shift;
-	my $category = shift;
-	my @out;
-	my @els = $self->search({ game_id => $game, object_type => $category, active => 1});
+	my @els = $self->search({active => 1});
 	for(@els)
 	{
 		push @out, $_->object_code();
@@ -108,27 +97,26 @@ sub getElements
 	return \@out;
 }
 
-sub getStatus
+sub get_status
 {
 	my $self = shift;
-	my $game = shift;
 	my $element = shift;
-	my @els = $self->search({ game_id => $game, object_code => $element});
+	my @els = $self->search({ object_code => $element});
 	if($#els == -1)
 	{
-		return undef;
+		return "NOT_FOUND";
 	}
 	else
 	{
-		return $els[0]->status();
+
+		return $els[0]->status() ? $els[0]->status() : "NULL";
 	}
 }
-sub getActive
+sub get_active
 {
 	my $self = shift;
-	my $game = shift;
 	my $element = shift;
-	my @els = $self->search({ game_id => $game, object_code => $element});
+	my @els = $self->search({object_code => $element});
 	if($#els == -1)
 	{
 		return 0;
@@ -142,17 +130,14 @@ sub getActive
 sub tag
 {
 	my $self = shift;
-	my $game = shift;
-	my $mission = shift;
+	my $game = shift; #Needed to create new elements
 	my $element = shift;
 	my $tag = shift;
-	my @els = $self->search({ game_id => $game, object_code => $element});
+	my @els = $self->search({object_code => $element});
 	if($#els == -1)
 	{
-		my $type = DjakaWeb::StoryManager::getAttribute($mission, $element, 'type');
 		$self->create({ game_id => $game, 
 				        object_code => $element, 
-						object_type => $type,
 						active => 0,
 					  	status => $tag	
 					  });
@@ -166,15 +151,12 @@ sub add
 {
 	my $self = shift;
 	my $game = shift;
-	my $mission = shift;
 	my $element = shift;
-	my $type = DjakaWeb::StoryManager::getAttribute($mission, $element, 'type');
-	my @els = $self->search({ game_id => $game, object_code => $element});
+	my @els = $self->search({object_code => $element});
 	if($#els == -1)
 	{
 		$self->create({ game_id => $game, 
 					    object_code => $element, 
-						object_type => $type,
 						active => 1  
 					});
 	}
@@ -188,7 +170,7 @@ sub remove
 	my $self = shift;
 	my $game = shift;
 	my $element = shift;
-	my @els = $self->search({ game_id => $game, object_code => $element});
+	my @els = $self->search({object_code => $element});
 	if($#els == -1)
 	{
 	}
@@ -197,6 +179,9 @@ sub remove
 		$els[0]->update({active => 0});
 	}
 }
+
+
+#------------------- TEST FUNCTIONS ----------------------------
 sub snapshot
 {
 	my $self = shift;
@@ -231,11 +216,10 @@ sub overwrite
 	return $danger;
 }
 
-sub printStatus
+sub print_status
 {
 	my $self = shift;
-	my $game = shift;
-	my @els = $self->search({ game_id => $game});
+	my @els = $self->all();
 	for(@els)
 	{
 		my $status = $_->status() ? $_->status() : "NULL";
