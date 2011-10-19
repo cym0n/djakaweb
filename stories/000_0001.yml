@@ -18,7 +18,7 @@ messages:
         Una visita alla {name} non ha rivelato niente di sospetto. 
         Abbiamo però individuato gli operai che potrebbero essere potenzialmente coinvolti nella cella terroristica: {0004.name}, {0005.name}, {0006.name}
     INSPECTION: |
-        L'ispezione a {name} non ha portato risultati. '
+        L'ispezione a {name} non ha portato risultati. 
     INFILTRATE: |
         Abbiamo infiltrato un nostro uomo in {name}. Questo ci ha permesso di venire in contatto con alcuni operai: {0004.name}, {0005.name}, {0006.name}
 actions:

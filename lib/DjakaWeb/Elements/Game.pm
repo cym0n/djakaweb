@@ -1,8 +1,6 @@
 package DjakaWeb::Elements::Game;
 
-use Dancer;
 use Moose;
-use Dancer::Plugin::DBIC;
 use DjakaWeb::StoryManager;
 
 
@@ -40,6 +38,7 @@ around BUILDARGS => sub {
 	my $params_ref = shift;
 	my %params = %{$params_ref};
 	my $game;
+	my $schema = $params{'schema'};
 	if(! $params{'id'})
 	{
 		#Fetching initial data from YAML files
@@ -48,8 +47,8 @@ around BUILDARGS => sub {
 		my $start_danger = DjakaWeb::StoryManager::getStartDanger($params{'mission'});
 		#Writing the DB
 		$game = $schema->resultset('Game')->init($params{'user'}, $params{'mission'}, $start_danger);
-		$schema->resultset('GamesStatus')->init($params{'id'}, $params{'mission'}, $elements);
-		$schema->resultset('Story')->write_story($params{'id'}, $story);
+		$schema->resultset('GamesStatus')->init($game->id(), $elements);
+		$schema->resultset('Story')->write_story($game->id(), $story);
 	}	
 	else
 	{
@@ -79,14 +78,12 @@ sub get_game
 sub get_status
 {
 	my $self = shift;
-	my @data = $self->StatusDB()->search({'game_id' => $self->id()});
-	return \@data;
+	return $self->StatusDB()->search({'game_id' => $self->id()});
 }
 sub get_story
 {
 	my $self = shift;
-	my @data = $self->StatusDB()->search({'game_id' => $self->id()});
-	return \@data;
+	return $self->StoryDB()->search({'game_id' => $self->id()});
 }
 
 #More complex getters :-)
@@ -95,15 +92,14 @@ sub get_elements
 	my $self = shift;
 	my %out;
 	my $els = $self->get_status()->active_only();
-		for(@{$els})
-		{
-			my $el = $_;
-			my $el_name = DjakaWeb::StoryManager::getAttribute($self->mission(), $el, 'name');
-			my $el_type = DjakaWeb::StoryManager::getAttribute($self->mission(), $el, 'type');
-			my $el_data = { 'id' => $el,
-				            'name' => $el_name};
-			push @{$out{$el_type}}, $el_data;
-		}
+	for(@{$els})
+	{
+		my $el = $_;
+		my $el_name = DjakaWeb::StoryManager::getAttribute($self->mission(), $el, 'name');
+		my $el_type = DjakaWeb::StoryManager::getAttribute($self->mission(), $el, 'type');
+		my $el_data = { 'id' => $el,
+			            'name' => $el_name};
+		push @{$out{$el_type}}, $el_data;
 	}
 	return %out;
 }
@@ -112,7 +108,7 @@ sub get_actions
 	my $self = shift;
 	my $element = shift;
 	my $filter = shift;
-	my $status = $self->get_elements()->get_status($element);
+	my $status = $self->get_status()->get_status($element);
 	if($status eq "NOT_FOUND")
 	{
 		return undef;
@@ -177,24 +173,24 @@ sub do
 		my @eff = split(' ', $_);
 		if($eff[0] =~ /^TAG$/)
 		{
-			$schema->get_status()->tag($self->id(), $element, $eff[1]);
+			$self->get_status()->tag($self->id(), $element, $eff[1]);
 		}
 		elsif($eff[0] =~ /^ADD$/)	
 		{
-			$schema->get_status()->add($self->id(), $eff[1]);
+			$self->get_status()->add($self->id(), $eff[1]);
 		}
 		elsif($eff[0] =~ /^REMOVE$/)	
 		{
-			$schema->get_status()->remove($eff[1]);
+			$self->get_status()->remove($eff[1]);
 		}
 		elsif($eff[0] =~ /^TELL$/)
 		{
 			if(! ($self->flags()->{'notell'}))
 			{
-				if($schema->get_status()->get_active($element) == 1)
+				if($self->get_status()->get_active($element) == 1)
 				{
 					my $story = DjakaWeb::StoryManager::getElementStory($self->mission(), $element, $eff[1]);
-					$schema->StoryDB()->write_story($self->id(), $story);
+					$self->StoryDB()->write_story($self->id(), $story);
 				}
 			}
 		}	
@@ -216,7 +212,7 @@ sub do
 sub get_all_story()
 {
 	my $self = shift;
-	return $self->get_story()->get_all_story($self->id(), 'desc');
+	return $self->get_story()->get_all_story('desc');
 }
 
 #Victory check
@@ -287,7 +283,7 @@ sub printClass
 sub printStatus
 {
 	my $self = shift;
-	$schema->get_status()->print_status();
+	$self->get_status()->print_status();
 }
 
 1;

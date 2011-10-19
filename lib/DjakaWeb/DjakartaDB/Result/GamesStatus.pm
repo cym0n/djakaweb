@@ -63,24 +63,6 @@ __PACKAGE__->set_primary_key("game_id", "object_code");
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
-sub init
-{
-	my $self = shift;
-	my $game = shift;
-	my $mission = shift;
-	my $elements = shift;
-	for(@{$elements})
-	{
-		my $el = $_;
-		my $type = DjakaWeb::StoryManager::getAttribute($mission, $el, 'type');
-		$self->create({ game_id => $game, 
-				        object_code => $el, 
-						object_type => $type,
-						active => 1  
-					});
-	}
-}
-
 __PACKAGE__->resultset_class('DjakaWeb::DjakartaDB::GamesStatus::ResultSet');
 
 package DjakaWeb::DjakartaDB::GamesStatus::ResultSet;
@@ -89,6 +71,7 @@ use base 'DBIx::Class::ResultSet';
 sub active_only
 {
 	my $self = shift;
+	my @out;
 	my @els = $self->search({active => 1});
 	for(@els)
 	{
@@ -96,6 +79,22 @@ sub active_only
 	}
 	return \@out;
 }
+
+sub init
+{
+	my $self = shift;
+	my $game = shift;
+	my $elements = shift;
+	for(@{$elements})
+	{
+		my $el = $_;
+		$self->create({ game_id => $game, 
+				        object_code => $el, 
+						active => 1  
+					});
+	}
+}
+
 
 sub get_status
 {
@@ -180,42 +179,6 @@ sub remove
 	}
 }
 
-
-#------------------- TEST FUNCTIONS ----------------------------
-sub snapshot
-{
-	my $self = shift;
-	my $game = shift;
-	my @els = $self->search({ game_id => $game});
-	return @els;
-}
-sub overwrite
-{
-	my $self = shift;
-	my $game = shift;
-	my $elements = shift;
-	my $danger;
-	$self->search({ game_id => $game })->delete;
-	for(@{$elements})
-	{
-		my $el = $_;
-		if(! ($el->object_code() =~ m/DANGER/))
-		{
-			$self->create({ game_id => $game, 
-					    	object_code => $el->object_code(), 
-							object_type => $el->object_type(),
-							active => $el->active(),
-							status => $el->status()  
-						});
-		}
-		else
-		{
-			$danger = $el->status();
-		}
-	}
-	return $danger;
-}
-
 sub print_status
 {
 	my $self = shift;
@@ -227,5 +190,6 @@ sub print_status
 	}
 }
 
-1;
 
+
+1;

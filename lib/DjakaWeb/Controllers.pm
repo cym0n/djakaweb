@@ -44,8 +44,8 @@ sub get_data_for_interface
 {
 	my $game = session('game');
 	my $user = session('user');
-	my %elements = $game->getElements();
-	my $story = $game->getAllStory();
+	my %elements = $game->get_elements();
+	my $story = $game->get_all_story();
 	#print keys %{$elements{'person'}[0]};
 	return {'game_id' => $game->id(),
 		    'user_id' => $user->id(),
@@ -58,7 +58,7 @@ sub get_actions_menu
 {
 	my $element = shift;
 	my $game = session('game');
-	my %actions = $game->getActions($element);
+	my %actions = $game->get_actions($element);
 	my @labels = keys %actions;
 	return {'actions' => \@labels, 
 			'layout'  => 0,
@@ -71,7 +71,7 @@ sub play
 	my $element = shift;
 	my $action = shift;
 	$game->do($element, $action, 'human');
-	if($game->gameover)
+	if($game->danger > config->{'danger_threshold'})
 	{
 		session 'end' => 'GAMEOVER';
 	}
