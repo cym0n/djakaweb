@@ -53,7 +53,7 @@ get '/game' => sub {
 };
 
 get '/do/:action/:element' => sub {
-	DjakaWeb::Controllers::play(params->{element}, params->{action});
+	DjakaWeb::Controllers::schedule_action(params->{element}, params->{action});
 	return redirect '/game';
 };
 
@@ -79,15 +79,10 @@ get '/win' => sub {
 };
 
 
-
-
 #AJAX CALLS
 get '/service/actions/:id' => sub {
 	template 'actions' => DjakaWeb::Controllers::get_actions_menu(params->{id});
 };
-
-
-
 
 
 #COURTESY PAGES

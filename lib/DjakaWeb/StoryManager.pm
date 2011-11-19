@@ -87,6 +87,7 @@ sub processText
 	my $text = shift;
 	my $story = shift;
 	my $code = shift;
+	return "" if(! $text);
 	$text =~ s/(\{.*?\})/<strong>$1<\/strong>/g;
 	$text =~ s/\{(.*?)\}/getAttribute($story, $code, $1)/eg;
 	return $text;

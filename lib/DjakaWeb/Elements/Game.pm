@@ -26,6 +26,9 @@ has 'StatusDB' => (
 has 'StoryDB' => (
 	  is     => 'ro',
 );
+has 'ActionsDB' => (
+	  is     => 'ro',
+);
 has 'flags' => (
 	  is     => 'rw',
 );
@@ -62,6 +65,7 @@ around BUILDARGS => sub {
 	$params{'GameDB'} =  $schema->resultset('Game');
 	$params{'StatusDB'} =  $schema->resultset('GamesStatus');
 	$params{'StoryDB'} =  $schema->resultset('Story');
+	$params{'ActionsDB'} =  $schema->resultset('OngoingAction');
 	my %flags;
 	$flags{'nodanger'} = 0;
 	$flags{'notell'} = 0;
@@ -207,16 +211,27 @@ sub do
 		}
 	}
 }
+#Put action on schedule
+sub schedule_action
+{
+	my $self = shift;
+	my $element = shift;
+	my $action = shift;
+	$self->ActionsDB->add_action($self->id(), $element, $action);
+}
+
+
+
 
 #Story reader
-sub get_all_story()
+sub get_all_story
 {
 	my $self = shift;
 	return $self->get_story()->get_all_story('desc');
 }
 
 #Victory check
-sub check_victory()
+sub check_victory
 {
 	my $self = shift;
 	my $victories = DjakaWeb::StoryManager::getVictory($self->mission());	

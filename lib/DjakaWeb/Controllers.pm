@@ -65,6 +65,14 @@ sub get_actions_menu
 			'element' => $element};
 }
 
+sub schedule_action
+{
+	my $game = session('game');
+	my $element = shift;
+	my $action = shift;
+	$game->schedule_action($element, $action);
+}
+
 sub play
 {
 	my $game = session('game');
