@@ -1,3 +1,10 @@
+body
+{
+	font-size: 14px;
+ 	font-family: Arial,Helvetica,sans-serif;
+}
+
+
 .left_column
 {
 	width: 180px;
@@ -12,6 +19,7 @@
 .blue
 {
 	border: 1px solid #003BEB;
+	background: #668CFF;
 }
 .red
 {
@@ -24,7 +32,6 @@
 .box
 {
 	margin-bottom: 10px;
-	margin-right: 10px;
 }
 #footer
 {
@@ -33,9 +40,17 @@
 }
 #badge
 {
-	background: #668CFF;
 	height: 120px;
-	padding: 20px;
+	padding: 10px;
+}
+#ongoing
+{
+	height: 120px;
+	padding: 10px;
+}
+#ongoing span
+{
+	font-size: 12px;
 }
 #messages
 {
@@ -69,6 +84,11 @@
 	color: #FFF;
 	background: #000;
 	padding: 5px 7px;
+}
+
+.elements .box
+{
+	margin-right: 20px;
 }
 .element_badge
 {

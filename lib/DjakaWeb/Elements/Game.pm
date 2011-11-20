@@ -219,7 +219,22 @@ sub schedule_action
 	my $action = shift;
 	$self->ActionsDB->add_action($self->id(), $element, $action);
 }
-
+#Retrieve the action
+sub get_active_action
+{
+	my $self = shift;
+	my $AA = $self->ActionsDB->get_active_action($self->id());
+	if($AA)
+	{
+		return { object => DjakaWeb::StoryManager::getAttribute($self->mission(), $AA->object_code, 'name'),
+				 action => $AA->action() }
+	}
+	else
+	{
+		return { object => 'NONE',
+			     action => 'NONE'}
+	}
+}
 
 
 

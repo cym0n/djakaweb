@@ -4,6 +4,7 @@ use Dancer;
 use Dancer::Plugin::DBIC;
 use DjakaWeb::Elements::Game;
 
+#TODO: rewrite using class User
 sub login_stub
 {
 	my $user_id = shift;
@@ -46,12 +47,15 @@ sub get_data_for_interface
 	my $user = session('user');
 	my %elements = $game->get_elements();
 	my $story = $game->get_all_story();
+	my $active_A = $game->get_active_action();
 	#print keys %{$elements{'person'}[0]};
 	return {'game_id' => $game->id(),
 		    'user_id' => $user->id(),
 		 	'elements' => \%elements,
 			'story' => $story,
-			'danger' => $game->danger()};
+			'danger' => $game->danger(),
+			'action' => $active_A
+		};
 }
 
 sub get_actions_menu

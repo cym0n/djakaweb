@@ -91,5 +91,12 @@ sub add_action
 	$self->create({game_id => $game, object_code => $object, action => $action, active => 1, clicks => 0});
 }
 
+sub get_active_action
+{
+	my $self = shift;
+	my $game = shift;
+	return $self->find({game_id => $game, active => 1});
+}
+
 
 1;
