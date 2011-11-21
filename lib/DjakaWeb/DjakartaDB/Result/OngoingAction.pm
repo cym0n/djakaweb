@@ -74,6 +74,16 @@ __PACKAGE__->set_primary_key("id");
 # Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-11-19 22:46:27
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FiciksgPdUIj4GIntx8Byg
 
+sub click
+{
+	my $self = shift;
+	my $new_clicks = $self->clicks() + 1;
+	$self->update({clicks => $new_clicks});
+	return $new_clicks;
+}
+
+
+
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
@@ -96,6 +106,15 @@ sub get_active_action
 	my $self = shift;
 	my $game = shift;
 	return $self->find({game_id => $game, active => 1});
+}
+
+sub click
+{
+	my $self = shift;
+	my $game = shift;
+	my $action = $self->get_active_action($game);
+	return $action->click();
+
 }
 
 

@@ -57,6 +57,11 @@ get '/do/:action/:element' => sub {
 	return redirect '/game';
 };
 
+get '/click' => sub {
+	DjakaWeb::Controllers::click();
+	redirect '/game';
+};
+
 get '/gameover' => sub {
 	if(session('end') =~ /GAMEOVER/)
 	{

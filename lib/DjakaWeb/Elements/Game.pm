@@ -227,15 +227,24 @@ sub get_active_action
 	if($AA)
 	{
 		return { object => DjakaWeb::StoryManager::getAttribute($self->mission(), $AA->object_code, 'name'),
-				 action => $AA->action() }
+				 action => $AA->action(),
+				 clicks => $AA->clicks()	
+		 }
 	}
 	else
 	{
 		return { object => 'NONE',
-			     action => 'NONE'}
+			     action => 'NONE',
+			     clicks => 0}
 	}
 }
 
+sub click
+{
+	my $self = shift;
+	$self->ActionsDB->click($self->id());
+	#TODO: implement the check for action completed
+}
 
 
 #Story reader

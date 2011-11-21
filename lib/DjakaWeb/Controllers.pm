@@ -77,6 +77,12 @@ sub schedule_action
 	$game->schedule_action($element, $action);
 }
 
+sub click
+{
+	my $game = session('game');
+	$game->click();
+}
+
 sub play
 {
 	my $game = session('game');

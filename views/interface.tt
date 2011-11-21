@@ -14,7 +14,9 @@
 		<div id="ongoing">
 			Gli ordini sono:<br />
 			<br />
-			<span><% translate.${action.action} %> <% action.object %><br /></span>
+			<span><% translate.${action.action} %> <% action.object %><br /></span><br />
+			<% action.clicks %> clicks<br />
+			<div class="theclicker"><a href="/click">CLICK</a></div>
 		</div>
 	</div>
 	<% END %>
