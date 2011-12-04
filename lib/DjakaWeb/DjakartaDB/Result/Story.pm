@@ -8,7 +8,7 @@ use warnings;
 
 use base 'DBIx::Class::Core';
 
-__PACKAGE__->load_components("InflateColumn::DateTime");
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp");
 
 =head1 NAME
 
@@ -50,7 +50,7 @@ __PACKAGE__->add_columns(
   "content",
   { data_type => "text", is_nullable => 1 },
   "timestamp",
-  { data_type => "integer", is_nullable => 1 },
+  { data_type => "datetime", is_nullable => 0, set_on_create => 1 },
 );
 __PACKAGE__->set_primary_key("id");
 
@@ -72,7 +72,7 @@ sub write_story
 	my $game = shift;
 	my $text = shift;
 	#DB Dependent query!
-	$self->create({ game_id => $game, content => $text, timestamp => \'datetime(\'now\',\'localtime\')' });
+	$self->create({ game_id => $game, content => $text });
 }
 
 sub get_all_story

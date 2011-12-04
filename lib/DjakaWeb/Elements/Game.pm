@@ -2,6 +2,7 @@ package DjakaWeb::Elements::Game;
 
 use Moose;
 use DjakaWeb::StoryManager;
+use Dancer::Plugin::DBIC;
 
 
 has 'id' => (
@@ -41,7 +42,7 @@ around BUILDARGS => sub {
 	my $params_ref = shift;
 	my %params = %{$params_ref};
 	my $game;
-	my $schema = $params{'schema'};
+	my $schema = schema;
 	if(! $params{'id'})
 	{
 		#Fetching initial data from YAML files
@@ -72,6 +73,13 @@ around BUILDARGS => sub {
 	$params{'flags'} = \%flags;
 	return $class->$orig(%params);
 };
+
+#static method
+sub get_active_game
+{
+	my $user = shift;
+	return schema->resultset('Game')->get_active_game($user);
+}
 
 #Method to retrieve DB data
 sub get_game

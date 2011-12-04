@@ -1,39 +1,26 @@
 package DjakaWeb::Controllers;
 
 use Dancer;
-use Dancer::Plugin::DBIC;
 use DjakaWeb::Elements::Game;
+use DjakaWeb::Elements::User;
 
-#TODO: rewrite using class User
 sub login_stub
 {
 	my $user_id = shift;
-	my $user;
-	if(! $user_id)
-	{
-	 	$user = schema->resultset('User')->newUser();
-	}
-	else
-	{
-		$user = schema->resultset('User')->find($user_id);
-	}
-	if(! $user)
-	{
-		return -1; #login failed
-	}
+	my $user = DjakaWeb::Elements::User->new({'id' => $user_id});
 	session 'user' => $user;
-	my $game_id = schema->resultset('Game')->get_active_game($user->id());
+	my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
 	my $game;
 	if(! $game_id)
 	{
 		#At this time, when no game exists, a new one with mission 000 is created
-		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000', 'schema' => schema});
+		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000'});
 		session 'game' => $game;
 		return 0; #new game
 	}
 	else
 	{
-		$game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'schema' => schema});
+		$game = DjakaWeb::Elements::Game->new({'id' => $game_id});
 		session 'game' => $game;
 		return 1; #existing game	
 		#return redirect '/game';
@@ -51,6 +38,7 @@ sub get_data_for_interface
 	#print keys %{$elements{'person'}[0]};
 	return {'game_id' => $game->id(),
 		    'user_id' => $user->id(),
+			'last_action_done' => $user->last_action_done(),
 		 	'elements' => \%elements,
 			'story' => $story,
 			'danger' => $game->danger(),
@@ -81,6 +69,8 @@ sub click
 {
 	my $game = session('game');
 	$game->click();
+	my $user = session('user');
+	$user->update_click_time();
 }
 
 sub play

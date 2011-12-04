@@ -17,6 +17,7 @@
 			<span><% translate.${action.action} %> <% action.object %><br /></span><br />
 			<% action.clicks %> clicks<br />
 			<div class="theclicker"><a href="/click">CLICK</a></div>
+			Ultimo click: <% last_action_done %>
 		</div>
 	</div>
 	<% END %>

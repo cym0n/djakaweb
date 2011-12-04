@@ -7,8 +7,8 @@ use Dancer::Plugin::DBIC;
 has 'id' => (
 	is 		 => 'ro',
 );
-has 'last_action_done' => (
-	is       => 'rw',
+has 'UserDB' => (
+	is       => 'ro',
 );
 
 my $meta = __PACKAGE__->meta;
@@ -23,12 +23,28 @@ around BUILDARGS => sub {
 	{
 		my $new_user = $schema->resultset('User')->newUser();
 		$params{'id'} = $new_user->id();
+		$params{'UserDB'} = $new_user;
 		return $class->$orig(%params);
 	}	
 	else
 	{
 		my $user = $schema->resultset('User')->find($params{'id'});
-		$params{'last_action_done'} = $game->last_action_done();
+		$params{'UserDB'} = $user;
 		return $class->$orig(%params);
 	}
 };
+
+sub last_action_done
+{
+	my $self = shift;
+	return $self->UserDB()->last_action_done();
+}
+
+sub update_click_time
+{
+	my $self = shift;	
+	return $self->UserDB()->update_click_time();
+}
+
+1;
+
