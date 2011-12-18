@@ -155,7 +155,7 @@ sub get_actions
 }
 
 #Actions manager
-sub do
+sub do_action
 {
 	my $self = shift;
 	my $element = shift;
@@ -208,7 +208,7 @@ sub do
 		}	
 		elsif($eff[0] =~ /^DO$/)
 		{
-			$self->do($eff[2], $eff[1], 'machine');
+			$self->do_action($eff[2], $eff[1], 'machine');
 		}
 		elsif($eff[0] =~ /^DANGER$/)
 		{
@@ -246,12 +246,24 @@ sub get_active_action
 			     clicks => 0}
 	}
 }
+sub do_active_action
+{
+	my $self = shift;
+	my $AA = $self->ActionsDB->get_active_action($self->id());
+	if($AA)
+	{
+		$self->do_action($AA->object_code, $AA->action(), 'human');
+		$AA->active(0);
+		$AA->update();
+	}
+}
 
 sub click
 {
 	my $self = shift;
-	$self->ActionsDB->click($self->id());
-	#TODO: implement the check for action completed
+	my $limit = 4;
+	my $clicks = $self->ActionsDB->click($self->id());
+	$self->do_active_action if($clicks == $limit);
 }
 
 
