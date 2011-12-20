@@ -47,3 +47,21 @@ plugins:
 
 #User defined variables
 danger_threshold: 100
+
+clicks:
+    #common
+    RESEARCH: 3
+    #people and places
+    SPY: 4
+    #people
+    KILL: 7
+    TAKE: 7
+    INTERROGATE: 5
+    BRIBE: 5
+    #places
+    ASSAULT: 8
+    INSPECT: 5
+    INFILTRATE: 6
+    VISIT: 3
+    #objects
+    PICKUP: 4

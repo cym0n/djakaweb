@@ -68,26 +68,20 @@ sub schedule_action
 sub click
 {
 	my $game = session('game');
-	$game->click();
 	my $user = session('user');
 	$user->update_click_time();
-}
-
-sub play
-{
-	my $game = session('game');
-	my $element = shift;
-	my $action = shift;
-	$game->do($element, $action, 'human');
-	if($game->danger > config->{'danger_threshold'})
+	if($game->click(config->{'clicks'}))
 	{
-		session 'end' => 'GAMEOVER';
-	}
-	else
-	{
-		if(my $tag = $game->check_victory())
+		if($game->danger > config->{'danger_threshold'})
 		{
-			session 'end' => $tag;
+			session 'end' => 'GAMEOVER';
+		}
+		else
+		{
+			if(my $tag = $game->check_victory())
+			{
+				session 'end' => $tag;
+			}
 		}
 	}
 }

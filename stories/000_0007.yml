@@ -9,7 +9,7 @@ messages:
     TAKEN: |
         Abbiamo recuperato {name}
 actions:
-    TAKE: KO
+    PICKUP: KO
     RESEARCH:
         ANY:
             - TELL RESEARCH
