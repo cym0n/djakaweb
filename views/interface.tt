@@ -74,7 +74,6 @@
 		</div>
 		<% END %>
 	</div>
-</div>
 <% INCLUDE footer.tt %>
 <div class="simple_overlay" id="actions">
 	<div>Here comes the actions</div>

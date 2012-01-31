@@ -47,6 +47,7 @@ plugins:
 
 #User defined variables
 danger_threshold: 100
+wait_to_click: 5
 
 clicks:
     #common
