@@ -3,7 +3,6 @@ package DjakaWeb::Controllers;
 use Dancer;
 use DjakaWeb::Elements::Game;
 use DjakaWeb::Elements::User;
-use DateTime;
 
 sub login_stub
 {
@@ -70,22 +69,7 @@ sub click
 {
 	my $game = session('game');
 	my $user = session('user');
-	my $timestamp = $user->last_action_done();
-	my $click_gap = $timestamp ? DateTime->now()->subtract_datetime($timestamp) : undef;
-	my $do = 0;
-	if(! $click_gap)
-	{
-		$do = 1;
-	}
-	elsif($click_gap->minutes > config->{'wait_to_click'})
-	{
-		$do = 1
-	}
-	else
-	{
-		$do = 0;
-	}
-	if($do)
+	if($user->allowed_to_click(config->{'wait_to_click'}))
 	{
 		$user->update_click_time();
 		if($game->click(config->{'clicks'}))
