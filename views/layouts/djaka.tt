@@ -16,7 +16,8 @@
 		$('#defaultCountdown').countdown({until: '+<% time_to_click %>s',
 							  			  format: 'HMS',
 										  layout:'<b>{d<}{dn} {dl} and {d>}'+ 
- 											     '{hn} {hl}, {mn} {ml}, {sn} {sl}</b>'});
+										  		 '{hn} {hl}, {mn} {ml}, {sn} {sl}</b>',
+										  expiryText:'<div class="theclicker"><a href="/click">CLICK</a></div>'});
 	});
 	</script>
 </head>
