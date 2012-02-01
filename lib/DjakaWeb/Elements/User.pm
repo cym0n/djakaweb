@@ -52,12 +52,12 @@ sub allowed_to_click
 	my $self = shift;
 	my $waiting_time = shift;
 	my $timestamp = $self->last_action_done();
-	my $click_gap = $timestamp ? DateTime->now()->subtract_datetime($timestamp) : undef;
+	my $click_gap = $timestamp ? DateTime->now()->subtract_datetime_absolute($timestamp) : undef;
 	if(! $click_gap)
 	{
 		return 1;
 	}
-	elsif($click_gap->minutes > $waiting_time)
+	elsif($click_gap->seconds > ($waiting_time * 60))
 	{
 		return 1;
 	}
@@ -65,6 +65,17 @@ sub allowed_to_click
 	{
 		return 0;
 	}
+}
+sub time_to_click
+{
+	my $self = shift;
+	my $waiting_time = shift;
+	my $timestamp = $self->last_action_done();
+	return undef if (! $timestamp);
+	my $next = $timestamp->clone();
+	$next->add( minutes => $waiting_time);
+	my $duration = $next->subtract_datetime_absolute(DateTime->now());
+	return $duration->in_units('seconds');
 }
 
 1;

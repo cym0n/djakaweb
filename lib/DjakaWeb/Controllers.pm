@@ -39,6 +39,8 @@ sub get_data_for_interface
 	return {'game_id' => $game->id(),
 		    'user_id' => $user->id(),
 			'last_action_done' => $user->last_action_done(),
+			'time_to_click' => $user->time_to_click(config->{'wait_to_click'}),
+			'allowed_click' => $user->allowed_to_click(config->{'wait_to_click'}),
 		 	'elements' => \%elements,
 			'story' => $story,
 			'danger' => $game->danger(),

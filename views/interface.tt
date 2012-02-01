@@ -1,4 +1,5 @@
 <% PROCESS dictionary_it.tt %>
+
 <div class="header">
 	<h1>The DJAKARTA GAME</h1>
 </div>
@@ -15,9 +16,13 @@
 			Gli ordini sono:<br />
 			<br />
 			<span><% translate.${action.action} %> <% action.object %><br /></span><br />
-			<% action.clicks %> clicks<br />
+			<% action.clicks %> clicks<br /><br />
+			<% IF allowed_click %>
 			<div class="theclicker"><a href="/click">CLICK</a></div>
-			Ultimo click: <% last_action_done %>
+			<% ELSE %>
+			<div>Prossimo click fra:</div>
+			<div id="defaultCountdown"></div>
+			<% END %>
 		</div>
 	</div>
 	<% END %>
