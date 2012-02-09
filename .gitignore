@@ -1,3 +1,5 @@
 DB/
 perl/
+sessions/
+logs/
 perl_sandbox
