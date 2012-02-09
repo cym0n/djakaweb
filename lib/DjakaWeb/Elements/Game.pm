@@ -18,6 +18,9 @@ has 'danger' => (
       is     => 'rw',
 	  trigger => \&_update_danger
 );
+has 'StoryManager' => (
+	  is     => 'ro',
+);
 has 'GameDB' => (
 	  is     => 'ro',
 );
@@ -42,13 +45,15 @@ around BUILDARGS => sub {
 	my $params_ref = shift;
 	my %params = %{$params_ref};
 	my $game;
+	my $storymanager;
 	my $schema = schema;
 	if(! $params{'id'})
 	{
+		$storymanager = DjakaWeb::StoryManager->new({'path' => $params{'stories_path'}, 'story' => $params{'mission'}});
 		#Fetching initial data from YAML files
-		my $elements = DjakaWeb::StoryManager::getStartStatus($params{'mission'});
-		my $story = DjakaWeb::StoryManager::getStory($params{'mission'});
-		my $start_danger = DjakaWeb::StoryManager::getStartDanger($params{'mission'});
+		my $elements = $storymanager->getStartStatus();
+		my $story = $storymanager->getStory();
+		my $start_danger = $storymanager->getStartDanger();
 		#Writing the DB
 		$game = $schema->resultset('Game')->init($params{'user'}, $params{'mission'}, $start_danger);
 		$schema->resultset('GamesStatus')->init($game->id(), $elements);
@@ -57,6 +62,7 @@ around BUILDARGS => sub {
 	else
 	{
 		$game = $schema->resultset('Game')->find($params{'id'});
+		$storymanager = DjakaWeb::StoryManager->new({'path' => $params{'stories_path'}, 'story' => $game->mission_id()});
 	}
 	#Parameters collection
 	$params{'id'} = $game->id();
@@ -67,6 +73,7 @@ around BUILDARGS => sub {
 	$params{'StatusDB'} =  $schema->resultset('GamesStatus');
 	$params{'StoryDB'} =  $schema->resultset('Story');
 	$params{'ActionsDB'} =  $schema->resultset('OngoingAction');
+	$params{'StoryManager'} = $storymanager;
 	my %flags;
 	$flags{'nodanger'} = 0;
 	$flags{'notell'} = 0;
@@ -107,8 +114,8 @@ sub get_elements
 	for(@{$els})
 	{
 		my $el = $_;
-		my $el_name = DjakaWeb::StoryManager::getAttribute($self->mission(), $el, 'name');
-		my $el_type = DjakaWeb::StoryManager::getAttribute($self->mission(), $el, 'type');
+		my $el_name = $self->StoryManager()->getAttribute($el, 'name');
+		my $el_type = $self->StoryManager()->getAttribute($el, 'type');
 		my $el_data = { 'id' => $el,
 			            'name' => $el_name};
 		push @{$out{$el_type}}, $el_data;
@@ -129,7 +136,7 @@ sub get_actions
 	{
 		$status = 'ANY';
 	}
-	my %actions = DjakaWeb::StoryManager::getActions($self->mission(), $element, $status);
+	my %actions = $self->StoryManager()->getActions($element, $status);
 	if(! $filter)
 	{
 		return %actions;
@@ -169,11 +176,11 @@ sub do_action
 	my %actions;
 	if($author =~ /human/)
 	{
-		%actions = DjakaWeb::StoryManager::getActions($self->mission(), $element, $status);
+		%actions = $self->StoryManager()->getActions($element, $status);
 	}
 	elsif($author =~ /machine/)
 	{
-		%actions = DjakaWeb::StoryManager::getM2MActions($self->mission(), $element, $status);
+		%actions = $self->StoryManager()->getM2MActions($element, $status);
 	}
 	if(! ref $actions{$action})
 	{
@@ -201,7 +208,7 @@ sub do_action
 			{
 				if($self->get_status()->get_active($element) == 1)
 				{
-					my $story = DjakaWeb::StoryManager::getElementStory($self->mission(), $element, $eff[1]);
+					my $story = $self->StoryManager()->getElementStory($element, $eff[1]);
 					$self->StoryDB()->write_story($self->id(), $story);
 				}
 			}
@@ -234,7 +241,7 @@ sub get_active_action
 	my $AA = $self->ActionsDB->get_active_action($self->id());
 	if($AA)
 	{
-		return { object => DjakaWeb::StoryManager::getAttribute($self->mission(), $AA->object_code, 'name'),
+		return { object => $self->StoryManager()->getAttribute($AA->object_code, 'name'),
 				 action => $AA->action(),
 				 clicks => $AA->clicks()	
 		 }
@@ -288,7 +295,7 @@ sub get_all_story
 sub check_victory
 {
 	my $self = shift;
-	my $victories = DjakaWeb::StoryManager::getVictory($self->mission());	
+	my $victories = $self->StoryManager()->getVictory();	
 	for(keys %{$victories})
 	{
 		my $tag = $_;

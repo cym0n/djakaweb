@@ -7,19 +7,6 @@
 	<link rel="stylesheet" href="<% request.uri_base %>/res/css/djaka.css" />
 	<script type="text/javascript" src="/res/js/jquery-1.6.4.min.js"></script>
 	<script type="text/javascript" src="/res/js/jquery.tools.min.js"></script>
-	<script type="text/javascript" src="/res/js/jquery.countdown.js"></script>
-	<script type="text/javascript" src="/res/js/jquery.countdown-it.js"></script>
-	<script type="text/javascript" src="/res/js/interface.js"></script>
-	<script type="text/javascript">
-	$(function () {
-		//$('#defaultCountdown').countdown({until: +<% time_to_click %>m, format: 'HMS'});
-		$('#defaultCountdown').countdown({until: '+<% time_to_click %>s',
-							  			  format: 'HMS',
-										  layout:'<b>{d<}{dn} {dl} and {d>}'+ 
-										  		 '{hn} {hl}, {mn} {ml}, {sn} {sl}</b>',
-										  expiryText:'<div class="theclicker"><a href="/click">CLICK</a></div>'});
-	});
-	</script>
 </head>
 <body>
 	<% content %>

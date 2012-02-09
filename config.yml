@@ -7,7 +7,7 @@ appname: "DjakaWeb"
 
 # The default layout to use for your application (located in
 # views/layouts/main.tt)
-layout: "main"
+layout: "djaka"
 
 # when the charset is set to UTF-8 Dancer will handle for you
 # all the magic of encoding and decoding. You should not care
@@ -31,12 +31,12 @@ log: 'debug'
 startup_info: 1
 show_errors:  1
 
-session: Simple
+session: YAML
 
 plugins:
   DBIC:
     djaka:
-      dsn: dbi:SQLite:dbname=./DB/djaka.db
+      dsn: dbi:SQLite:dbname=/home/web/DjakaWeb/DB/djaka.db
       schema_class: DjakaWeb::DjakartaDB
       #user: root
       #pass: secret
@@ -45,9 +45,12 @@ plugins:
         PrintError: 1
 
 
+#paths
+stories_path: /home/web/DjakaWeb/stories
+
 #User defined variables
 danger_threshold: 100
-wait_to_click: 5
+wait_to_click: 1
 
 clicks:
     #common

@@ -7,21 +7,21 @@ use DjakaWeb::Elements::User;
 sub login_stub
 {
 	my $user_id = shift;
-	my $user = DjakaWeb::Elements::User->new({'id' => $user_id});
-	session 'user' => $user;
+	my $user = DjakaWeb::Elements::User->new({'id' => $user_id, 'stories_path' => config->{'stories_path'}});
+	session 'user' => $user->id();
 	my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
 	my $game;
 	if(! $game_id)
 	{
 		#At this time, when no game exists, a new one with mission 000 is created
-		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000'});
-		session 'game' => $game;
+		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000', 'stories_path' => config->{'stories_path'}});
+		session 'game' => $game->id();
 		return 0; #new game
 	}
 	else
 	{
-		$game = DjakaWeb::Elements::Game->new({'id' => $game_id});
-		session 'game' => $game;
+		$game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'stories_path' => config->{'stories_path'}});
+		session 'game' => $game->id();
 		return 1; #existing game	
 		#return redirect '/game';
 	}
@@ -30,8 +30,7 @@ sub login_stub
 
 sub get_data_for_interface
 {
-	my $game = session('game');
-	my $user = session('user');
+	my ($user, $game) = build_elements();
 	my %elements = $game->get_elements();
 	my $story = $game->get_all_story();
 	my $active_A = $game->get_active_action();
@@ -51,7 +50,7 @@ sub get_data_for_interface
 sub get_actions_menu
 {
 	my $element = shift;
-	my $game = session('game');
+	my ($user, $game) = build_elements();
 	my %actions = $game->get_actions($element);
 	my @labels = keys %actions;
 	return {'actions' => \@labels, 
@@ -61,7 +60,7 @@ sub get_actions_menu
 
 sub schedule_action
 {
-	my $game = session('game');
+	my ($user, $game) = build_elements();
 	my $element = shift;
 	my $action = shift;
 	$game->schedule_action($element, $action);
@@ -69,8 +68,7 @@ sub schedule_action
 
 sub click
 {
-	my $game = session('game');
-	my $user = session('user');
+	my ($user, $game) = build_elements();
 	if($user->allowed_to_click(config->{'wait_to_click'}))
 	{
 		$user->update_click_time();
@@ -92,6 +90,13 @@ sub click
 	else
 	{
 	}
+}
+
+sub build_elements
+{
+	my $game = DjakaWeb::Elements::Game->new({'id' => session('game'), 'stories_path' => config->{'stories_path'}});
+	my $user = DjakaWeb::Elements::User->new({'id' => session('user')});
+	return ($user, $game);
 }
 
 

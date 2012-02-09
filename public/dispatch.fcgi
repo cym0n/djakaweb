@@ -1,4 +1,7 @@
 #!/usr/bin/env perl
+
+use lib "../perl/lib/perl5";
+
 use Dancer ':syntax';
 use FindBin '$RealBin';
 use Plack::Handler::FCGI;

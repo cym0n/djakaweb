@@ -1,54 +1,73 @@
 package DjakaWeb::StoryManager;
 
+use Moose;
 use YAML::Tiny;
 
-$debug = 0;
+has 'story' => (
+      is     => 'ro',
+);
+has 'path' => (
+      is     => 'ro',
+);
+
+my $meta = __PACKAGE__->meta;
+my $debug = 0;
+
+
+around BUILDARGS => sub {
+	my $orig  = shift;
+    my $class = shift;
+	my $params_ref = shift;
+	my %params = %{$params_ref};
+	return $class->$orig(%params);
+};
+
 
 sub getStory
 {
-	my $story = shift;
-	my $yaml = openYAML($story, 'START');
-	return processText($yaml->[0]->{briefing}, $story, 'START');
+	my $self = shift;
+	my $yaml = $self->openYAML('START');
+	return $self->processText($yaml->[0]->{briefing}, 'START');
 }
 sub getStartStatus
 {
-	my $story = shift;
-	my $yaml = openYAML($story, 'START');
+	my $self = shift;
+	my $yaml = $self->openYAML('START');
 	return $yaml->[0]->{'elements'};
 }
 sub getStartDanger
 {
-	my $story = shift;
-	my $yaml = openYAML($story, 'START');
+	my $self = shift;
+	my $yaml = $self->openYAML('START');
 	return $yaml->[0]->{'start_danger'};
 }
 sub getActions
 {
-	my $story = shift;
+	my $self = shift;
 	my $element = shift;
 	my $status = shift;
-	return getAnyActions($story, $element, $status, 'actions');
+	return $self->getAnyActions($element, $status, 'actions');
 }
 sub getM2MActions
 {
-	my $story = shift;
+	my $self = shift;
 	my $element = shift;
 	my $status = shift;
-	return getAnyActions($story, $element, $status, 'm2m');
+	return $self->getAnyActions($element, $status, 'm2m');
 }
 sub getVictory
 {
-	my $story = shift;
-	my $yaml = openYAML($story, 'END');
+	my $self = shift;
+	my $yaml = $self->openYAML('END');
 	return $yaml->[0];
 }
 sub getAnyActions
 {
-	my $story = shift;
+	my $self = shift;
 	my $element = shift;
 	my $status = shift;
 	my $which = shift;
-	my $yaml = openYAML($story, $element);
+	my $yaml = $self->openYAML($element);
 	my $actions_grid = $yaml->[0]->{$which};
 	my %actions;
 	for(keys %{$actions_grid})
@@ -72,38 +91,37 @@ sub getAnyActions
 }
 sub openYAML
 {
-	$story = shift;
-	$code = shift;
+	my $self = shift;
+	my $code = shift;
 	my $yaml = YAML::Tiny->new;
-	my $file = "stories/" . $story . "_" . $code . ".yml";
+	my $file = $self->path() . "/" . $self->story() . "_" . $code . ".yml";
 	print "$file\n" if($debug);
 	$yaml = YAML::Tiny->read($file);
 	return $yaml;
-
 }
 
 sub processText
 {
+	my $self = shift;
 	my $text = shift;
-	my $story = shift;
 	my $code = shift;
 	return "" if(! $text);
 	$text =~ s/(\{.*?\})/<strong>$1<\/strong>/g;
-	$text =~ s/\{(.*?)\}/getAttribute($story, $code, $1)/eg;
+	$text =~ s/\{(.*?)\}/$self->getAttribute($code, $1)/eg;
 	return $text;
 }
 
 sub getElementStory
 {
-	my $story = shift;
+	my $self = shift;
 	my $code = shift;
 	my $tag = shift;
-	$yaml = openYAML($story, $code);
-	return processText($yaml->[0]->{'messages'}->{$tag}, $story, $code);
+	my $yaml = $self->openYAML($code);
+	return $self->processText($yaml->[0]->{'messages'}->{$tag}, $code);
 }
 sub getAttribute
 {
-	my $story = shift;
+	my $self = shift;
 	my $code = shift;
 	my $attribute = shift;
 	print "Getting attribute for $attribute\n" if($debug);
@@ -111,7 +129,7 @@ sub getAttribute
 	{
 		($code, $attribute) = split('\.', $attribute);
 	}
-	$yaml = openYAML($story, $code);
+	my $yaml = $self->openYAML($code);
 	print $yaml->[0]->{$attribute} if($debug);	
 	return $yaml->[0]->{$attribute};	
 }

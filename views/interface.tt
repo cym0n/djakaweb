@@ -20,7 +20,6 @@
 			<% IF allowed_click %>
 			<div class="theclicker"><a href="/click">CLICK</a></div>
 			<% ELSE %>
-			<div>Prossimo click fra:</div>
 			<div id="defaultCountdown"></div>
 			<% END %>
 		</div>

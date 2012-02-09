@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+use lib "perl/lib/perl5";
 use Dancer;
 use Dancer::Plugin::DBIC;
 use Dancer::Template::TemplateToolkit;
@@ -6,34 +7,35 @@ use DjakaWeb;
 use DjakaWeb::Elements::Game;
 use DjakaWeb::Controllers;
 
-set layout => 'djaka';
-
 before sub {
 	if(request->path_info !~ /courtesy/ && request->path_info !~ /login/)
 	{
 		if(! session('game'))
 		{
-			 request->path_info('/courtesy/not_logged');
+			request->path_info('/courtesy/not_logged');
     	};
 	}
 	if(request->path_info !~ /win/ && request->path_info !~ /gameover/)
 	{
-		if(session('end') =~ /GAMEOVER/)
+		if(session('end'))
 		{
-			redirect '/gameover';
-		}
-		else
-		{
-			if(session('end'))
+			if(session('end') =~ /GAMEOVER/)
 			{
-				redirect '/win';
+				redirect '/gameover';
+			}
+			else
+			{
+				if(session('end'))
+				{
+					redirect '/win';
+				}
 			}
 		}
 	}
 };
 
 get '/login/:id?' => sub {
-	 my $login = DjakaWeb::Controllers::login_stub(params->{id});
+	my $login = DjakaWeb::Controllers::login_stub(params->{id});
 	if($login == 0)
 	{
 		return redirect '/game';
@@ -49,7 +51,7 @@ get '/login/:id?' => sub {
 };
 
 get '/game' => sub {
-	template 'interface' => DjakaWeb::Controllers::get_data_for_interface();
+	template 'interface' => DjakaWeb::Controllers::get_data_for_interface(), {'layout' => 'interface.tt'};
 };
 
 get '/do/:action/:element' => sub {
