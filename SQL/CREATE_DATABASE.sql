@@ -1,0 +1,7 @@
+CREATE database DjakaDB;
+
+CREATE USER 'djaka'@'localhost' IDENTIFIED BY "MI5MI6";
+
+GRANT ALL PRIVILEGES ON DjakaDB.* TO 'djaka'@'localhost' IDENTIFIED BY "MI5MI6";
+
+FLUSH PRIVILEGES;
