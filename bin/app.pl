@@ -1,13 +1,11 @@
 #!/usr/bin/env perl
-use lib "perl/lib/perl5";
+
 use Dancer;
-use Dancer::Plugin::DBIC;
 use Dancer::Template::TemplateToolkit;
 use DjakaWeb;
-use DjakaWeb::Elements::Game;
 use DjakaWeb::Controllers;
 
-before sub {
+hook 'before' => sub {
 	if(request->path_info !~ /courtesy/ && request->path_info !~ /login/)
 	{
 		if(! session('game'))
@@ -33,6 +31,9 @@ before sub {
 		}
 	}
 };
+
+
+
 
 get '/login/:id?' => sub {
 	my $login = DjakaWeb::Controllers::login_stub(params->{id});
