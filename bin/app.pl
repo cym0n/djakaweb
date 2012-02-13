@@ -32,6 +32,11 @@ hook 'before' => sub {
 	}
 };
 
+hook 'before_template_render' => sub {
+	my $tokens = shift;
+	$tokens->{env} = config->{environment};
+};
+
 
 
 
