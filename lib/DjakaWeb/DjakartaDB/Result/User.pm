@@ -36,7 +36,7 @@ __PACKAGE__->add_columns(
   "id",
   { data_type => "integer", is_nullable => 0 },
   "last_action_done",
-  { data_type => "datetime", is_nullable => 1 },
+  { data_type => "datetime", is_nullable => 1, timezone => "CET" },
 );
 __PACKAGE__->set_primary_key("id");
 

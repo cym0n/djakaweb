@@ -34,12 +34,13 @@ sub get_data_for_interface
 	my %elements = $game->get_elements();
 	my $story = $game->get_all_story();
 	my $active_A = $game->get_active_action();
+	my $ttc = $user->time_to_click(config->{'wait_to_click'});
 	#print keys %{$elements{'person'}[0]};
 	return {'game_id' => $game->id(),
 		    'user_id' => $user->id(),
 			'last_action_done' => $user->last_action_done(),
-			'time_to_click' => $user->time_to_click(config->{'wait_to_click'}),
-			'allowed_click' => $user->allowed_to_click(config->{'wait_to_click'}),
+			'time_to_click' => $ttc,
+			'allowed_click' => ($ttc <= 0) ,
 		 	'elements' => \%elements,
 			'story' => $story,
 			'danger' => $game->danger(),
