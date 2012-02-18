@@ -64,7 +64,11 @@ sub schedule_action
 	my ($user, $game) = build_elements();
 	my $element = shift;
 	my $action = shift;
-	$game->schedule_action($element, $action);
+	my $A = $game->get_active_action();
+	if($A->{'action'} =~ m/^NONE$/)
+	{
+		$game->schedule_action($element, $action);
+	}
 }
 
 sub click
