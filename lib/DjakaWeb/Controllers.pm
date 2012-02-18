@@ -70,7 +70,7 @@ sub schedule_action
 sub click
 {
 	my ($user, $game) = build_elements();
-	if($user->allowed_to_click(config->{'wait_to_click'}))
+	if($user->time_to_click(config->{'wait_to_click'}) <= 0)
 	{
 		$user->update_click_time();
 		if($game->click(config->{'clicks'}))

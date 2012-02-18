@@ -52,7 +52,7 @@ sub time_to_click
 	my $self = shift;
 	my $waiting_time = shift;
 	my $timestamp = $self->last_action_done();
-	return undef if (! $timestamp);
+	return -1 if (! $timestamp);
 	my $timestamp_e = $timestamp->epoch();
 	my $next_e = $timestamp_e + ($waiting_time * 60);
 	my $now = DateTime->now();
