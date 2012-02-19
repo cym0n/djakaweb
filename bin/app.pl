@@ -2,13 +2,14 @@
 
 use Dancer;
 use Dancer::Template::TemplateToolkit;
+use Facebook::Graph;
 use DjakaWeb;
 use DjakaWeb::Controllers;
 
 hook 'before' => sub {
 	if(request->path_info !~ /courtesy/ && request->path_info !~ /login/)
 	{
-		if(! session('game'))
+		if(! session('user'))
 		{
 			request->path_info('/courtesy/not_logged');
     	};
@@ -37,7 +38,18 @@ hook 'before_template_render' => sub {
 	$tokens->{env} = config->{environment};
 };
 
+get '/login/facebook/' => sub {
+   my $fb = Facebook::Graph->new( config->{facebook} );
+   redirect $fb->authorize->uri_as_string;
+};
 
+get '/facebook/postback/' => sub {
+    my $authorization_code = params->{code};
+    my $fb = Facebook::Graph->new( config->{facebook} );
+    $fb->request_access_token($authorization_code);
+    session access_token => $fb->access_token;
+    redirect '/';
+};
 
 
 get '/login/:id?' => sub {
@@ -55,6 +67,8 @@ get '/login/:id?' => sub {
 		return redirect '/courtesy/login_failed';
 	}
 };
+
+
 
 get '/game' => sub {
 	template 'interface' => DjakaWeb::Controllers::get_data_for_interface(), {'layout' => 'interface.tt'};

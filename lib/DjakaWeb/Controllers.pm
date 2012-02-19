@@ -35,9 +35,22 @@ sub get_data_for_interface
 	my $story = $game->get_all_story();
 	my $active_A = $game->get_active_action();
 	my $ttc = $user->time_to_click(config->{'wait_to_click'});
+	my $user_displayed;
+	if(session->{access_token})
+	{
+		my $fb = Facebook::Graph->new( config->{facebook} );
+    	$fb->access_token(session->{access_token});
+	    my $response = $fb->query->find('me')->request;
+    	my $fb_user = $response->as_hashref;
+		$user_displayed = $fb_user->name();
+	}
+	else
+	{
+		$user_displayed = $user->id();
+	}
 	#print keys %{$elements{'person'}[0]};
 	return {'game_id' => $game->id(),
-		    'user_id' => $user->id(),
+		    'user_id' => $user_displayed,
 			'last_action_done' => $user->last_action_done(),
 			'time_to_click' => $ttc,
 			'allowed_click' => ($ttc <= 0) ,

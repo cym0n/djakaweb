@@ -44,6 +44,12 @@ plugins:
         RaiseError: 1
         PrintError: 1
 
+facebook:
+    postback: "http://djaka.therabbit.it/facebook/postback/"
+    app_id: "289526111061581"
+    secret: "def970e709749e1864972bc65da425f9"
+
+
 
 #paths
 stories_path: /home/web/DjakaWeb/stories
