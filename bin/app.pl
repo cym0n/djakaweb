@@ -38,7 +38,7 @@ hook 'before_template_render' => sub {
 	$tokens->{env} = config->{environment};
 };
 
-get '/login/facebook/' => sub {
+get '/facebook/login/' => sub {
    my $fb = Facebook::Graph->new( config->{facebook} );
    redirect $fb->authorize->uri_as_string;
 };
