@@ -1,0 +1,8 @@
+<div class="header">
+	<h1>The DJAKARTA GAME</h1>
+</div>
+<div>Facebook authentication completed.<br />
+Welcome <% fb_name %>
+
+<% INCLUDE footer.tt %>
+

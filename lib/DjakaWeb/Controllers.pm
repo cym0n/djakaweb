@@ -28,6 +28,22 @@ sub login_stub
 
 }
 
+sub get_from_facebook
+{
+	my ($user, $game) = build_elements();
+	my $user_displayed = "XXX";
+	if(session->{access_token})
+	{
+		my $fb = Facebook::Graph->new( config->{facebook} );
+    	$fb->access_token(session->{access_token});
+	    my $response = $fb->query->find('me')->request;
+    	my $fb_user = $response->as_hashref;
+		$user_displayed = $fb_user->name();
+	}
+	return {'fb_name' => $user_displayed};
+
+}
+
 sub get_data_for_interface
 {
 	my ($user, $game) = build_elements();

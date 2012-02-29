@@ -48,7 +48,7 @@ get '/facebook/postback/' => sub {
     my $fb = Facebook::Graph->new( config->{facebook} );
     $fb->request_access_token($authorization_code);
     session access_token => $fb->access_token;
-    redirect '/';
+	template 'fb_landing' => DjakaWeb::Controllers::get_from_facebook();
 };
 
 
