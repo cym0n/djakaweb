@@ -2,12 +2,12 @@
 
 use Dancer;
 use Dancer::Template::TemplateToolkit;
-use Facebook::Graph;
 use DjakaWeb;
 use DjakaWeb::Controllers;
 
 hook 'before' => sub {
-	if(request->path_info !~ /courtesy/ && request->path_info !~ /login/)
+	if(request->path_info !~ /courtesy/ && request->path_info !~ /login/ && request->path_info !~ /facebook/)
+
 	{
 		if(! session('user'))
 		{
@@ -38,20 +38,6 @@ hook 'before_template_render' => sub {
 	$tokens->{env} = config->{environment};
 };
 
-get '/facebook/login/' => sub {
-   my $fb = Facebook::Graph->new( config->{facebook} );
-   redirect $fb->authorize->uri_as_string;
-};
-
-get '/facebook/postback/' => sub {
-    my $authorization_code = params->{code};
-    my $fb = Facebook::Graph->new( config->{facebook} );
-    $fb->request_access_token($authorization_code);
-    session access_token => $fb->access_token;
-	template 'fb_landing' => DjakaWeb::Controllers::get_from_facebook();
-};
-
-
 get '/login/:id?' => sub {
 	my $login = DjakaWeb::Controllers::login_stub(params->{id});
 	if($login == 0)
@@ -66,6 +52,10 @@ get '/login/:id?' => sub {
 	{
 		return redirect '/courtesy/login_failed';
 	}
+};
+
+get '/facebook/' => sub {
+	template 'facebook_access' => { 'fb_app_id' => config->{facebook}->{'app_id'}};
 };
 
 
