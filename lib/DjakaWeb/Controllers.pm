@@ -1,5 +1,7 @@
 package DjakaWeb::Controllers;
 
+use JSON;
+use Data::Dumper;
 use Dancer;
 use DjakaWeb::Elements::Game;
 use DjakaWeb::Elements::User;
@@ -32,6 +34,10 @@ sub facebook_data
 {
 	my $app_id = config->{facebook}->{'app_id'};
 	my $cookie = cookies->{'fbsr_' . $app_id};
+	my ($encoded_sig, $payload) = split('.', $cookie->value);
+	$payload = decode_base64url($payload);
+	my $json = decode_json($payload);
+	debug Data::Dumper->Dump($json);
 	return {'cookie_value' => $cookie->value};
 }
 
