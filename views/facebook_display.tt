@@ -8,10 +8,10 @@
             xfbml      : true,
             oauth      : true,
           });
-    };
 	FB.Event.subscribe('auth.login', function () {
           window.location = "/facebook/display";
     });
+    };
     (function(d){
     	var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
         js = d.createElement('script'); js.id = id; js.async = true;
