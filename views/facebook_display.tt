@@ -19,4 +19,4 @@
         d.getElementsByTagName('head')[0].appendChild(js);
     }(document));
 </script>
-<div class="fb-login-button">Login with Facebook</div>
+<h1>GREAT! YOU'RE LOGGED WITH FACEBOOK!</h1>

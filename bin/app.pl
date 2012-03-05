@@ -57,6 +57,9 @@ get '/login/:id?' => sub {
 get '/facebook/' => sub {
 	template 'facebook_access' => { 'fb_app_id' => config->{facebook}->{'app_id'}};
 };
+get '/facebook/display' => sub {
+	template 'facebook_display' => { 'fb_app_id' => config->{facebook}->{'app_id'}};
+};
 
 
 
