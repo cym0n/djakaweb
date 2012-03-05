@@ -30,9 +30,9 @@ sub login_stub
 
 sub facebook_data
 {
-	my $app_id = config->{facebook}->app_id;
+	my $app_id = config->{facebook}->{'app_id'};
 	my $cookie = cookies->{'fbsr_' . $app_id};
-	return {'cookie_value' => $cookie->value;};
+	return {'cookie_value' => $cookie->value};
 }
 
 sub get_data_for_interface
