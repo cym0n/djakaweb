@@ -22,5 +22,6 @@
 <h1>GREAT! YOU'RE LOGGED WITH FACEBOOK!</h1>
 <ul>
 <li>Facebook encoded json: <% cookie_value %></li>
+<li>Value checking with segret: <% check_value %></li>
 <li>Facebook userID: <% fbuser_id %></li>
 </ul>

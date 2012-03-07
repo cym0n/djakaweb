@@ -1,7 +1,8 @@
 package DjakaWeb::Controllers;
 
 use JSON;
-use MIME::Base64 'decode_base64url';
+use MIME::Base64 'decode_base64url', 'encode_base64url';
+use Digest::SHA 'hmac_sha256';
 use Data::Dumper;
 use Dancer;
 use DjakaWeb::Elements::Game;
@@ -34,11 +35,27 @@ sub login_stub
 sub facebook_data
 {
 	my $app_id = config->{facebook}->{'app_id'};
-	my $cookie = cookies->{'fbsr_' . $app_id};
-	my ($encoded_sig, $payload) = split('\.', $cookie->value);
-	$payload = decode_base64url($payload);
-	my $json = decode_json($payload);
-	return {'cookie_value' => $cookie->value,
+	my $val;
+	if(config->{facebook}->{stubbed})
+	{
+		$val = "WhTeWdR-c4SHRCsW1IN3cfcmm1Tsv_-Gijf_OfN3OXk.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImNvZGUiOiJBUUM0YlhXNUJVUElXTFZqN095TEtsMkpSNDRpRk9aaXVac3pRcU5UQy1oTzM4Wmp1UFZJX0NfUnNpOFZpOFdqZ0k5b0EtcTNaWkVMbG1hbXBOZS1ac01CRDJhLXY0eXBQREZJS0R2MnBiX3F5blc5akVvaG9pWEZhN0ZqZGRsWjVlY0lPRHRlcURqTmUtWDhORlNGVG1PM0dQWnluNVVjSEI5RzBHR3FCMUotM1pIa2Myd1k2b3YzQW5jenV5ejItVVEiLCJpc3N1ZWRfYXQiOjEzMzExNTkwMTEsInVzZXJfaWQiOiIxNDUyMzk0Nzg2In0";	
+	}
+	else
+	{
+		my $cookie = cookies->{'fbsr_' . $app_id};
+		$val = $cookie->value;
+	}
+	my ($encoded_sig, $payload) = split('\.', $val);
+	my $decoded_payload = decode_base64url($payload);
+	my $json = decode_json($decoded_payload);
+	if(uc($json->{'algorithm'}) !~ /HMAC-SHA256/)
+	{
+		return {'error' => 'Unknown algorithm. Expected HMAC-SHA256'};
+	}
+	my $check_sig = hmac_sha256($payload, config->{facebook}->{secret});
+	return {#'cookie_value' => $cookie->value,
+			'cookie_value' => $val,
+			'check_value' => encode_base64url($check_sig),
 	        'fbuser_id' => $json->{'user_id'}};
 }
 
