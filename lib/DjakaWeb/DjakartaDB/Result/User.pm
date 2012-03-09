@@ -25,9 +25,14 @@ __PACKAGE__->table("USERS");
   data_type: 'integer'
   is_nullable: 0
 
-=head2 last_action_done
+=head2 facebook_id
 
   data_type: 'integer'
+  is_nullable: 1
+
+=head2 last_action_done
+
+  data_type: 'timestamp'
   is_nullable: 1
 
 =cut
@@ -35,14 +40,16 @@ __PACKAGE__->table("USERS");
 __PACKAGE__->add_columns(
   "id",
   { data_type => "integer", is_nullable => 0 },
+  "facebook_id",
+  { data_type => "integer", is_nullable => 1 },
   "last_action_done",
   { data_type => "datetime", is_nullable => 1, timezone => "CET" },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-11-22 01:26:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:lTzqzaiY4/REIQUr358AKA
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-03-09 23:49:18
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bwfUGNN3W0Dc2ooFTR5vkw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

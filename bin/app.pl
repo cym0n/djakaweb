@@ -6,14 +6,15 @@ use DjakaWeb;
 use DjakaWeb::Controllers;
 
 hook 'before' => sub {
-	if(request->path_info !~ /courtesy/ && request->path_info !~ /login/ && request->path_info !~ /facebook/)
-
+	#game navigations are only for logged users
+	if(request->path_info =~ !^/game!)
 	{
 		if(! session('user'))
 		{
-			request->path_info('/courtesy/not_logged');
-    	};
+
+		}
 	}
+	#End of game management
 	if(request->path_info !~ /win/ && request->path_info !~ /gameover/)
 	{
 		if(session('end'))
@@ -31,6 +32,8 @@ hook 'before' => sub {
 			}
 		}
 	}
+	
+	
 };
 
 hook 'before_template_render' => sub {
@@ -38,46 +41,46 @@ hook 'before_template_render' => sub {
 	$tokens->{env} = config->{environment};
 };
 
-get '/login/:id?' => sub {
-	my $login = DjakaWeb::Controllers::login_stub(params->{id});
-	if($login == 0)
-	{
-		return redirect '/game';
-	}
-	elsif($login == 1)
-	{
-		return redirect '/game';
-	}
-	elsif($login == -1)
-	{
-		return redirect '/courtesy/login_failed';
-	}
-};
+#get '/login/:id?' => sub {
+#	my $login = DjakaWeb::Controllers::login_stub(params->{id});
+#	if($login == 0)
+#	{
+#		return redirect '/game';
+#	}
+#	elsif($login == 1)
+#	{
+#		return redirect '/game';
+#	}
+#	elsif($login == -1)
+#	{
+#		return redirect '/courtesy/login_failed';
+#	}
+#};
 
-get '/facebook/' => sub {
+get '/facebook/login' => sub {
 	template 'facebook_access' => { 'fb_app_id' => config->{facebook}->{'app_id'}};
 };
-get '/facebook/display' => sub {
+get '/facebook/welcome' => sub {
 	template 'facebook_display' => DjakaWeb::Controllers::facebook_data();
 };
 
 
 
-get '/game' => sub {
+get '/game/dashboard' => sub {
 	template 'interface' => DjakaWeb::Controllers::get_data_for_interface(), {'layout' => 'interface.tt'};
 };
 
-get '/do/:action/:element' => sub {
+get '/game/do/:action/:element' => sub {
 	DjakaWeb::Controllers::schedule_action(params->{element}, params->{action});
 	return redirect '/game';
 };
 
-get '/click' => sub {
+get '/game/click' => sub {
 	DjakaWeb::Controllers::click();
 	redirect '/game';
 };
 
-get '/gameover' => sub {
+get '/game/gameover' => sub {
 	if(session('end') =~ /GAMEOVER/)
 	{
 		template 'gameover';
@@ -87,7 +90,7 @@ get '/gameover' => sub {
 		redirect '/game';
 	}
 };
-get '/win' => sub {
+get '/game/win' => sub {
 	if(session('end'))
 	{
 		template 'win' => { 'tag' => session('end')};
@@ -100,7 +103,7 @@ get '/win' => sub {
 
 
 #AJAX CALLS
-get '/service/actions/:id' => sub {
+get '/game/service/actions/:id' => sub {
 	template 'actions' => DjakaWeb::Controllers::get_actions_menu(params->{id});
 };
 

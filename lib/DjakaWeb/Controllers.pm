@@ -43,6 +43,11 @@ sub facebook_data
 	else
 	{
 		my $cookie = cookies->{'fbsr_' . $app_id};
+		if(! $cookie)
+		{
+			debug "LOGIN: No facebook cookie";
+			return 0;
+		}
 		$val = $cookie->value;
 	}
 	my ($encoded_sig, $payload) = split('\.', $val);
@@ -53,10 +58,12 @@ sub facebook_data
 		return {'error' => 'Unknown algorithm. Expected HMAC-SHA256'};
 	}
 	my $check_sig = hmac_sha256($payload, config->{facebook}->{secret});
-	return {#'cookie_value' => $cookie->value,
-			'cookie_value' => $val,
-			'check_value' => encode_base64url($check_sig),
-	        'fbuser_id' => $json->{'user_id'}};
+	if($check_sig != $encoded_sig)
+	{
+		debug "LOGIN: Bad facebook cookie";
+		return 0;
+	}
+	my $facebook_id = $json->{'user_id'};
 }
 
 sub get_data_for_interface
