@@ -7,10 +7,15 @@ use DjakaWeb::Controllers;
 
 hook 'before' => sub {
 	#game navigations are only for logged users
-	if(request->path_info =~ !^/game!)
+	if(request->path_info =~ /^\/game/)
 	{
 		if(! session('user'))
 		{
+			my $fblogin = DjakaWeb::Controllers::facebook_data;
+			if($fblogin == 0)
+			{
+				redirect '/facebook/login';
+			}
 
 		}
 	}

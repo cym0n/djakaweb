@@ -72,7 +72,8 @@ use base 'DBIx::Class::ResultSet';
 sub newUser
 {
 	my $self = shift;
-	my $user = $self->create({last_action_done => undef });
+	my $fb = shift;
+	my $user = $self->create({last_action_done => undef, facebook_id => $fb });
 	return $user;
 }
 

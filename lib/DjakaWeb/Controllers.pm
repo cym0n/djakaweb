@@ -64,6 +64,22 @@ sub facebook_data
 		return 0;
 	}
 	my $facebook_id = $json->{'user_id'};
+	my $user = DjakaWeb::Elements::User->new({'fb' => $facebook_id, 'stories_path' => config->{'stories_path'}});
+	session 'user' => $user->id();
+	my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
+	my $game;
+	if(! $game_id)
+	{
+		#At this time, when no game exists, a new one with mission 000 is created
+		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000', 'stories_path' => config->{'stories_path'}});
+		session 'game' => $game->id();
+	}
+	else
+	{
+		$game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'stories_path' => config->{'stories_path'}});
+		session 'game' => $game->id();
+	}
+	return 1;
 }
 
 sub get_data_for_interface
