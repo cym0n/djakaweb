@@ -36,7 +36,7 @@ sub facebook_data
 {
 	my $app_id = config->{facebook}->{'app_id'};
 	my $val;
-	if(config->{facebook}->{stubbed})
+	if(config->{facebook}->{stubbed} == 1)
 	{
 		$val = "WhTeWdR-c4SHRCsW1IN3cfcmm1Tsv_-Gijf_OfN3OXk.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImNvZGUiOiJBUUM0YlhXNUJVUElXTFZqN095TEtsMkpSNDRpRk9aaXVac3pRcU5UQy1oTzM4Wmp1UFZJX0NfUnNpOFZpOFdqZ0k5b0EtcTNaWkVMbG1hbXBOZS1ac01CRDJhLXY0eXBQREZJS0R2MnBiX3F5blc5akVvaG9pWEZhN0ZqZGRsWjVlY0lPRHRlcURqTmUtWDhORlNGVG1PM0dQWnluNVVjSEI5RzBHR3FCMUotM1pIa2Myd1k2b3YzQW5jenV5ejItVVEiLCJpc3N1ZWRfYXQiOjEzMzExNTkwMTEsInVzZXJfaWQiOiIxNDUyMzk0Nzg2In0";	
 	}

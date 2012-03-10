@@ -9,7 +9,7 @@
             oauth      : true,
           });
 	FB.Event.subscribe('auth.login', function () {
-          window.location = "/facebook/display";
+          window.location = "<% returl %>";
     });
    
     };

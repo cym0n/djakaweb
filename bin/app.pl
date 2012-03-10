@@ -14,7 +14,7 @@ hook 'before' => sub {
 			my $fblogin = DjakaWeb::Controllers::facebook_data;
 			if($fblogin == 0)
 			{
-				redirect '/facebook/login';
+				redirect '/facebook/login?returl=' . request->path_info;
 			}
 
 		}
@@ -63,7 +63,8 @@ hook 'before_template_render' => sub {
 #};
 
 get '/facebook/login' => sub {
-	template 'facebook_access' => { 'fb_app_id' => config->{facebook}->{'app_id'}};
+	template 'facebook_access' => { 'fb_app_id' => config->{facebook}->{'app_id'},
+	                                'returl' => request->{params}->{returl}};
 };
 get '/facebook/welcome' => sub {
 	template 'facebook_display' => DjakaWeb::Controllers::facebook_data();
