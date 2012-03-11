@@ -1,6 +1,7 @@
 package DjakaWeb::Controllers;
 
 use JSON;
+use LWP::UserAgent;
 use MIME::Base64 'decode_base64url', 'encode_base64url';
 use Digest::SHA 'hmac_sha256';
 use Data::Dumper;
@@ -58,25 +59,38 @@ sub facebook_data
 		return {'error' => 'Unknown algorithm. Expected HMAC-SHA256'};
 	}
 	my $check_sig = hmac_sha256($payload, config->{facebook}->{secret});
-	if($check_sig != $encoded_sig)
+	if($check_sig ne $encoded_sig)
 	{
 		debug "LOGIN: Bad facebook cookie";
 		return 0;
 	}
 	my $facebook_id = $json->{'user_id'};
-	my $user = DjakaWeb::Elements::User->new({'fb' => $facebook_id, 'stories_path' => config->{'stories_path'}});
+
+	my $ua = new LWP::UserAgent;
+	$ua->agent("Mozilla/5.0 " . $ua->agent);
+	my $req = new HTTP::Request GET => config->{'facebook'}->{'graph_url'} . $facebook_id;;
+	my $res = $ua->request($req);
+	my $content;
+	if ($res->is_success) 
+	{
+    	 $content = $res->content;
+	} 
+	my $content = decode_base64url($content);
+	my $fbjson = decode_json($content);
+
+	my $user = DjakaWeb::Elements::User->new({'facebook_id' => $facebook_id});
 	session 'user' => $user->id();
+	session 'user_name' => $fbjson->{name};
 	my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
-	my $game;
 	if(! $game_id)
 	{
 		#At this time, when no game exists, a new one with mission 000 is created
-		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000', 'stories_path' => config->{'stories_path'}});
+		my $game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000', 'stories_path' => config->{'stories_path'}});
 		session 'game' => $game->id();
 	}
 	else
 	{
-		$game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'stories_path' => config->{'stories_path'}});
+		my $game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'stories_path' => config->{'stories_path'}});
 		session 'game' => $game->id();
 	}
 	return 1;
@@ -89,22 +103,11 @@ sub get_data_for_interface
 	my $story = $game->get_all_story();
 	my $active_A = $game->get_active_action();
 	my $ttc = $user->time_to_click(config->{'wait_to_click'});
-	my $user_displayed;
-	if(session->{access_token})
-	{
-		my $fb = Facebook::Graph->new( config->{facebook} );
-    	$fb->access_token(session->{access_token});
-	    my $response = $fb->query->find('me')->request;
-    	my $fb_user = $response->as_hashref;
-		$user_displayed = $fb_user->name();
-	}
-	else
-	{
-		$user_displayed = $user->id();
-	}
+	my $name = session('user_name') ? session('user_name') : $user->id();
 	#print keys %{$elements{'person'}[0]};
 	return {'game_id' => $game->id(),
-		    'user_id' => $user_displayed,
+		    'user_id' => $name,
+			'avatar' => config->{'facebook'}->{'graph_url'} . $user->facebook_id() . '/picture',
 			'last_action_done' => $user->last_action_done(),
 			'time_to_click' => $ttc,
 			'allowed_click' => ($ttc <= 0) ,

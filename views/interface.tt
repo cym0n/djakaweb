@@ -7,6 +7,7 @@
 	<div class="box blue">
 		<div id="badge">
 			User: <% user_id %><br />
+			<img src="<% avatar %>" /><br /><br />
 			Game: <% game_id %><br />
 		</div>
 	</div>

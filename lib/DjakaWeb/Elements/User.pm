@@ -11,6 +11,9 @@ has 'id' => (
 has 'UserDB' => (
 	is       => 'ro',
 );
+has 'facebook_id' => (
+	is 		 => 'ro',
+);
 
 my $meta = __PACKAGE__->meta;
 my $schema = schema;
@@ -20,12 +23,12 @@ around BUILDARGS => sub {
     my $class = shift;
 	my $params_ref = shift;
 	my %params = %{$params_ref};
-	if($params{'fb'})
+	if($params{'facebook_id'})
 	{
-		my $user = $schema->resultset('User')->find({'facebook_id' => $params{'fb'}});
+		my $user = $schema->resultset('User')->find({'facebook_id' => $params{'facebook_id'}});
 		if(! $user)
 		{
-			my $new_user = $schema->resultset('User')->newUser($params{'fb'});
+			my $new_user = $schema->resultset('User')->newUser($params{'facebook_id'});
 			$params{'id'} = $new_user->id();
 			$params{'UserDB'} = $new_user;
 		}
@@ -40,6 +43,7 @@ around BUILDARGS => sub {
 	{
 		my $user = $schema->resultset('User')->find($params{'id'});
 		$params{'UserDB'} = $user;
+		$params{'facebook_id'} = $user->facebook_id();
 		return $class->$orig(%params);
 	}
 };

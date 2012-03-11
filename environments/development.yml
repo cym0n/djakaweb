@@ -29,4 +29,5 @@ auto_reload: 0
 facebook:
     app_id: "289526111061581"
     secret: "def970e709749e1864972bc65da425f9"
+    graph_url: "https://graph.facebook.com/"
     stubbed: 1
