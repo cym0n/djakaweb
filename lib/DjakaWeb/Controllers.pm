@@ -78,6 +78,12 @@ sub facebook_data
 		$fbjson = decode_json($content);
 		session 'user_name' => $fbjson->{name};
 	} 
+	else
+	{
+		debug $res->code();
+		debug $res->message();
+		debug $res->headers();
+	}
 
 	my $user = DjakaWeb::Elements::User->new({'facebook_id' => $facebook_id});
 	session 'user' => $user->id();
