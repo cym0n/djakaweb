@@ -61,7 +61,7 @@ sub facebook_data
 	my $check_sig = hmac_sha256($payload, config->{facebook}->{secret});
 	if($check_sig ne $encoded_sig)
 	{
-		debug "LOGIN: Bad facebook cookie";
+		debug "LOGIN: Bad facebook cookie: $check_sig <---> $encoded_sig";
 		return 0;
 	}
 	my $facebook_id = $json->{'user_id'};
@@ -70,17 +70,17 @@ sub facebook_data
 	$ua->agent("Mozilla/5.0 " . $ua->agent);
 	my $req = new HTTP::Request GET => config->{'facebook'}->{'graph_url'} . $facebook_id;;
 	my $res = $ua->request($req);
-	my $content;
+	my $content, my $fbjson;
 	if ($res->is_success) 
 	{
-    	 $content = $res->content;
+    	$content = $res->content;
+		$content = decode_base64url($content);
+		$fbjson = decode_json($content);
+		session 'user_name' => $fbjson->{name};
 	} 
-	my $content = decode_base64url($content);
-	my $fbjson = decode_json($content);
 
 	my $user = DjakaWeb::Elements::User->new({'facebook_id' => $facebook_id});
 	session 'user' => $user->id();
-	session 'user_name' => $fbjson->{name};
 	my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
 	if(! $game_id)
 	{
