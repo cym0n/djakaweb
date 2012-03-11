@@ -59,7 +59,7 @@ sub facebook_data
 		return {'error' => 'Unknown algorithm. Expected HMAC-SHA256'};
 	}
 	my $check_sig = hmac_sha256($payload, config->{facebook}->{secret});
-	if($check_sig ne $encoded_sig)
+	if(encode_base64url($check_sig) ne $encoded_sig)
 	{
 		debug "LOGIN: Bad facebook cookie: $check_sig <---> $encoded_sig";
 		return 0;
