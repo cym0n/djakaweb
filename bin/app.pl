@@ -62,6 +62,11 @@ hook 'before_template_render' => sub {
 #	}
 #};
 
+get '/debugger' => sub {
+	my $dummy = 1;
+	my $dummy = $dummy / 0;
+};
+
 get '/facebook/login' => sub {
 	template 'facebook_access' => { 'fb_app_id' => config->{facebook}->{'app_id'},
 	                                'returl' => request->{params}->{returl}};
@@ -78,12 +83,12 @@ get '/game/dashboard' => sub {
 
 get '/game/do/:action/:element' => sub {
 	DjakaWeb::Controllers::schedule_action(params->{element}, params->{action});
-	return redirect '/game';
+	return redirect '/game/dashboard';
 };
 
 get '/game/click' => sub {
 	DjakaWeb::Controllers::click();
-	redirect '/game';
+	redirect '/game/dashboard';
 };
 
 get '/game/gameover' => sub {
@@ -93,7 +98,7 @@ get '/game/gameover' => sub {
 	}
 	else
 	{
-		redirect '/game';
+		redirect '/game/dashboard';
 	}
 };
 get '/game/win' => sub {
@@ -103,7 +108,7 @@ get '/game/win' => sub {
 	}
 	else
 	{
-		redirect '/game';
+		redirect '/game/dashboard';
 	}
 };
 

@@ -17,7 +17,7 @@
 							  			  format: 'HMS',
 										  layout:'Prossimo click fra:<br /><b>{d<}{dn} {dl} and {d>}'+ 
 										  		 '{hn} {hl}, {mn} {ml}, {sn} {sl}</b>',
-										  expiryText:'<div class="theclicker"><a href="/click">CLICK</a></div>'});
+										  expiryText:'<div class="theclicker"><a href="/game/click">CLICK</a></div>'});
 	});
 	</script>
 </head>

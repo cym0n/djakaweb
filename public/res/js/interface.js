@@ -3,7 +3,7 @@ $(document).ready(function() {
 				top: "center",
 				onBeforeLoad: function() {
 					var id = this.getTrigger().attr('id');
-					var callfun = "/service/actions/"+id;
+					var callfun = "/game/service/actions/"+id;
 					var menu = this.getOverlay();
 					$.ajax({ url: callfun,
 			 				 async: true,

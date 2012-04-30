@@ -1,6 +1,6 @@
 <% PROCESS dictionary_it.tt %>
 <ul>
 	<% FOREACH a IN actions %>
-	<li><a href="/do/<% a %>/<% element %>"><% translate.$a %></a></li>
+	<li><a href="/game/do/<% a %>/<% element %>"><% translate.$a %></a></li>
 	<% END %>
 </ul>

@@ -19,7 +19,7 @@
 			<span><% translate.${action.action} %> <% action.object %><br /></span><br />
 			<% action.clicks %> clicks<br /><br />
 			<% IF allowed_click %>
-			<div class="theclicker"><a href="/click">CLICK</a></div>
+			<div class="theclicker"><a href="/game/click">CLICK</a></div>
 			<% ELSE %>
 			<div id="defaultCountdown"></div>
 			<% END %>
