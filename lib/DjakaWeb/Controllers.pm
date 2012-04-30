@@ -66,25 +66,6 @@ sub facebook_data
 	}
 	my $facebook_id = $json->{'user_id'};
 
-	my $ua = new LWP::UserAgent;
-	$ua->agent("Mozilla/5.0 " . $ua->agent);
-	my $req = new HTTP::Request GET => config->{'facebook'}->{'graph_url'} . $facebook_id;;
-	my $res = $ua->request($req);
-	my $content, my $fbjson;
-	if ($res->is_success) 
-	{
-    	$content = $res->content;
-		$content = decode_base64url($content);
-		$fbjson = decode_json($content);
-		session 'user_name' => $fbjson->{name};
-	} 
-	else
-	{
-		debug $res->code();
-		debug $res->message();
-		debug $res->headers();
-	}
-
 	my $user = DjakaWeb::Elements::User->new({'facebook_id' => $facebook_id});
 	session 'user' => $user->id();
 	my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
@@ -102,6 +83,28 @@ sub facebook_data
 	return 1;
 }
 
+sub facebook_user
+{
+	my $facebook_id = shift;
+	my $ua = new LWP::UserAgent;
+	$ua->agent("Mozilla/5.0 " . $ua->agent);
+	debug config->{'facebook'}->{'graph_url'} . $facebook_id;
+	my $req = new HTTP::Request GET => config->{'facebook'}->{'graph_url'} . $facebook_id;
+	my $res = $ua->request($req);
+	my $content, my $fbjson;
+	if ($res->is_success) 
+	{
+	 	$content = $res->content;
+		debug $content;
+		$fbjson = decode_json($content);
+		return $fbjson;
+	} 
+	else
+	{
+		return undef;
+	}
+}
+
 sub get_data_for_interface
 {
 	my ($user, $game) = build_elements();
@@ -109,10 +112,13 @@ sub get_data_for_interface
 	my $story = $game->get_all_story();
 	my $active_A = $game->get_active_action();
 	my $ttc = $user->time_to_click(config->{'wait_to_click'});
-	my $name = session('user_name') ? session('user_name') : $user->id();
+	my $user_data = facebook_user($user->facebook_id());
+	#my $name = session('user_name') ? session('user_name') : $user->id();
 	#print keys %{$elements{'person'}[0]};
 	return {'game_id' => $game->id(),
-		    'user_id' => $name,
+		    'user_id' => $user->id(),
+			'username' => $user_data->{'name'},
+			'fb_app_id' => config->{'facebook'}->{'app_id'},
 			'avatar' => config->{'facebook'}->{'graph_url'} . $user->facebook_id() . '/picture',
 			'last_action_done' => $user->last_action_done(),
 			'time_to_click' => $ttc,

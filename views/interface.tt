@@ -6,7 +6,7 @@
 <div class="left_column">
 	<div class="box blue">
 		<div id="badge">
-			User: <% user_id %><br />
+			User: <span class="username" rel="<% fb_id %>"><% username %></span><br />
 			<img src="<% avatar %>" /><br /><br />
 			Game: <% game_id %><br />
 		</div>
