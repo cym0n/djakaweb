@@ -30,13 +30,18 @@
 	<% END %>
 </div>
 <div class="central_body">
+	<div id="tooltips">
+		<div id="logtip" class="first active"><a href="#">Mission log</a></div><div id="inttip" class="off"><a href="#">Intelligence</a></div><div class="clear"></div>
+	</div>
 	<div class="box red">
-		<div id="messages">
+		<div id="messages" class="logbox">
 			<% FOREACH s IN story %>
 				<% s.content %>
 				<br />----<br />
 			<% END %>
 		</div>
+		<div id="intelligence" class="logbox">
+		</div>	
 	</div>
 	<div class="box purple">
 		<div id="danger_bar">

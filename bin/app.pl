@@ -115,7 +115,11 @@ get '/game/win' => sub {
 
 #AJAX CALLS
 get '/game/service/actions/:id' => sub {
-	template 'actions' => DjakaWeb::Controllers::get_actions_menu(params->{id}), {'layout' => 'none.tt'};;
+	template 'actions' => DjakaWeb::Controllers::get_actions_menu(params->{id}), {'layout' => 'none.tt'};
+};
+
+get '/game/service/description/:id' => sub {
+	template 'description' => DjakaWeb::Controllers::get_element_description(params->{id}), {'layout' => 'none.tt'};
 };
 
 

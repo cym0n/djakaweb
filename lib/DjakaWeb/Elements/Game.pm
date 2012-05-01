@@ -110,6 +110,13 @@ sub get_element_name
 	my $id = shift;
 	return $self->StoryManager()->getAttribute($id, 'name');
 }
+sub get_element_description
+{
+	my $self = shift;
+	my $id = shift;
+	my $el = $self->StatusDB()->find({'game_id' => $self->id(), 'object_code' => $id});
+    return $self->StoryManager()->getElementDescription($id, $el->{'status'});
+}
 
 #More complex getters :-)
 sub get_elements

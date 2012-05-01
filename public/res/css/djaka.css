@@ -3,6 +3,10 @@ body
 	font-size: 14px;
  	font-family: Arial,Helvetica,sans-serif;
 }
+.clear
+{
+	clear: both;
+}
 
 
 .left_column
@@ -52,13 +56,17 @@ body
 {
 	font-size: 12px;
 }
-#messages
+.logbox
 {
 	background: #FFFF99;
 	/*width: 770px;*/
 	height: 230px;
 	padding: 10px;
 	overflow: auto;
+}
+#intelligence
+{
+	display: none;	
 }
 #danger_bar
 {
@@ -180,3 +188,45 @@ body
 	margin-bottom: 0px;
 }
 /* END INTERACTIONS */
+
+
+
+/* TOOLTIPS */
+#tooltips
+{
+	height: 32px;
+	width: 171px;
+	line-height: 32px;
+	border: 1px solid #000;
+	border-bottom: 0px;
+}
+#tooltips div
+{
+	float: left;
+	width: 75px;
+	padding-right: 5px;
+	padding-left: 5px;
+	background: #bdbdbd;
+}
+#tooltips .first
+{
+	border-right: 1px solid black;
+}
+#tooltips .active
+{
+	background: #FFFF99;
+}
+#tooltips .inactive
+{
+	background: #FFDE00;
+}
+#tooltops .off
+{
+	background: #bdbdbd;
+}
+
+#tooltips div a
+{
+	text-decoration: none;
+}
+

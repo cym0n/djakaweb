@@ -142,6 +142,13 @@ sub get_actions_menu
 			'element_name' => $game->get_element_name($element)};
 }
 
+sub get_element_description
+{
+	my $element = shift;
+	my ($user, $game) = build_elements();
+	return {'description' => $game->get_element_description($element)};
+}
+
 sub schedule_action
 {
 	my ($user, $game) = build_elements();

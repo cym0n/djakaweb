@@ -119,6 +119,20 @@ sub getElementStory
 	my $yaml = $self->openYAML($code);
 	return $self->processText($yaml->[0]->{'messages'}->{$tag}, $code);
 }
+sub getElementDescription
+{
+	my $self = shift;
+	my $code = shift;
+	my $status = shift;
+	my $yaml = $self->openYAML($code);
+	my $description = $self->processText($yaml->[0]->{'description'}->{'START'}, $code);
+	$description .= "\n";
+	if($status)
+	{
+		$description .= $self->processText($yaml->[0]->{'description'}->{$status}, $code);
+	}
+	return $description;
+}
 sub getAttribute
 {
 	my $self = shift;
