@@ -121,6 +121,8 @@ body
 	padding-left: 64px;
 }
 
+
+/* OVERLAY STYLE */
 .simple_overlay {
 	display:none;
 	
@@ -151,3 +153,30 @@ body
 	text-decoration: none;
 	color: #000;
 }
+/* END OVERLAY */
+
+/* INTERACTIONS STYLE */
+#interaction ul
+{
+	padding-top: 4px;
+	padding-left: 4px;
+	padding-right: 14px;
+	margin: 0px;
+	margin-bottom: 15px;
+}
+#interaction li
+{
+	list-style-type: none;
+	line-height: 32px;
+	border-bottom: 1px solid #bdbdbd;
+}
+#interaction li a
+{
+	text-decoration: none;
+	color: #000;
+}
+#interaction h4
+{
+	margin-bottom: 0px;
+}
+/* END INTERACTIONS */

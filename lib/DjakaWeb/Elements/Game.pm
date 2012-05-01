@@ -104,6 +104,12 @@ sub get_story
 	my $self = shift;
 	return $self->StoryDB()->search({'game_id' => $self->id()});
 }
+sub get_element_name
+{
+	my $self = shift;
+	my $id = shift;
+	return $self->StoryManager()->getAttribute($id, 'name');
+}
 
 #More complex getters :-)
 sub get_elements

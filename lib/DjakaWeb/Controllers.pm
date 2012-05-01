@@ -138,7 +138,8 @@ sub get_actions_menu
 	my @labels = keys %actions;
 	return {'actions' => \@labels, 
 			'layout'  => 0,
-			'element' => $element};
+			'element' => $element,
+			'element_name' => $game->get_element_name($element)};
 }
 
 sub schedule_action

@@ -11,6 +11,8 @@
 			Game: <% game_id %><br />
 		</div>
 	</div>
+	<div id="interaction">
+	</div>
 	<% IF action.action != 'NONE' %>
 	<div class="box blue">
 		<div id="ongoing">
@@ -68,6 +70,7 @@
 					<% ELSE %>
 						<% p.name %>
 					<% END %>
+					<br /><a href="#">INFO</a>
 				</div>
 			</div>
 			<% END %>

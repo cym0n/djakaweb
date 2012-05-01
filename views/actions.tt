@@ -1,4 +1,6 @@
 <% PROCESS dictionary_it.tt %>
+<h3>Ordini?</h3>
+<h4><% element_name %></h4>
 <ul>
 	<% FOREACH a IN actions %>
 	<li><a href="/game/do/<% a %>/<% element %>"><% translate.$a %></a></li>
