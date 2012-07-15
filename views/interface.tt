@@ -36,6 +36,7 @@
 	<div class="box red">
 		<div id="messages" class="logbox">
 			<% FOREACH s IN story %>
+				<span class="action_done"><% translate.${s.action} %> <% s.object_name %>:</span><br />
 				<% s.content %>
 				<br />----<br />
 			<% END %>

@@ -43,7 +43,7 @@ __PACKAGE__->add_columns(
   "facebook_id",
   { data_type => "integer", is_nullable => 1 },
   "last_action_done",
-  { data_type => "datetime", is_nullable => 1, timezone => "CET" },
+  { data_type => "datetime", is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key("id");
 
@@ -53,6 +53,9 @@ __PACKAGE__->set_primary_key("id");
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+__PACKAGE__->remove_column("last_action_done");
+__PACKAGE__->add_column("last_action_done", { data_type => "datetime", is_nullable => 1, timezone => "CET" });
+
 
 sub update_click_time
 {

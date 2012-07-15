@@ -222,7 +222,8 @@ sub do_action
 				if($self->get_status()->get_active($element) == 1)
 				{
 					my $story = $self->StoryManager()->getElementStory($element, $eff[1]);
-					$self->StoryDB()->write_story($self->id(), $story);
+					my $AA = $self->ActionsDB->get_active_action($self->id());
+					$self->StoryDB()->write_story($self->id(), $story, $AA, $self->get_element_name($AA->object_code()), $AA->id());
 				}
 			}
 		}	
@@ -235,6 +236,12 @@ sub do_action
 			if(! ($self->flags()->{'nodanger'}))
 			{
 				$self->modify_danger($eff[1]);		
+				if(! ($self->flags()->{'notell'}))
+				{
+					my $story = $self->StoryManager()->getDangerStory($eff[1]);
+					my $AA = $self->ActionsDB->get_active_action($self->id());
+					$self->StoryDB()->write_story($self->id(), $story, $AA, $self->get_element_name($AA->object_code()), $AA->id());
+				}
 			}
 		}
 	}

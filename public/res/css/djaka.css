@@ -242,4 +242,9 @@ body
 {
 	float: left;
 }
+#messages .action_done
+{
+	font-weight: bold;
+	color: #1B3F8B;
+}
 

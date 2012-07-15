@@ -119,6 +119,21 @@ sub getElementStory
 	my $yaml = $self->openYAML($code);
 	return $self->processText($yaml->[0]->{'messages'}->{$tag}, $code);
 }
+sub getDangerStory
+{
+	my $self = shift;
+	my $level = shift;
+	if($level > 0)
+	{
+		return "Il livello di tensione si è alzato di " . $level;
+	}
+	else
+	{
+		return "Il livello di tensione si è abbassato di " . $level*-1;
+	}
+}
+
+
 sub getElementDescription
 {
 	my $self = shift;
