@@ -15,8 +15,8 @@ $(document).ready(function() {
 		//					});
 		//			 }	
 		//	});
-		$('.actions_trigger[rel]').click(function() {
-				var id = $(this).attr('id');
+		$('.actions_trigger').click(function() {
+				var id = $(this).parent().attr('id');
 				var callfun = "/game/service/actions/"+id;
 				$.ajax({ url: callfun,
 		 				 async: true,
@@ -26,6 +26,7 @@ $(document).ready(function() {
 			 				$('#interaction').html(output);
 						 }
 				});
+				return false;
 			});
 
 
