@@ -71,13 +71,12 @@ body
 #danger_bar
 {
 	background: #000000;
-	/*width: 800px;*/
+	width: 660px;
 	height: 30px;
 }
 #danger_level
 {
 	background: #FF0000;
-	/*width: 400px;*/
 	height: 31px;
 }
 .theclicker
@@ -115,11 +114,16 @@ body
 	height: 70px;
 	margin-right: 5px;
 }
-.element_name
+.element_content
 {
 	float: left;
 	width: 140px;
-	
+}
+.element_content h1
+{
+	font-size: 14px;
+	margin: 0;
+	margin-bottom: 4px;
 }
 .no_elements
 {
@@ -228,5 +232,14 @@ body
 #tooltips div a
 {
 	text-decoration: none;
+}
+.label
+{
+	float: left;
+	margin-right: 10px;
+}
+.danger
+{
+	float: left;
 }
 

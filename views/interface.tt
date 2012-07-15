@@ -31,7 +31,7 @@
 </div>
 <div class="central_body">
 	<div id="tooltips">
-		<div id="logtip" class="first active"><a href="#">Mission log</a></div><div id="inttip" class="off"><a href="#">Intelligence</a></div><div class="clear"></div>
+		<div id="logtip" class="first active"><a href="#" onclick="javascript:showLog();return false;">Mission log</a></div><div id="inttip"><a href="#" onclick="javascript:showIntelligence();return false;">Intelligence</a></div><div class="clear"></div>
 	</div>
 	<div class="box red">
 		<div id="messages" class="logbox">
@@ -43,11 +43,13 @@
 		<div id="intelligence" class="logbox">
 		</div>	
 	</div>
-	<div class="box purple">
+	<div class="label">Danger level: </div>
+	<div class="box purple danger">
 		<div id="danger_bar">
 			<div id="danger_level" style="width:<% danger %>%">&nbsp;</div>
 		</div>
 	</div>
+	<div class="clear"></div>
 	<div class="elements">
 		<% types = [ 'person', 'place', 'object' ] %>
 		<% portraits = {
@@ -69,13 +71,14 @@
 			<% FOREACH p IN elements.$t %>
 			<div class="element_badge">
 				<img src="/res/images/<% portraits.$t %>" />
-				<div class="element_name" id="<% p.id %>">
+				<div class="element_content" id="<% p.id %>">
+					<h1><% p.name %></h1>
 					<% IF action.action == 'NONE' %>
-						<a  class="actions_trigger" href="#"><% p.name %></a>
+						<a  class="actions_trigger" href="#">ACTIONS</a>
 					<% ELSE %>
 						<% p.name %>
 					<% END %>
-					<br /><a href="#">INFO</a>
+					<br /><a class="info_trigger" href="#">INFO</a>
 				</div>
 			</div>
 			<% END %>
