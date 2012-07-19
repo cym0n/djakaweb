@@ -247,4 +247,8 @@ body
 	font-weight: bold;
 	color: #1B3F8B;
 }
+#messages .done
+{
+	background-color: #FA8072;
+}
 

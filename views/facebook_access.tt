@@ -9,7 +9,11 @@
             oauth      : true,
           });
 	FB.Event.subscribe('auth.login', function () {
-          window.location = "<% returl %>";
+		<% IF returl %>	
+        	window.location = "<% returl %>";
+		<% ELSE %>
+        	window.location = "/game/dashboard";
+		<% END %>
     });
    
     };

@@ -27,7 +27,7 @@ show_errors: 1
 auto_reload: 0
 
 facebook:
-    app_id: "289526111061581"
-    secret: "def970e709749e1864972bc65da425f9"
+    app_id: "161809567288637"
+    secret: "2337e26f9a6b1f4d021cee5681a2f93e"
     graph_url: "http://graph.facebook.com/"
-    stubbed: 1
+    stubbed: 0

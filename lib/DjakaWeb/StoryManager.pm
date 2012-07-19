@@ -125,11 +125,11 @@ sub getDangerStory
 	my $level = shift;
 	if($level > 0)
 	{
-		return "Il livello di tensione si è alzato di " . $level;
+		return "Il livello di tensione si è alzato di " . $level . '.';
 	}
 	else
 	{
-		return "Il livello di tensione si è abbassato di " . $level*-1;
+		return "Il livello di tensione si è abbassato di " . $level*-1 . '.';;
 	}
 }
 

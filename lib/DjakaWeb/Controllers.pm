@@ -1,6 +1,6 @@
 package DjakaWeb::Controllers;
 
-use JSON;
+use JSON 'decode_json';
 use LWP::UserAgent;
 use MIME::Base64 'decode_base64url', 'encode_base64url';
 use Digest::SHA 'hmac_sha256';
@@ -113,6 +113,8 @@ sub get_data_for_interface
 	my $active_A = $game->get_active_action();
 	my $ttc = $user->time_to_click(config->{'wait_to_click'});
 	my $user_data = facebook_user($user->facebook_id());
+	my $last_action_class = session('action');
+	session 'action' => undef;
 	#my $name = session('user_name') ? session('user_name') : $user->id();
 	#print keys %{$elements{'person'}[0]};
 	return {'game_id' => $game->id(),
@@ -126,7 +128,8 @@ sub get_data_for_interface
 		 	'elements' => \%elements,
 			'story' => $story,
 			'danger' => $game->danger(),
-			'action' => $active_A
+			'action' => $active_A,
+			'last_action_class' => $last_action_class
 		};
 }
 
@@ -178,6 +181,10 @@ sub click
 				if(my $tag = $game->check_victory())
 				{
 					session 'end' => $tag;
+				}
+				else
+				{
+					session 'action' => 'done';
 				}
 			}
 		}

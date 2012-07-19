@@ -37,8 +37,6 @@ hook 'before' => sub {
 			}
 		}
 	}
-	
-	
 };
 
 hook 'before_template_render' => sub {
@@ -62,9 +60,16 @@ hook 'before_template_render' => sub {
 #	}
 #};
 
+get '/' => sub {
+	redirect '/game/dashboard';
+};
+
+
+
 get '/debugger' => sub {
+	debug "DEBUGGER";
 	my $dummy = 1;
-	my $dummy = $dummy / 0;
+	$dummy = $dummy / 0;
 };
 
 get '/facebook/login' => sub {
@@ -130,6 +135,12 @@ get '/courtesy/not_logged' => sub {
 get '/courtesy/login_failed' => sub {
 	template 'login_failed';
 };
+
+get '/index' => sub {
+	debug "HOME";
+	redirect '/facebook/login';
+};
+
 
 
 
