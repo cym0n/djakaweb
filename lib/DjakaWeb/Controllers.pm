@@ -161,6 +161,7 @@ sub schedule_action
 	if($A->{'action'} =~ m/^NONE$/)
 	{
 		$game->schedule_action($element, $action);
+		click();
 	}
 }
 
