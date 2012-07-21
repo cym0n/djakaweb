@@ -117,7 +117,8 @@ sub get_data_for_interface
 	session 'action' => undef;
 	#my $name = session('user_name') ? session('user_name') : $user->id();
 	#print keys %{$elements{'person'}[0]};
-	return {'game_id' => $game->id(),
+	return {'app_domain' => config->{'app_domain'},
+			'game_id' => $game->id(),
 		    'user_id' => $user->id(),
 			'username' => $user_data->{'name'},
 			'fb_app_id' => config->{'facebook'}->{'app_id'},

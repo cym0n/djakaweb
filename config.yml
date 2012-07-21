@@ -5,6 +5,8 @@
 # Your application's name
 appname: "DjakaWeb"
 
+app_domain: "djaka.therabbit.it"
+
 # The default layout to use for your application (located in
 # views/layouts/main.tt)
 layout: "djaka"
