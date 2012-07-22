@@ -9,30 +9,6 @@ use Dancer;
 use DjakaWeb::Elements::Game;
 use DjakaWeb::Elements::User;
 
-sub login_stub
-{
-	my $user_id = shift;
-	my $user = DjakaWeb::Elements::User->new({'id' => $user_id, 'stories_path' => config->{'stories_path'}});
-	session 'user' => $user->id();
-	my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
-	my $game;
-	if(! $game_id)
-	{
-		#At this time, when no game exists, a new one with mission 000 is created
-		$game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000', 'stories_path' => config->{'stories_path'}});
-		session 'game' => $game->id();
-		return 0; #new game
-	}
-	else
-	{
-		$game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'stories_path' => config->{'stories_path'}});
-		session 'game' => $game->id();
-		return 1; #existing game	
-		#return redirect '/game';
-	}
-
-}
-
 sub facebook_data
 {
 	my $app_id = config->{facebook}->{'app_id'};
@@ -88,14 +64,12 @@ sub facebook_user
 	my $facebook_id = shift;
 	my $ua = new LWP::UserAgent;
 	$ua->agent("Mozilla/5.0 " . $ua->agent);
-	debug config->{'facebook'}->{'graph_url'} . $facebook_id;
 	my $req = new HTTP::Request GET => config->{'facebook'}->{'graph_url'} . $facebook_id;
 	my $res = $ua->request($req);
 	my $content, my $fbjson;
 	if ($res->is_success) 
 	{
 	 	$content = $res->content;
-		debug $content;
 		$fbjson = decode_json($content);
 		return $fbjson;
 	} 
@@ -132,6 +106,37 @@ sub get_data_for_interface
 			'action' => $active_A,
 			'last_action_class' => $last_action_class
 		};
+}
+
+sub get_data_for_help
+{
+	my $action = shift;
+	my ($user, $game) = build_elements(); #This game is not directly involved
+	my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
+	if($ongoing_action)
+	{
+		my $user_to_help = DjakaWeb::Elements::User->new({'id' => $game_to_help->user});
+		my $user_to_help_data = facebook_user($user_to_help->facebook_id());
+		my $errors = 'NONE';
+		if($ongoing_action->active == 0)
+		{
+			$errors = 'INACTIVE_ACTION';
+		}
+		if($user->id == $user_to_help->id)
+		{
+			$errors = 'SAME_USER';
+		}
+		return {'game_id' => $game_to_help->id,
+				'username_to_help' => $user_to_help_data->{'name'},
+				'action' => $game_to_help->get_action_data($ongoing_action),
+				'errors' => $errors
+				};
+	}
+	else
+	{
+		return {'errors' => 'BAD_ACTION'};
+	}
+
 }
 
 sub get_actions_menu
@@ -198,8 +203,16 @@ sub click
 
 sub build_elements
 {
-	my $game = DjakaWeb::Elements::Game->new({'id' => session('game'), 'stories_path' => config->{'stories_path'}});
-	my $user = DjakaWeb::Elements::User->new({'id' => session('user')});
+	my ($user, $game);
+	if(session('game'))
+	{
+		$game = DjakaWeb::Elements::Game->new({'id' => session('game'), 'stories_path' => config->{'stories_path'}});
+	}
+	else
+	{
+		$game = undef;
+	}
+	$user = DjakaWeb::Elements::User->new({'id' => session('user')});
 	return ($user, $game);
 }
 

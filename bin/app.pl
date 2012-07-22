@@ -86,6 +86,18 @@ get '/game/dashboard' => sub {
 	template 'interface' => DjakaWeb::Controllers::get_data_for_interface(), {'layout' => 'interface.tt'};
 };
 
+get '/game/help/:action_id' => sub {
+	my $data = DjakaWeb::Controllers::get_data_for_help(params->{action_id});
+	if($data->{'errors'} eq 'BAD_ACTION')
+	{
+		return Dancer::Response->new(
+        	status => 404,
+        	content => 'Bad action id'
+    	);
+	}	
+	template 'help' => $data, {'layout' => 'help' };
+};
+
 get '/game/do/:action/:element' => sub {
 	DjakaWeb::Controllers::schedule_action(params->{element}, params->{action});
 	return redirect '/game/dashboard';

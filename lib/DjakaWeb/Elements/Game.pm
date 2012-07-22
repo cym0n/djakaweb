@@ -87,6 +87,18 @@ sub get_active_game
 	my $user = shift;
 	return schema->resultset('Game')->get_active_game($user);
 }
+sub get_game_from_ongoing
+{
+	my $ongoing = shift;
+	my $stories_path = shift;
+	my $OA = schema->resultset('OngoingAction')->find($ongoing);
+	if(! $OA)
+	{
+		return (undef, undef);
+	}
+	my $game = DjakaWeb::Elements::Game->new({'id' => $OA->game_id, 'stories_path' => $stories_path});
+	return ($game, $OA);
+}
 
 #Method to retrieve DB data
 sub get_game
@@ -259,11 +271,17 @@ sub get_active_action
 {
 	my $self = shift;
 	my $AA = $self->ActionsDB->get_active_action($self->id());
-	if($AA)
+	return $self->get_action_data($AA);
+}
+sub get_action_data
+{
+	my $self = shift;
+	my $A = shift;
+	if($A)
 	{
-		return { object => $self->StoryManager()->getAttribute($AA->object_code, 'name'),
-				 action => $AA->action(),
-				 clicks => $AA->clicks()	
+		return { object => $self->StoryManager()->getAttribute($A->object_code, 'name'),
+				 action => $A->action(),
+				 clicks => $A->clicks()	
 		 }
 	}
 	else
