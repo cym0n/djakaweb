@@ -4,9 +4,11 @@
 	<% INCLUDE user_badge.tt %>
 </div>
 <div class="central_body">
-	<div><% errors %></div>
-	<div>Aiuta <% username_to_help %> per il game <% game_id %></div>
-	<div><% translate.${action.action} %> <% action.object %></div>
+	<% IF errors == INACTIVE_ACTION %>
+	<% INCLUDE active_help.tt %>
+	<% ELSE %>
+	<% INCLUDE inactive_help.tt %>
+	<% END %>
 </div>
 <% INCLUDE footer.tt %>
 

@@ -95,6 +95,10 @@ get '/game/help/:action_id' => sub {
         	content => 'Bad action id'
     	);
 	}	
+	if($data->{'errors'} eq 'SAME_USER')
+	{
+		redirect '/game/dashboard';
+	}
 	template 'help' => $data, {'layout' => 'help' };
 };
 
