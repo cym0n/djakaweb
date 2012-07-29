@@ -261,14 +261,16 @@ sub get_active_action
 	my $AA = $self->ActionsDB->get_active_action($self->id());
 	if($AA)
 	{
-		return { object => $self->StoryManager()->getAttribute($AA->object_code, 'name'),
+		return { id => $AA->id(),
+			     object => $self->StoryManager()->getAttribute($AA->object_code, 'name'),
 				 action => $AA->action(),
 				 clicks => $AA->clicks()	
 		 }
 	}
 	else
 	{
-		return { object => 'NONE',
+		return { id => -1,
+			     object => 'NONE',
 			     action => 'NONE',
 			     clicks => 0}
 	}
@@ -292,6 +294,9 @@ sub click
 	my $AA = $self->get_active_action();
 	my $limit = $limits->{$AA->{'action'}};
 	my $clicks = $self->ActionsDB->click($self->id());
+	schema->resultset('Click')->create({"user_id" => $self->user(),
+		                               "action" => $AA->{'id'},
+									   "type" => "ACTIVE"});
 	if($clicks == $limit)
 	{
 		$self->do_active_action;

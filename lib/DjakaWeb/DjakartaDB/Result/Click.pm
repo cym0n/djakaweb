@@ -68,4 +68,10 @@ __PACKAGE__->set_primary_key("id");
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+
+#Changes to the table to make timestamp works
+__PACKAGE__->load_components("TimeStamp");
+__PACKAGE__->remove_column("timestamp");
+__PACKAGE__->add_column(  "timestamp", { data_type => "datetime", is_nullable => 0, set_on_create => 1 });
+
 1;
