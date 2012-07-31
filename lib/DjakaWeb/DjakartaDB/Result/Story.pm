@@ -109,7 +109,14 @@ sub write_story
 	my $action = shift;
 	my $object_name = shift;
 	my $parent_action = shift;
-	$self->create({ game_id => $game, content => $text, action => $action->action(), object_code => $action->object_code(), object_name => $object_name, parent_action => $parent_action });
+	if($action)
+	{
+		$self->create({ game_id => $game, content => $text, action => $action->action(), object_code => $action->object_code(), object_name => $object_name, parent_action => $parent_action });
+	}
+	else
+	{
+		$self->create({ game_id => $game, content => $text, action => undef, object_code => undef, object_name => undef, parent_action => undef });
+	}
 }
 
 sub get_all_story

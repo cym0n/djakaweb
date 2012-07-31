@@ -37,7 +37,20 @@
 		<div id="messages" class="logbox">
 			<% writetitle = 0 %>
 			<% FOREACH s IN story %>
-				<% IF s.parent_action != writetitle %>
+				<% IF s.action %>
+					<% IF s.parent_action != writetitle %>
+						<% IF writetitle != 0 %>
+							</p>
+							----<br />
+							<p>
+						<% ELSE %>
+							<p class="<% last_action_class %>">
+						<% END %>
+
+						<span class="action_done"><% translate.${s.action} %> <% s.object_name %>:</span><br />
+						<% writetitle = s.parent_action %>
+					<% END %>
+				<% ELSE %>
 					<% IF writetitle != 0 %>
 						</p>
 						----<br />
@@ -45,9 +58,6 @@
 					<% ELSE %>
 						<p class="<% last_action_class %>">
 					<% END %>
-
-					<span class="action_done"><% translate.${s.action} %> <% s.object_name %>:</span><br />
-					<% writetitle = s.parent_action %>
 				<% END %>
 				<% s.content %>
 				<br />
