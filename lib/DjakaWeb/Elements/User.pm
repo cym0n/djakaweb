@@ -53,6 +53,11 @@ sub last_action_done
 	my $self = shift;
 	return $self->UserDB()->last_action_done();
 }
+sub last_support_done
+{
+	my $self = shift;
+	return $self->UserDB()->last_support_done();
+}
 
 sub update_click_time
 {
@@ -69,10 +74,21 @@ sub time_to_click
 	my $timestamp_e = $timestamp->epoch();
 	my $next_e = $timestamp_e + ($waiting_time * 60);
 	my $now = DateTime->now();
-	debug $now;
 	my $now_e = $now->epoch();
 	my $duration = $next_e - $now_e;
-	debug "$timestamp_e $now_e $next_e $duration";
+	return $duration;
+}
+sub time_to_support_click
+{
+	my $self = shift;
+	my $waiting_time = shift;
+	my $timestamp = $self->last_support_done();
+	return -1 if (! $timestamp);
+	my $timestamp_e = $timestamp->epoch();
+	my $next_e = $timestamp_e + ($waiting_time * 60);
+	my $now = DateTime->now();
+	my $now_e = $now->epoch();
+	my $duration = $next_e - $now_e;
 	return $duration;
 }
 

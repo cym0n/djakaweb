@@ -59,6 +59,7 @@ stories_path: /home/web/DjakaWeb/stories
 #User defined variables
 danger_threshold: 100
 wait_to_click: 1
+wait_to_support_click: 1
 
 clicks:
     #common

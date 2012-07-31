@@ -113,6 +113,7 @@ sub get_data_for_help
 	my $action = shift;
 	my ($user, $game) = build_elements(); #This game is not directly involved, can be null
 	my $user_data = facebook_user($user->facebook_id());
+	my $ttc = $user->time_to_support_click(config->{'wait_to_support_click'});
 	my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
 	if($ongoing_action)
 	{
@@ -127,6 +128,7 @@ sub get_data_for_help
 		{
 			$errors = 'SAME_USER';
 		}
+		debug $errors;
 		return {'app_domain' => config->{'app_domain'},
 			    'app_call' => '/game/help/' . $ongoing_action->id,
 				'game_id' => $game_to_help->id,
@@ -135,7 +137,9 @@ sub get_data_for_help
 				'errors' => $errors,
 		    	'user_id' => $user->id(),
 				'username' => $user_data->{'name'},
-				'fb_app_id' => config->{'facebook'}->{'app_id'},
+				'time_to_click' => $ttc,
+				'allowed_click' => ($ttc <= 0) ,
+		 		'fb_app_id' => config->{'facebook'}->{'app_id'},
 				'avatar' => config->{'facebook'}->{'graph_url'} . $user->facebook_id() . '/picture'
 				};
 	}

@@ -4,10 +4,10 @@
 	<% INCLUDE user_badge.tt %>
 </div>
 <div class="central_body">
-	<% IF errors == INACTIVE_ACTION %>
-	<% INCLUDE active_help.tt %>
-	<% ELSE %>
+	<% IF errors == 'INACTIVE_ACTION' %>
 	<% INCLUDE inactive_help.tt %>
+	<% ELSE %>
+	<% INCLUDE active_help.tt %>
 	<% END %>
 </div>
 <% INCLUDE footer.tt %>
