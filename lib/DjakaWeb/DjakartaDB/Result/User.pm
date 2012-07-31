@@ -35,6 +35,11 @@ __PACKAGE__->table("USERS");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 last_support_done
+
+  data_type: 'timestamp'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -43,18 +48,22 @@ __PACKAGE__->add_columns(
   "facebook_id",
   { data_type => "integer", is_nullable => 1 },
   "last_action_done",
-  { data_type => "datetime", is_nullable => 1 },
+  { data_type => "timestamp", is_nullable => 1 },
+  "last_support_done",
+  { data_type => "timestamp", is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-03-09 23:49:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:bwfUGNN3W0Dc2ooFTR5vkw
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-07-31 22:45:34
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1ZFqjzgqggh9krXgWIaCCQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 __PACKAGE__->remove_column("last_action_done");
 __PACKAGE__->add_column("last_action_done", { data_type => "datetime", is_nullable => 1, timezone => "CET" });
+__PACKAGE__->remove_column("last_support_done");
+__PACKAGE__->add_column("last_support_done", { data_type => "datetime", is_nullable => 1, timezone => "CET" });
 
 
 sub update_click_time
