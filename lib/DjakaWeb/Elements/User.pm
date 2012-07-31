@@ -64,6 +64,12 @@ sub update_click_time
 	my $self = shift;	
 	return $self->UserDB()->update_click_time();
 }
+sub update_support_click_time
+{
+	my $self = shift;	
+	return $self->UserDB()->update_support_click_time();
+}
+
 
 sub time_to_click
 {
@@ -91,6 +97,17 @@ sub time_to_support_click
 	my $duration = $next_e - $now_e;
 	return $duration;
 }
+
+sub trace_click
+{
+	my $self = shift;
+	my $action = shift;
+	my $type = shift;
+	schema->resultset('Click')->create({"user_id" => $self->id,
+		                                "action" => $action,
+									    "type" => $type});
+}
+
 
 1;
 

@@ -72,6 +72,12 @@ sub update_click_time
 	$self->update({'last_action_done' => DateTime->now()});
 	return $self->last_action_done();
 }
+sub update_support_click_time
+{
+	my $self = shift;
+	$self->update({'last_support_done' => DateTime->now()});
+	return $self->last_support_done();
+}
 
 
 

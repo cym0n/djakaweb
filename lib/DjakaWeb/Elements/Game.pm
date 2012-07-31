@@ -311,9 +311,6 @@ sub click
 	my $AA = $self->get_active_action();
 	my $limit = $limits->{$AA->{'action'}};
 	my $clicks = $self->ActionsDB->click($self->id());
-	schema->resultset('Click')->create({"user_id" => $self->user(),
-		                               "action" => $AA->{'id'},
-									   "type" => "ACTIVE"});
 	if($clicks == $limit)
 	{
 		$self->do_active_action;

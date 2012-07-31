@@ -188,6 +188,7 @@ sub click
 	if($user->time_to_click(config->{'wait_to_click'}) <= 0)
 	{
 		$user->update_click_time();
+		$user->trace_click($game->get_active_action()->id(), 'ACTIVE');
 		if($game->click(config->{'clicks'}))
 		{
 			if($game->danger > config->{'danger_threshold'})
@@ -211,6 +212,19 @@ sub click
 	{
 	}
 }
+sub support_click
+{
+	my $action = shift;
+	my ($user, $game) = build_elements();
+	my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
+	if($user->time_to_support_click(config->{'wait_to_support_click'}) <= 0)
+	{
+		$user->update_support_click_time();
+		$user->trace_click($action, 'SUPPORT');
+		$game_to_help->click(config->{'clicks'});
+	}
+}
+
 
 sub build_elements
 {

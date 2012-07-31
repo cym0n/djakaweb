@@ -103,10 +103,17 @@ get '/game/help/:action_id' => sub {
 	template 'help' => $data, {'layout' => 'help' };
 };
 
+
 get '/game/do/:action/:element' => sub {
 	DjakaWeb::Controllers::schedule_action(params->{element}, params->{action});
 	return redirect '/game/dashboard';
 };
+
+get '/game/help/:action_id/click' => sub {
+	DjakaWeb::Controllers::support_click(params->{action_id});
+	redirect '/game/dashboard'; #TODO: to a courtesy
+};
+
 
 get '/game/click' => sub {
 	DjakaWeb::Controllers::click();

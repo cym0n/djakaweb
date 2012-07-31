@@ -3,7 +3,7 @@
 <div><% translate.${action.action} %> <% action.object %></div>
 <div>Clicca per contribuire:</div>
 <% IF allowed_click %>
-	<div class="theclicker"><a href="/game/click">CLICK</a></div>
+	<div class="theclicker"><a href="/game/help/<% action.id %>/click">CLICK</a></div>
 <% ELSE %>
 	<div id="defaultCountdown"></div>
 <% END %>
