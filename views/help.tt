@@ -1,0 +1,14 @@
+<% PROCESS dictionary_it.tt %>
+<% INCLUDE header.tt %>
+<div class="left_column">
+	<% INCLUDE user_badge.tt %>
+</div>
+<div class="central_body">
+	<% IF errors == INACTIVE_ACTION %>
+	<% INCLUDE active_help.tt %>
+	<% ELSE %>
+	<% INCLUDE inactive_help.tt %>
+	<% END %>
+</div>
+<% INCLUDE footer.tt %>
+

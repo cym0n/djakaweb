@@ -1,0 +1,6 @@
+<% PROCESS dictionary_it.tt %>
+<meta property="fb:app_id" content="<% fb_app_id %>" /> 
+<meta property="og:type"   content="djakarta:order" /> 
+<meta property="og:url"    content="http://<% app_domain %><% app_call %>" /> 
+<meta property="og:title"  content="<% translate.${action.action} %> <% action.object %>" /> 
+<meta property="og:image"  content="https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png" /> 

@@ -1,0 +1,3 @@
+<div><% errors %></div>
+<div>Aiuta <% username_to_help %> per il game <% game_id %></div>
+<div><% translate.${action.action} %> <% action.object %></div>

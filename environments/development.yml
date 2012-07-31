@@ -1,4 +1,6 @@
 # configuration file for development environment
+#
+app_domain: "local.djaka.therabbit.it:3000"
 
 # the logger engine to use
 # console: log messages to STDOUT (your console where you started the
