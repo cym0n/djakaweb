@@ -276,13 +276,13 @@ sub get_active_action
 sub get_action_data
 {
 	my $self = shift;
-	my $A = shift;
-	if($A)
+	my $AA = shift;
+	if($AA)
 	{
 		return { id => $AA->id(),
 			     object => $self->StoryManager()->getAttribute($AA->object_code, 'name'),
 				 action => $AA->action(),
-				 clicks => $AA->clicks()	
+				 clicks => $AA->clicks()}	
 	}
 	else
 	{
