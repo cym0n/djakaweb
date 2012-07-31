@@ -5,7 +5,7 @@ use LWP::UserAgent;
 use MIME::Base64 'decode_base64url', 'encode_base64url';
 use Digest::SHA 'hmac_sha256';
 use Data::Dumper;
-use Dancer;
+use Dancer ':syntax';
 use DjakaWeb::Elements::Game;
 use DjakaWeb::Elements::User;
 
