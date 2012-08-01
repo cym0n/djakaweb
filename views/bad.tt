@@ -1,0 +1,8 @@
+<% INCLUDE header.tt %>
+<div class="left_column">
+	<% INCLUDE user_badge.tt %>
+</div>
+<div class="central_body">
+<div><% message %></div>
+</div>
+<% INCLUDE footer.tt %>

@@ -1,0 +1,11 @@
+<% INCLUDE header.tt %>
+<div class="left_column">
+	<% INCLUDE user_badge.tt %>
+</div>
+<div class="central_body">
+<div>
+Grazie!<br />
+Il tuo click è stato utile alla missione!
+</div>
+</div>
+<% INCLUDE footer.tt %>

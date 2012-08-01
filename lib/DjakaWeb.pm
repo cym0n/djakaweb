@@ -3,8 +3,8 @@ use Dancer ':syntax';
 use Dancer::Template::TemplateToolkit;
 use DjakaWeb::Controllers;
 
-
 our $VERSION = '0.1';
+
 
 hook 'before' => sub {
 	#game navigations are only for logged users
@@ -20,24 +20,6 @@ hook 'before' => sub {
 
 		}
 	}
-	#End of game management
-	if(request->path_info !~ /win/ && request->path_info !~ /gameover/)
-	{
-		if(session('end'))
-		{
-			if(session('end') =~ /GAMEOVER/)
-			{
-				redirect '/game/gameover';
-			}
-			else
-			{
-				if(session('end'))
-				{
-					redirect '/game/win';
-				}
-			}
-		}
-	}
 };
 
 hook 'before_template_render' => sub {
@@ -45,48 +27,25 @@ hook 'before_template_render' => sub {
 	$tokens->{env} = config->{environment};
 };
 
-#get '/login/:id?' => sub {
-#	my $login = DjakaWeb::Controllers::login_stub(params->{id});
-#	if($login == 0)
-#	{
-#		return redirect '/game';
-#	}
-#	elsif($login == 1)
-#	{
-#		return redirect '/game';
-#	}
-#	elsif($login == -1)
-#	{
-#		return redirect '/courtesy/login_failed';
-#	}
-#};
-
+#Redirect to real pages
 get '/' => sub {
 	redirect '/game/dashboard';
 };
 
-
-
-get '/debugger' => sub {
-	debug "DEBUGGER";
-	my $dummy = 1;
-	$dummy = $dummy / 0;
+get '/game' => sub {
+	redirect '/game/dashboard';
 };
 
+#Login
 get '/facebook/login' => sub {
 	template 'facebook_access' => { 'fb_app_id' => config->{facebook}->{'app_id'},
 	                                'returl' => request->{params}->{returl}};
 };
-get '/facebook/welcome' => sub {
-	template 'facebook_display' => DjakaWeb::Controllers::facebook_data();
-};
 
-
-
+#Game navigations
 get '/game/dashboard' => sub {
 	template 'interface' => DjakaWeb::Controllers::get_data_for_interface(), {'layout' => 'interface.tt'};
 };
-
 get '/game/help/:action_id' => sub {
 	my $data = DjakaWeb::Controllers::get_data_for_help(params->{action_id});
 	if($data->{'errors'} eq 'BAD_ACTION')
@@ -102,26 +61,60 @@ get '/game/help/:action_id' => sub {
 	}	
 	template 'help' => $data, {'layout' => 'help' };
 };
-
-
 get '/game/do/:action/:element' => sub {
-	DjakaWeb::Controllers::schedule_action(params->{element}, params->{action});
-	return redirect '/game/dashboard';
-};
-
-get '/game/help/:action_id/click' => sub {
-	DjakaWeb::Controllers::support_click(params->{action_id});
-	redirect '/game/dashboard'; #TODO: to a courtesy
-};
-
-
-get '/game/click' => sub {
-	DjakaWeb::Controllers::click();
+	my $result = DjakaWeb::Controllers::schedule_action(params->{element}, params->{action});
+	if($result == DjakaWeb::Controllers::GAME_LOST)
+	{
+		redirect '/game/gameover';
+	}
+	elsif($result == DjakaWeb::Controllers::GAME_WON)
+	{
+		redirect '/game/win';
+	
+	}
+	elsif($result == DjakaWeb::Controllers::CLICK_ERROR)
+	{
+		redirect '/game/courtesy/bad_click';
+	}
+	elsif($result == DjakaWeb::Controllers::ACTION_ERROR)
+	{
+		redirect '/game/courtesy/bad_action';
+	}
 	redirect '/game/dashboard';
 };
-
+get '/game/help/:action_id/click' => sub {
+	my $result = DjakaWeb::Controllers::support_click(params->{action_id});
+	if($result == DjakaWeb::Controllers::CLICK_ERROR)
+	{
+		redirect '/game/courtesy/bad_click';
+	}
+	else
+	{
+		redirect '/game/courtesy/good_click';
+	}
+};
+get '/game/click' => sub {
+	my $result = DjakaWeb::Controllers::click();
+	if($result == DjakaWeb::Controllers::GAME_LOST)
+	{
+		redirect '/game/gameover';
+	}
+	elsif($result == DjakaWeb::Controllers::GAME_WON)
+	{
+		redirect '/game/win';
+	
+	}
+	elsif($result == DjakaWeb::Controllers::CLICK_ERROR)
+	{
+		redirect '/game/courtesy/bad_click';
+	}
+	else
+	{
+		redirect '/game/dashboard';
+	}
+};
 get '/game/gameover' => sub {
-	if(session('end') =~ /GAMEOVER/)
+	if(session('end') =~ /^__GAMEOVER__$/)
 	{
 		template 'gameover';
 	}
@@ -141,16 +134,13 @@ get '/game/win' => sub {
 	}
 };
 
-
 #AJAX CALLS
 get '/game/service/actions/:id' => sub {
 	template 'actions' => DjakaWeb::Controllers::get_actions_menu(params->{id}), {'layout' => 'none.tt'};
 };
-
 get '/game/service/description/:id' => sub {
 	template 'description' => DjakaWeb::Controllers::get_element_description(params->{id}), {'layout' => 'none.tt'};
 };
-
 
 #COURTESY PAGES
 get '/courtesy/not_logged' => sub {
@@ -159,10 +149,11 @@ get '/courtesy/not_logged' => sub {
 get '/courtesy/login_failed' => sub {
 	template 'login_failed';
 };
-
-get '/index' => sub {
-	debug "HOME";
-	redirect '/facebook/login';
+get '/game/courtesy/bad_click' => sub {
+	template 'bad' => { 'message' => 'Il click non &egrave; andato a buon fine'};
+};
+get '/game/courtesy/bad_action' => sub {
+	template 'bad' => { 'message' => 'La selezione dell\'azione non &egrave; andata a buon fine'};
 };
 
 1;

@@ -309,6 +309,7 @@ sub click
 	my $self = shift;
 	my $limits = shift;
 	my $AA = $self->get_active_action();
+	return -1 if($AA->{'id'} == -1);
 	my $limit = $limits->{$AA->{'action'}};
 	my $clicks = $self->ActionsDB->click($self->id());
 	if($clicks == $limit)

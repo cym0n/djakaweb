@@ -6,8 +6,16 @@ use MIME::Base64 'decode_base64url', 'encode_base64url';
 use Digest::SHA 'hmac_sha256';
 use Data::Dumper;
 use Dancer ':syntax';
+use DjakaWeb;
 use DjakaWeb::Elements::Game;
 use DjakaWeb::Elements::User;
+
+use constant GAME_LOST => -1000;
+use constant ACTION_ERROR => -101;
+use constant CLICK_ERROR => -100;
+use constant CLICK_DONE => 100;
+use constant ACTION_DONE => 101;
+use constant GAME_WON => 1000;
 
 sub facebook_data
 {
@@ -178,38 +186,59 @@ sub schedule_action
 	if($A->{'action'} =~ m/^NONE$/)
 	{
 		$game->schedule_action($element, $action);
-		click();
+		return click();
+	}
+	else
+	{
+		return ACTION_ERROR;
 	}
 }
 
 sub click
 {
 	my ($user, $game) = build_elements();
+	if($game->get_active_action()->{'id'} == -1)
+	{
+		return CLICK_ERROR;
+	}
 	if($user->time_to_click(config->{'wait_to_click'}) <= 0)
 	{
 		$user->update_click_time();
-		$user->trace_click($game->get_active_action()->id(), 'ACTIVE');
-		if($game->click(config->{'clicks'}))
+		$user->trace_click($game->get_active_action()->{'id'}, 'ACTIVE');
+		my $click_result = $game->click(config->{'clicks'});
+		if($click_result == 1)
 		{
 			if($game->danger > config->{'danger_threshold'})
 			{
-				session 'end' => 'GAMEOVER';
+				session 'end' => '__GAMEOVER__';
+				return GAME_LOST; 
 			}
 			else
 			{
 				if(my $tag = $game->check_victory())
 				{
 					session 'end' => $tag;
+					return GAME_WON;
 				}
 				else
 				{
 					session 'action' => 'done';
+					return ACTION_DONE;
 				}
 			}
+		}
+		elsif($click_result == -1)
+		{
+			return CLICK_ERROR;
+		}
+		else
+		{
+			return CLICK_DONE;
 		}
 	}
 	else
 	{
+		return CLICK_ERROR;
 	}
 }
 sub support_click
@@ -221,7 +250,19 @@ sub support_click
 	{
 		$user->update_support_click_time();
 		$user->trace_click($action, 'SUPPORT');
-		$game_to_help->click(config->{'clicks'});
+		my $click_result = $game_to_help->click(config->{'clicks'});
+		if($click_result == -1)
+		{
+			return CLICK_ERROR;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else
+	{
+		return CLICK_ERROR;
 	}
 }
 
