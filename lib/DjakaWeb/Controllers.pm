@@ -30,7 +30,6 @@ sub facebook_data
 		my $cookie = cookies->{'fbsr_' . $app_id};
 		if(! $cookie)
 		{
-			debug "LOGIN: No facebook cookie";
 			return 0;
 		}
 		$val = $cookie->value;
@@ -143,12 +142,10 @@ sub get_data_for_help
 		}
 		return {'app_domain' => config->{'app_domain'},
 			    'app_call' => '/game/help/' . $ongoing_action->id,
-				'game_id' => $game_to_help->id,
 				'userid_to_help' => $user_to_help->facebook_id(),
 				'username_to_help' => $user_to_help_data->{'name'},
 				'action' => $game_to_help->get_action_data($ongoing_action),
 				'errors' => $errors,
-		    	'user_id' => $user->id(),
 				'time_to_click' => $ttc,
 				'allowed_click' => ($ttc <= 0) ,
 		 		'fb_app_id' => config->{'facebook'}->{'app_id'},

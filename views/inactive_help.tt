@@ -1,1 +1,9 @@
-<div>L'azione per cui stai cercando di intervenire &egrave; gi&agrave; stata completata.</div>
+<div class="box interface">
+	<div class="box_title">Supporto</div>
+	<div class="courtesy_body">
+		<div>L'azione per cui stai cercando di intervenire &egrave; gi&agrave; stata completata.</div>
+		<div>
+			&gt;&gt; <a href="/">Torna in homepage</a>
+		</div>
+	</div>
+</div>

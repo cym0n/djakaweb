@@ -3,6 +3,16 @@
 	<% INCLUDE user_badge.tt %>
 </div>
 <div class="central_body">
-<div><% message %></div>
+	<div class="box interface">
+		<div class="box_title">Errore</div>
+		<div class="courtesy_body">
+			<div><% message %></div>		
+			<div>
+				&gt;&gt; <a href="/">Torna in homepage</a>
+			</div>
+		</div>
+	</div>
+</div>
+
 </div>
 <% INCLUDE footer.tt %>
