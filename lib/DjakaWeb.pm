@@ -24,6 +24,12 @@ hook 'before' => sub {
 
 hook 'before_template_render' => sub {
 	my $tokens = shift;
+	if(request->path_info =~ /^\/game/)
+	{
+		my $badge = DjakaWeb::Controllers::get_data_for_badge;
+		$tokens->{username} = $badge->{username};
+		$tokens->{avatar} = $badge->{avatar};
+	}
 	$tokens->{env} = config->{environment};
 };
 
@@ -148,6 +154,9 @@ get '/courtesy/not_logged' => sub {
 };
 get '/courtesy/login_failed' => sub {
 	template 'login_failed';
+};
+get '/game/courtesy/good_click' => sub {
+	template 'good_click';
 };
 get '/game/courtesy/bad_click' => sub {
 	template 'bad' => { 'message' => 'Il click non &egrave; andato a buon fine'};

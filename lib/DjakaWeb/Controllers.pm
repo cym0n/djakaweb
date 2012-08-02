@@ -94,7 +94,6 @@ sub get_data_for_interface
 	my $story = $game->get_all_story();
 	my $active_A = $game->get_active_action();
 	my $ttc = $user->time_to_click(config->{'wait_to_click'});
-	my $user_data = facebook_user($user->facebook_id());
 	my $last_action_class = session('action');
 	session 'action' => undef;
 	#my $name = session('user_name') ? session('user_name') : $user->id();
@@ -102,9 +101,7 @@ sub get_data_for_interface
 	return {'app_domain' => config->{'app_domain'},
 			'game_id' => $game->id(),
 		    'user_id' => $user->id(),
-			'username' => $user_data->{'name'},
 			'fb_app_id' => config->{'facebook'}->{'app_id'},
-			'avatar' => config->{'facebook'}->{'graph_url'} . $user->facebook_id() . '/picture',
 			'last_action_done' => $user->last_action_done(),
 			'time_to_click' => $ttc,
 			'allowed_click' => ($ttc <= 0) ,
@@ -115,12 +112,20 @@ sub get_data_for_interface
 			'last_action_class' => $last_action_class
 		};
 }
+sub get_data_for_badge
+{
+	my ($user, $game) = build_elements();
+	my $user_data = facebook_user($user->facebook_id());
+	return {'username' => $user_data->{'name'},
+			'avatar' => config->{'facebook'}->{'graph_url'} . $user->facebook_id() . '/picture',
+	};
+
+}
 
 sub get_data_for_help
 {
 	my $action = shift;
 	my ($user, $game) = build_elements(); #This game is not directly involved, can be null
-	my $user_data = facebook_user($user->facebook_id());
 	my $ttc = $user->time_to_support_click(config->{'wait_to_support_click'});
 	my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
 	if($ongoing_action)
@@ -136,19 +141,17 @@ sub get_data_for_help
 		{
 			$errors = 'SAME_USER';
 		}
-		debug $errors;
 		return {'app_domain' => config->{'app_domain'},
 			    'app_call' => '/game/help/' . $ongoing_action->id,
 				'game_id' => $game_to_help->id,
+				'userid_to_help' => $user_to_help->facebook_id(),
 				'username_to_help' => $user_to_help_data->{'name'},
 				'action' => $game_to_help->get_action_data($ongoing_action),
 				'errors' => $errors,
 		    	'user_id' => $user->id(),
-				'username' => $user_data->{'name'},
 				'time_to_click' => $ttc,
 				'allowed_click' => ($ttc <= 0) ,
 		 		'fb_app_id' => config->{'facebook'}->{'app_id'},
-				'avatar' => config->{'facebook'}->{'graph_url'} . $user->facebook_id() . '/picture'
 				};
 	}
 	else

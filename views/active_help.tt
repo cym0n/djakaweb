@@ -1,10 +1,18 @@
-<div><% errors %></div>
-<div>Aiuta <% username_to_help %> per il game <% game_id %></div>
-<div><% translate.${action.action} %> <% action.object %></div>
-<div>Clicca per contribuire:</div>
-<% IF allowed_click %>
-	<div class="theclicker"><a href="/game/help/<% action.id %>/click">CLICK</a></div>
-<% ELSE %>
-	<div id="defaultCountdown"></div>
-<% END %>
+<div class="box interface">
+	<div class="box_title">Supporto</div>
+	<div class="interface_body">
+		<div class="order_data">Aiuta <a href="http://www.facebook.com/<% userid_to_help %>"><% username_to_help %></a><br />
+		Ordini da eseguire: <% translate.${action.action} %> <% action.object %></div>
+		<div class="order_data">Clicca per contribuire:
+			<% IF allowed_click %>
+				<div class="theclicker"><a href="/game/help/<% action.id %>/click">CLICK</a></div>
+			<% ELSE %>
+			<div id="defaultCountdown"></div>
+			<% END %>
+		</div>
+		<div>
+			&gt;&gt; <a href="/">Torna in homepage</a>
+		
+		</div>
+	</div>
 </div>

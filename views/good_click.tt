@@ -3,9 +3,17 @@
 	<% INCLUDE user_badge.tt %>
 </div>
 <div class="central_body">
-<div>
-Grazie!<br />
-Il tuo click è stato utile alla missione!
-</div>
+	<div class="box interface">
+		<div class="box_title">Supporto</div>
+		<div class="interface_body">
+			<div class="order_data" >	
+				Grazie!<br />
+				Il tuo click &egrave; stato utile alla missione!
+			</div>
+			<div>
+				&gt;&gt; <a href="/">Torna in homepage</a>
+			</div>
+		</div>
+	</div>
 </div>
 <% INCLUDE footer.tt %>
