@@ -48,6 +48,7 @@ plugins:
 
 facebook:
     app_id: "289526111061581"
+    graph_domain: "djakaweb"
     secret: "def970e709749e1864972bc65da425f9"
     graph_url: "http://graph.facebook.com/"
 

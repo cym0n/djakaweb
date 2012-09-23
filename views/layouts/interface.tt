@@ -25,7 +25,7 @@
   		function askForHelp()
   		{
       		FB.api(
-        	'/me/djakarta:Execute',
+        	'/me/<% graph_domain %>:Execute',
         	'post',
 			{ order: 'http://<% app_domain %>/share/help/<% action.id %>' },
         	function(response) {

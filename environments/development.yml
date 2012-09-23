@@ -32,4 +32,5 @@ facebook:
     app_id: "161809567288637"
     secret: "2337e26f9a6b1f4d021cee5681a2f93e"
     graph_url: "http://graph.facebook.com/"
+    graph_domain: "djakarta"
     stubbed: 0

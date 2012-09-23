@@ -101,6 +101,7 @@ sub get_data_for_interface
 			'game_id' => $game->id(),
 		    'user_id' => $user->id(),
 			'fb_app_id' => config->{'facebook'}->{'app_id'},
+			'graph_domain' => config->{'facebook'}->{'graph_domain'},
 			'last_action_done' => $user->last_action_done(),
 			'time_to_click' => $ttc,
 			'allowed_click' => ($ttc <= 0) ,
@@ -149,6 +150,7 @@ sub get_data_for_help
 			$errors = 'SAME_USER';
 		}
 		return {'app_domain' => config->{'app_domain'},
+				'graph_domain' => config->{'facebook'}->{'graph_domain'},
 			    'app_call' => '/share/help/' . $ongoing_action->id,
 				'userid_to_help' => $user_to_help->facebook_id(),
 				'username_to_help' => $user_to_help_data->{'name'},
