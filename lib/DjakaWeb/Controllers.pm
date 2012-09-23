@@ -149,7 +149,7 @@ sub get_data_for_help
 			$errors = 'SAME_USER';
 		}
 		return {'app_domain' => config->{'app_domain'},
-			    'app_call' => '/game/help/' . $ongoing_action->id,
+			    'app_call' => '/share/help/' . $ongoing_action->id,
 				'userid_to_help' => $user_to_help->facebook_id(),
 				'username_to_help' => $user_to_help_data->{'name'},
 				'action' => $game_to_help->get_action_data($ongoing_action),
