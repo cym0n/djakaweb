@@ -125,7 +125,15 @@ sub get_data_for_help
 {
 	my $action = shift;
 	my ($user, $game) = build_elements(); #This game is not directly involved, can be null
-	my $ttc = $user->time_to_support_click(config->{'wait_to_support_click'});
+	my $ttc;
+	if($user)
+	{
+ 		$ttc = $user->time_to_support_click(config->{'wait_to_support_click'});
+	}
+	else
+	{
+		$ttc = -1;
+	}
 	my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
 	if($ongoing_action)
 	{
@@ -136,7 +144,7 @@ sub get_data_for_help
 		{
 			$errors = 'INACTIVE_ACTION';
 		}
-		if($user->id == $user_to_help->id)
+		if($user && $user->id == $user_to_help->id)
 		{
 			$errors = 'SAME_USER';
 		}
@@ -278,7 +286,14 @@ sub build_elements
 	{
 		$game = undef;
 	}
-	$user = DjakaWeb::Elements::User->new({'id' => session('user')});
+	if(session('user'))
+	{
+		$user = DjakaWeb::Elements::User->new({'id' => session('user')});
+	}
+	else
+	{
+		$user = undef;
+	}
 	return ($user, $game);
 }
 

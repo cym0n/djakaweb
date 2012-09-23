@@ -21,8 +21,44 @@
 										  expiryText:'<div class="theclicker"><a href="/game/click">CLICK</a></div>'});
 	});
 	</script>
+	<script type="text/javascript">
+  		function askForHelp()
+  		{
+      		FB.api(
+        	'/me/djakarta:Execute',
+        	'post',
+			{ Order: 'http://<% app_domain %>/share/help/<% action.id %>' },
+        	function(response) {
+           		if (!response || response.error) {
+              		alert('Error occured');
+           		} else {
+              		alert('Cook was successful! Action ID: ' + response.id);
+           		}
+        	});
+  		}
+  	</script>
 </head>
 <body>
+	<div id="fb-root"></div>
+  	<script>
+    	window.fbAsyncInit = function() {
+      	FB.init({
+        	appId      : '<% fb_app_id %>', // App ID
+        	status     : true, // check login status
+        	cookie     : true, // enable cookies to allow the server to access the session
+        	xfbml      : true  // parse XFBML
+      	});
+    };
+
+    // Load the SDK Asynchronously
+    (function(d){
+      var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+      js = d.createElement('script'); js.id = id; js.async = true;
+      js.src = "//connect.facebook.net/en_US/all.js";
+      d.getElementsByTagName('head')[0].appendChild(js);
+    }(document));
+  	</script>
 	<% content %>
+	<fb:activity actions="djakarta:cook"></fb:activity>
 </body>
 </html>

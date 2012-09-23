@@ -52,19 +52,19 @@ get '/facebook/login' => sub {
 get '/game/dashboard' => sub {
 	template 'interface' => DjakaWeb::Controllers::get_data_for_interface(), {'layout' => 'interface.tt'};
 };
-get '/game/help/:action_id' => sub {
+get '/share/help/:action_id' => sub {
 	my $data = DjakaWeb::Controllers::get_data_for_help(params->{action_id});
-	if($data->{'errors'} eq 'BAD_ACTION')
-	{
-		return Dancer::Response->new(
-        	status => 404,
-        	content => 'Bad action id'
-    	);
-	}
-	if($data->{'errors'} eq 'SAME_USER')
-	{
-		redirect '/game/dashboard';
-	}	
+	#if($data->{'errors'} eq 'BAD_ACTION')
+	#{
+	#	return Dancer::Response->new(
+	#    	status => 404,
+	#    	content => 'Bad action id'
+	#	);
+	#}
+	#if($data->{'errors'} eq 'SAME_USER')
+	#{
+	#	redirect '/game/dashboard';
+	#}	
 	template 'help' => $data, {'layout' => 'help' };
 };
 get '/game/do/:action/:element' => sub {
