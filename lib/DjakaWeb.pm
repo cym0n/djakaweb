@@ -86,7 +86,10 @@ get '/game/do/:action/:element' => sub {
 	{
 		redirect '/game/courtesy/bad_action';
 	}
-	redirect '/game/dashboard';
+    else
+    {
+	    redirect '/game/dashboard';
+    }
 };
 get '/game/help/:action_id/click' => sub {
 	my $result = DjakaWeb::Controllers::support_click(params->{action_id});

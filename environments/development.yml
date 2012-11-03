@@ -33,4 +33,5 @@ facebook:
     secret: "2337e26f9a6b1f4d021cee5681a2f93e"
     graph_url: "http://graph.facebook.com/"
     graph_domain: "djakarta"
+    stubbed_cookie: "h6Y8Xf60Y5SxCEg6JbPfOqeLpdYHKVUhUOzx8EGLb58.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImNvZGUiOiIyLkFRRFBCbjZWdjRseWl0MHguMzYwMC4xMzUxOTU0ODAwLjEtMTQ1MjM5NDc4NnwxMzUxOTQ4Nzg2fDU3NFM3T1BNcXdsM2ZmT3lRam1DMEVIbHlkRSIsImlzc3VlZF9hdCI6MTM1MTk0ODQ4NiwidXNlcl9pZCI6IjE0NTIzOTQ3ODYifQ"
     stubbed: 0

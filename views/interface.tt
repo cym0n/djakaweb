@@ -106,9 +106,9 @@
 		</div>
 		<% END %>
 	</div>
-	<form>
+	<!-- form>
     	<input type="button" value="HELP" onclick="askForHelp()" />
-  	</form>
+  	</form -->
 <% INCLUDE footer.tt %>
 <!--div class="simple_overlay" id="actions">
 	<div>Here comes the actions</div>

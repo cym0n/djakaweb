@@ -37,7 +37,7 @@ session: YAML
 
 plugins:
   DBIC:
-    djaka:
+    default:
       dsn: dbi:SQLite:dbname=/home/web/DjakaWeb/DB/djaka.db
       schema_class: DjakaWeb::DjakartaDB
       #user: root
@@ -51,8 +51,7 @@ facebook:
     graph_domain: "djakaweb"
     secret: "def970e709749e1864972bc65da425f9"
     graph_url: "http://graph.facebook.com/"
-
-
+    stubbed_cookie: "hCkBYF3mb2Depk0a5WgvRAdnYhJXbM-asI0DYHVTFoM.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImNvZGUiOiIyLkFRQ3BKYjJ2RThJMC10ekUuMzYwMC4xMzUxOTQ3NjAwLjEtMTQ1MjM5NDc4NnwxMzUxOTQ0MDM4fG55LUlhSFdvWVJEZUd4ZkQwaTh1QVF6bkc2YyIsImlzc3VlZF9hdCI6MTM1MTk0MzczOCwidXNlcl9pZCI6IjE0NTIzOTQ3ODYifQ"
 
 #paths
 stories_path: /home/web/DjakaWeb/stories

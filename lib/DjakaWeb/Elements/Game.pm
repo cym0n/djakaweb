@@ -280,6 +280,7 @@ sub get_action_data
 	if($AA)
 	{
 		return { id => $AA->id(),
+                 object_code => $AA->object_code,
 			     object => $self->StoryManager()->getAttribute($AA->object_code, 'name'),
 				 action => $AA->action(),
 				 clicks => $AA->clicks()}	
@@ -287,6 +288,7 @@ sub get_action_data
 	else
 	{
 		return { id => -1,
+                 object_code => -1,
 			     object => 'NONE',
 			     action => 'NONE',
 			     clicks => 0}

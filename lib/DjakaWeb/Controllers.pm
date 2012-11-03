@@ -19,11 +19,11 @@ use constant GAME_WON => 1000;
 
 sub facebook_data
 {
+    my $val;
 	my $app_id = config->{facebook}->{'app_id'};
-	my $val;
 	if(config->{facebook}->{stubbed} == 1)
 	{
-		$val = "WhTeWdR-c4SHRCsW1IN3cfcmm1Tsv_-Gijf_OfN3OXk.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImNvZGUiOiJBUUM0YlhXNUJVUElXTFZqN095TEtsMkpSNDRpRk9aaXVac3pRcU5UQy1oTzM4Wmp1UFZJX0NfUnNpOFZpOFdqZ0k5b0EtcTNaWkVMbG1hbXBOZS1ac01CRDJhLXY0eXBQREZJS0R2MnBiX3F5blc5akVvaG9pWEZhN0ZqZGRsWjVlY0lPRHRlcURqTmUtWDhORlNGVG1PM0dQWnluNVVjSEI5RzBHR3FCMUotM1pIa2Myd1k2b3YzQW5jenV5ejItVVEiLCJpc3N1ZWRfYXQiOjEzMzExNTkwMTEsInVzZXJfaWQiOiIxNDUyMzk0Nzg2In0";	
+        $val = config->{facebook}->{stubbed_cookie};
 	}
 	else
 	{
@@ -48,6 +48,10 @@ sub facebook_data
 		return 0;
 	}
 	my $facebook_id = $json->{'user_id'};
+    if(config->{facebook}->{stubbed} == 1 && config->{facebook}->{fake_id})
+    {
+        $facebook_id = config->{facebook}->{fake_id};
+    }
 
 	my $user = DjakaWeb::Elements::User->new({'facebook_id' => $facebook_id});
 	session 'user' => $user->id();
@@ -193,6 +197,7 @@ sub schedule_action
 	my $element = shift;
 	my $action = shift;
 	my $A = $game->get_active_action();
+    #print Dumper($A);
 	if($A->{'action'} =~ m/^NONE$/)
 	{
 		$game->schedule_action($element, $action);

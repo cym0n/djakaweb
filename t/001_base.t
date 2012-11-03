@@ -1,4 +1,5 @@
-use Test::More tests => 1;
+use Test::More import => ['!pass'], tests => 1;
+use Dancer;
 use strict;
 use warnings;
 
