@@ -59,8 +59,8 @@ sub facebook_data
 	if(! $game_id)
 	{
 		#At this time, when no game exists, a new one with mission 000 is created
-		my $game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000', 'stories_path' => config->{'stories_path'}});
-		session 'game' => $game->id();
+        #my $game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000', 'stories_path' => config->{'stories_path'}});
+        #session 'game' => $game->id();
 	}
 	else
 	{
@@ -88,6 +88,11 @@ sub facebook_user
 	{
 		return undef;
 	}
+}
+
+sub get_missions
+{
+    return { 'stories' => DjakaWeb::Elements::Game::get_stories(config->{'stories_path'})};
 }
 
 sub get_data_for_interface

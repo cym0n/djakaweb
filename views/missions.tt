@@ -1,0 +1,19 @@
+<% PROCESS dictionary_it.tt %>
+
+<% INCLUDE header.tt %>
+<div class="left_column">
+	<% INCLUDE user_badge.tt %>
+</div>
+<div class="central_body">
+    <p>Sembra che tu non abbia in corso nessuna missione. Seleziona una missione dall'elenco per cominciare a giocare.</p>
+<div>
+    <ul>
+    <% FOREACH s IN stories %>
+    <li><% s.code %> - <% s.title %></li>
+    <% END %>
+</div>
+
+
+
+</div>
+<% INCLUDE footer.tt %>

@@ -22,6 +22,22 @@ around BUILDARGS => sub {
 	return $class->$orig(%params);
 };
 
+sub allowed_stories
+{
+    my $self = shift;
+    opendir (my $DIR, $self->path()) or die $!;
+    my @stories;
+    while (my $file = readdir($DIR)) {
+        if($file =~ /^(.*?)_START.yml/)
+        {
+            my $story = $1;
+            my $yaml = $self->openYAML_nostory($story, 'START');
+            push @stories, {code => $story, title => $yaml->[0]->{'title'}};
+        }
+    }
+    return \@stories;
+}
+
 
 sub getStory
 {
@@ -95,6 +111,17 @@ sub openYAML
 	my $code = shift;
 	my $yaml = YAML::Tiny->new;
 	my $file = $self->path() . "/" . $self->story() . "_" . $code . ".yml";
+	print "$file\n" if($debug);
+	$yaml = YAML::Tiny->read($file);
+	return $yaml;
+}
+sub openYAML_nostory
+{
+	my $self = shift;
+    my $story = shift;
+	my $code = shift;
+	my $yaml = YAML::Tiny->new;
+	my $file = $self->path() . "/" . $story . "_" . $code . ".yml";
 	print "$file\n" if($debug);
 	$yaml = YAML::Tiny->read($file);
 	return $yaml;

@@ -403,5 +403,11 @@ sub printStatus
 	my $self = shift;
 	$self->get_status()->print_status();
 }
+sub get_stories
+{
+    my $stories_path = shift;
+    my $storymanager = DjakaWeb::StoryManager->new({'path' => $stories_path, 'story' => undef});
+    return $storymanager->allowed_stories();
+}
 
 1;

@@ -5,6 +5,7 @@ use DjakaWeb::Controllers;
 
 our $VERSION = '0.1';
 
+my @game_not_needed_path = (qr/^\/game\/help/, qr/^\/game\/missions/);
 
 hook 'before' => sub {
 	#game navigations are only for logged users
@@ -17,8 +18,11 @@ hook 'before' => sub {
 			{
 				redirect '/facebook/login?returl=' . request->path_info;
 			}
-
 		}
+        if( ! session('game') && ! map { request->path_info =~ $_ ? (1) : () } @game_not_needed_path )
+        {
+				redirect '/game/missions';
+        }
 	}
 };
 
@@ -46,6 +50,12 @@ get '/game' => sub {
 get '/facebook/login' => sub {
 	template 'facebook_access' => { 'fb_app_id' => config->{facebook}->{'app_id'},
 	                                'returl' => request->{params}->{returl}};
+};
+
+
+#Missions
+get '/game/missions' => sub {
+    template 'missions' => DjakaWeb::Controllers::get_missions();
 };
 
 #Game navigations
