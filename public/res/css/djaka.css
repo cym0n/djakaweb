@@ -271,4 +271,12 @@ body
 	border-bottom: 1px solid #000000;
 	padding-bottom: 5px;
 }
+.mission_options span
+{
+    padding-left: 7px;
+}
+.mission_options 
+{
+    margin-bottom: 7px;
+}
 

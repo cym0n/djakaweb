@@ -94,6 +94,13 @@ sub get_missions
 {
     return { 'stories' => DjakaWeb::Elements::Game::get_stories(config->{'stories_path'})};
 }
+sub assign_mission
+{
+    my $mission_code = shift;
+   	my ($user, $game) = build_elements(); #game will be null
+    my $game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => $mission_code, 'stories_path' => config->{'stories_path'}});
+    session 'game' => $game->id();
+}
 
 sub get_data_for_interface
 {

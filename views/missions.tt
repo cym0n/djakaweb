@@ -7,11 +7,14 @@
 <div class="central_body">
     <p>Sembra che tu non abbia in corso nessuna missione. Seleziona una missione dall'elenco per cominciare a giocare.</p>
 <div>
-    <ul>
+    <form method="post">
+    <div class="mission_options">
     <% FOREACH s IN stories %>
-    <li><% s.code %> - <% s.title %></li>
+    <input type="radio" name="mission" value="<% s.code %>"/><span class="mission_option"><% s.title %><br />
     <% END %>
 </div>
+    <input type="submit" value="Scegli..." />
+    </form>
 
 
 

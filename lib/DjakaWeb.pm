@@ -58,6 +58,11 @@ get '/game/missions' => sub {
     template 'missions' => DjakaWeb::Controllers::get_missions();
 };
 
+post '/game/missions' => sub {
+    DjakaWeb::Controllers::assign_mission(params->{mission});
+	redirect '/game/dashboard';
+};
+
 #Game navigations
 get '/game/dashboard' => sub {
 	template 'interface' => DjakaWeb::Controllers::get_data_for_interface(), {'layout' => 'interface.tt'};
