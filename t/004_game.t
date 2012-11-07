@@ -1,4 +1,4 @@
-use Test::More import => ['!pass'], tests => 18;
+use Test::More import => ['!pass'], tests => 23;
 use Data::Dumper;
 use strict;
 use warnings;
@@ -10,6 +10,7 @@ use DjakaWeb;
 use Dancer::Test;
 
 my $fake_facebook_id = 100;
+my $test_mission = '000';
 my $test_object = '0000';
 my $test_action = 'BRIBE';
 
@@ -19,11 +20,19 @@ config->{facebook}->{stubbed} = 1;
 config->{facebook}->{fake_id} = $fake_facebook_id;
 
 #Access to the homepage
-diag("Homepage tests");
+diag("First access tests");
 route_exists [GET => '/game/dashboard'], "a route handler is defined for " . '/game/dashboard';
-response_status_is ['GET' => '/game/dashboard'], 200, "response status is 200 for " . '/game/dashboard';
-diag("If response status is a redirect probably stubbed login failed");
-
+response_status_is ['GET' => '/game/dashboard'], 302, "response status is 302 for " . '/game/dashboard' . ' because no mission is selected';
+diag("Mission configuration tests");
+route_exists [GET => '/game/missions'], "a route handler is defined for " . '/game/dashboard' . ' (GET)';
+route_exists [POST => '/game/missions'], "a route handler is defined for " . '/game/dashboard' . ' (GET)';
+diag("Access to the mission selection page - GET");
+response_status_is ['GET' => '/game/missions'], 200, "response status is 200 for " . '/game/missions';
+diag("POST value simulated. Submit mission selection - POST");
+$ENV{'QUERY_STRING'} = "mission=$test_mission";
+response_status_is ['POST' => '/game/missions'], 302, "response status is 302 for " . '/game/missions' . ' (POST) because of the submit of the mission';
+diag("Access to dashboard test");
+response_status_is ['GET' => '/game/dashboard'], 200, "response status is 200 for " . '/game/dashboard' . '. We have a mission.';
 diag("Objects menu check - descriptions");
 route_exists [GET => '/game/service/description/0000'], "a route handler is defined for " . '/game/service/description/0000';
 diag("Just one check for route existence");
