@@ -1,30 +1,17 @@
 name: Yosuf Tristan 
 type: person
 description:
-    START: |
-        {name} appare come un fervente islamico. Si è messo a disposizione di {0000.name} in tutto e per tutto. Non ha famiglia né molti amici e vive di quello che la comunità gli dà per il suo lavoro alla moschea. 
-    ALARMED: |
-        Gli ultimi avvenimenti lo hanno scosso molto rendendolo nervoso.
+    START: "{name} appare come un fervente islamico. Si è messo a disposizione di {0000.name} in tutto e per tutto. Non ha famiglia né molti amici e vive di quello che la comunità gli dà per il suo lavoro alla moschea." 
+    ALARMED: "Gli ultimi avvenimenti lo hanno scosso molto rendendolo nervoso."
 messages: 
-    KILL: |
-        {name} è stato eliminato.
-    FAILTAKE: |
-        {name} era pronto a riceverci e quindi è sfuggito al nostro tentativo di catturarlo.
-    FAILBRIBE: |
-        {name} ha rifiutato una nostra offerta di denaro per collaborare.
-    FAILINTERROGATION: |
-        {name} non ci ha dato informazioni interessanti su eventuali terroristi nella sua comunità. Ha però confessato che ultimamente {0000.name} riceve ingenti somme di denaro da fonti che lui non conosce.
-    TAKEN: |
-        {name} è detenuto presso la nostra base.
-    CONFESSION: |
-        {name} ha confessato di essere a capo della cellula terroristica. Ha anche parlato di una base operativa in {0008.name}. Si è però rifiutato di far sapere i nomi dei suoi complici e i suoi piani.
-    HIDEOUSE: |
-        {name} nell'ultimo periodo ha fatto visita spesso a {0008.name} anche se, per quello che ci è noto, non ne avrebbe motivo. '
-    QUIETSPY: |
-        {name} passa gran parte del tempo alla moschea, sia per organizzare le funzioni religiose che per parlare con i fedeli.
-    RESEARCH: |
-        {name} sembra che da giovane abbia frequentato, in patria, dei circoli di estremisti e che abbia anche avuto un addestramento paramilitare.
-        Esistono sue foto in mezzo alla guardia di alcuni noti capi del terrorismo mediorientale.
+    KILL: "{name} è stato eliminato."
+    FAILTAKE: "{name} era pronto a riceverci e quindi è sfuggito al nostro tentativo di catturarlo."
+    FAILBRIBE: "{name} ha rifiutato una nostra offerta di denaro per collaborare."
+    FAILINTERROGATION: "{name} non ci ha dato informazioni interessanti su eventuali terroristi nella sua comunità. Ha però confessato che ultimamente {0000.name} riceve ingenti somme di denaro da fonti che lui non conosce."
+    TAKEN: "{name} è detenuto presso la nostra base."
+    CONFESSION: "{name} ha confessato di essere a capo della cellula terroristica. Ha anche parlato di una base operativa in {0008.name}. Si è però rifiutato di far sapere i nomi dei suoi complici e i suoi piani."
+    HIDEOUSE: "{name} sembra che da giovane abbia frequentato, in patria, dei circoli di estremisti e che abbia anche avuto un addestramento paramilitare.<br />Esistono sue foto in mezzo alla guardia di alcuni noti capi del terrorismo mediorientale.<br /><br />Oggi come oggi passa gran parte del tempo alla moschea, sia per organizzare le funzioni religiose che per parlare con i fedeli.<br />Nell'ultimo periodo ha fatto visita spesso a {0008.name} anche se, per quello che ci è noto, non ne avrebbe motivo. "
+    RESEARCH: "{name} sembra che da giovane abbia frequentato, in patria, dei circoli di estremisti e che abbia anche avuto un addestramento paramilitare.<br />Esistono sue foto in mezzo alla guardia di alcuni noti capi del terrorismo mediorientale.<br /><br />Oggi come oggi passa gran parte del tempo alla moschea, sia per organizzare le funzioni religiose che per parlare con i fedeli."
 actions:
     KILL:
         DEAD: KO 
@@ -51,21 +38,18 @@ actions:
         ANY:
             - TAG ALARMED
             - TELL FAILINTERROGATION
-    RESEARCH:
-        ANY:
-            - TELL RESEARCH
     BRIBE:
         DEAD: KO 
         ANY:
             - TELL FAILBRIBE
             - DANGER 10
-    SPY:
+    INTEL:
         DEAD: KO 
-        ALARNED:
+        ALARMED:
             - TELL HIDEOUSE
             - ADD 0008
         ANY:
-            - TELL QUIETSPY
+            - TELL RESEARCH
 m2m:
     ALARM:
         DEAD: KO

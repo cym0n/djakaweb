@@ -4,7 +4,7 @@
 	TAKE = 'Rapire',
 	KILL = 'Uccidere',
 	INTERROGATE = 'Interrogare',
-	RESEARCH = 'Analizzare',
+	INTEL = 'Acquisire Intel',
 	VISIT = 'Visitare',
 	ASSAULT = 'Assaltare',
 	INSPECT = 'Ispezionare',

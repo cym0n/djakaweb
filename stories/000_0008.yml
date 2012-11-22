@@ -1,25 +1,20 @@
 name: Magazzino Wilson 
 type: place
 description:
-    START: |
-        Il {name} è solo un vecchio magazzino proprio dietro la moschea
+    START: "Il {name} è solo un vecchio magazzino proprio dietro la moschea."
 messages: 
-    ASSAULT: |
-        Le nostre squadre speciali hanno proceduto ad attaccare {name}, prendendolo con facilità, non avendo alcuna difesa.
-    SPY: |
-        {name} sembra non avere nessun uso a oggi. 
-    INSPECT: |
-        Siamo riusciti a fare una perquisizione di {name}
+    ASSAULT: "Le nostre squadre speciali hanno proceduto ad attaccare {name}, prendendolo con facilità, non avendo alcuna difesa."
+    SPY: "{name} sembra non avere nessun uso a oggi."
+    INSPECT: "Siamo riusciti a fare una perquisizione di {name}."
 actions:
     ASSAULT:
         ANY:
             - TELL ASSAULT
             - DO FINDWAREHOUSE 0007
             - DANGER 20
-    SPY: 
+    INTEL: 
         ANY:
             - TELL SPY
-    RESEARCH: KO
     INSPECT:
         ANY:
             - TELL INSPECT

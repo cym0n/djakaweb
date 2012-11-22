@@ -1,27 +1,17 @@
 name: Abdul Abdali 
 type: person
 description:
-    START: |
-        Operaio della {0001.name}
+    START: "Operaio della {0001.name}"
 messages: 
-    KILL: |
-        L'omicidio di {name} è stato portato a termine. '
-    TAKEN: |
-        {name} ora si trova detenuto nella nostra base.
-    SUICIDE: |
-        {name}, quando ha visto di essere in trappola, si è suicidato, portando con sé due dei nostri uomini.
-    CONFESSION: |
-        {name} ha confessato di far parte di una organizzazione terroristica capeggiata da {0003.name}. Ha anche parlato di un nascondiglio: {0008.name}
-    RESEARCH: |
-        Ricerche su {name} non hanno rilevato niente di interessante.
-    NOBRIBE: |
-        {name} non accetta denaro da noi.
-    NOTHING: |
-        {name} dice di non sapere niente sugli attentati.
-    ANGRY: |
-        Il pedinamento di {name} ci ha fatto notare che ultimamente va molto spesso alla moschea, per sfogare la sua rabbia. Si incontra con {0000.name} e {0003.name}
-    BOSS: |
-        Abbiamo seguito {name} fino a {0008.name} dove sembra stia tramando qualcosa.
+    KILL: "L'omicidio di {name} &egrave; stato portato a termine."
+    TAKEN: "{name} ora si trova detenuto nella nostra base."
+    SUICIDE: "{name}, quando ha visto di essere in trappola, si &egrave; suicidato, portando con s&egrave; due dei nostri uomini."
+    CONFESSION: "{name} ha confessato di far parte di una organizzazione terroristica capeggiata da {0003.name}. Ha anche parlato di un nascondiglio: {0008.name}"
+    RESEARCH: "Ricerche su {name} non hanno rilevato niente di interessante."
+    NOBRIBE: "{name} non accetta denaro da noi."
+    NOTHING: "{name} dice di non sapere niente sugli attentati."
+    ANGRY: "Il pedinamento di {name} ci ha fatto notare che ultimamente va molto spesso alla moschea, per sfogare la sua rabbia. Si incontra con {0000.name} e {0003.name}"
+    BOSS: "Abbiamo seguito {name} fino a {0008.name} dove sembra stia tramando qualcosa."
 actions:
     KILL:
         DEAD: KO 
@@ -50,22 +40,20 @@ actions:
             - ADD 0008
         ANY:
             - TELL NOTHING
-    RESEARCH:
+    INTEL:
         ANY:
             - TELL RESEARCH
-    BRIBE:
-        DEAD: KO 
-        ANY:
-            - TELL NOBRIBE
-    SPY:
-        DEAD: KO 
+        DEAD:
+            - TELL RESEARCH
         BOSS:
             - TELL PLAN
             - ADD 0008
         ANGRY:
             - TELL MOSQUE
+    BRIBE:
+        DEAD: KO 
         ANY:
-            - TELL USUAL
+            - TELL NOBRIBE
 m2m:
     ANGRY:
         DEAD: KO

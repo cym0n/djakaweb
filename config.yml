@@ -63,9 +63,7 @@ wait_to_support_click: 1
 
 clicks:
     #common
-    RESEARCH: 3
-    #people and places
-    SPY: 4
+    INTEL: 3
     #people
     KILL: 7
     TAKE: 7

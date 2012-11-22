@@ -159,8 +159,6 @@ sub getDangerStory
 		return "Il livello di tensione si è abbassato di " . $level*-1 . '.';;
 	}
 }
-
-
 sub getElementDescription
 {
 	my $self = shift;

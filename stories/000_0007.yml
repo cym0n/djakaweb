@@ -1,16 +1,13 @@
 name: Bomba artigianale 
 type: object
 description:
-    START: |
-        Una bomba artigianale, ma molto potente
+    START: "Una bomba artigianale, ma molto potente."
 messages: 
-    RESEARCH: |
-        La bomba è stata realizzata con materiali reperibili in magazzini di chimica e assemblata con esperienza.
-    TAKEN: |
-        Abbiamo recuperato {name}
+    RESEARCH: "{name} &egrave; stata realizzata con materiali reperibili in magazzini di chimica e assemblata con esperienza."
+    TAKEN: "Abbiamo recuperato {name}."
 actions:
     PICKUP: KO
-    RESEARCH:
+    INTEL:
         ANY:
             - TELL RESEARCH
 m2m:

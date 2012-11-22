@@ -1,22 +1,14 @@
 name: Al-Manaba 
 type: place
 description:
-    START: |
-        {name} è la moschea di riferimento della comunità islamica di Loose Bricks.
+    START: "{name} &egrave; la moschea di riferimento della comunit&agrave; islamica di Loose Bricks."
 messages: 
-    ASSAULT: |
-        L'assalto alla {name} ha gettato la zona nel caos. {0001.name} è morto e tutti sono molto nervosi ora. E' stata aperta un'inchiesta per capire l'operato della squadra e la missione rischia di fallire.
-    SPY: |
-        {name} è una moschea molto frequentata. Al di là di {0000.name} sembra che sia gestita da {0003.name}. Abbiamo individuato anche alcuni operai che vi passano molto più tempo degli altri: {0004.name}, {0005.name}, {0006.name}
-    RESEARCH: |
-        Non ci sono informazioni rilevanti su {name}.
-    FAIL: |
-        Infiltrarci in {name} risulta impossibile.
-    INSPECTION: |
-        La moschea sembra avere un collegamento diretto a {0008.name}.
-        Sono state oltretutto trovate tracce che ricondurrebbero alla creazione di {0007.name} che però non si trova qui.
-    INFILTRATED: |
-        Ci siamo infiltrati nella moschea! Ora abbiamo l'elenco completo dei potenziali terroristi e dati su come possono essere organizzati gli attentati.
+    ASSAULT: "L'assalto alla {name} ha gettato la zona nel caos. {0001.name} &egrave; morto e tutti sono molto nervosi ora. E' stata aperta un'inchiesta per capire l'operato della squadra e la missione rischia di fallire."
+    SPY: "{name} &egrave; una moschea molto frequentata. Al di l&agrave; di {0000.name} sembra che sia gestita da {0003.name}. Abbiamo individuato anche alcuni operai che vi passano molto più tempo degli altri: {0004.name}, {0005.name}, {0006.name}"
+    RESEARCH: "Non ci sono informazioni rilevanti su {name}."
+    FAIL: "Infiltrarci in {name} risulta impossibile."
+    INSPECTION: "La moschea sembra avere un collegamento diretto a {0008.name}.<br />Sono state oltretutto trovate tracce che ricondurrebbero alla creazione di {0007.name} che però non si trova qui."
+    INFILTRATED: "Ci siamo infiltrati nella moschea! Ora abbiamo l'elenco completo dei potenziali terroristi e dati su come possono essere organizzati gli attentati."
 actions:
     ASSAULT:
         ANY:
@@ -36,7 +28,7 @@ actions:
             - ADD 0004
             - ADD 0005
             - ADD 0006
-    RESEARCH:
+    INTEL:
         ANY:
             - TELL RESEARCH
     INSPECT:
@@ -56,8 +48,6 @@ actions:
         ANY:
             - TELL FAIL
             - DANGER 10
-    VISIT: 
-        ANY: KO
 m2m:
     FRIEND:
         ASSAULTED: KO
