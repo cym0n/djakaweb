@@ -39,7 +39,7 @@ session: Storable
 plugins:
   DBIC:
     djaka:
-      dsn: dbi:mysql:djakarta
+      dsn: dbi:mysql:djakarta:127.6.130.129
       schema_class: DjakaWeb::DjakartaDB
       user: djakarta
       pass: djakarta
