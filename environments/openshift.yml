@@ -1,0 +1,51 @@
+# configuration file for development environment
+
+app_domain: "djaka.therabbit.it"
+
+# the logger engine to use
+# console: log messages to STDOUT (your console where you started the
+#          application server)
+# file:    log message to a file in log/
+logger: "console"
+
+# the log level for this environement
+# core is the lowest, it shows Dancer's core log messages as well as yours
+# (debug, warning and error)
+log: "debug"
+
+# should Dancer consider warnings as critical errors?
+warnings: 1
+
+# should Dancer show a stacktrace when an error is caught?
+show_errors: 1
+
+# auto_reload is a development and experimental feature
+# you should enable it by yourself if you want it
+# Module::Refresh is needed 
+# 
+# Be aware it's unstable and may cause a memory leak.
+# DO NOT EVER USE THAT FEATURE IN PRODUCTION 
+# OR TINY KITTENS SHALL DIE WITH LOTS OF SUFFERING
+auto_reload: 0
+
+facebook:
+    app_id: "474275542616399"
+    secret: "daff413d3d763b57c58df0b7aeb5879e"
+    graph_url: "http://graph.facebook.com/"
+    graph_domain: "djakartaopenshift"
+
+session: Storable
+
+plugins:
+  DBIC:
+    djaka:
+      dsn: dbi:mysql:djakarta
+      schema_class: DjakaWeb::DjakartaDB
+      user: djakarta
+      pass: djakarta
+      options:
+        RaiseError: 1
+        PrintError: 1
+
+#paths
+stories_path: "/var/lib/openshift/4ae3e584c92849cba17a40a58c0a1214/app-root/runtime/repo/djakaweb/stories"
