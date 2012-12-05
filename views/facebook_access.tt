@@ -25,3 +25,4 @@
     }(document));
 </script>
 <div class="fb-login-button">Login with Facebook</div>
+<% INCLUDE footer.tt %>
