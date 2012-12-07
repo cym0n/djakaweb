@@ -17,11 +17,13 @@ hook 'before' => sub {
 			if($fblogin == 0)
 			{
 				redirect '/facebook/login?returl=' . request->path_info;
+                return 0;
 			}
 		}
         if( ! session('game') && ! map { request->path_info =~ $_ ? (1) : () } @game_not_needed_path )
         {
 				redirect '/game/missions';
+                return 0;
         }
 	}
 };
