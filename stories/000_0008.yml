@@ -19,5 +19,3 @@ actions:
         ANY:
             - TELL INSPECT
             - DO FINDWAREHOUSE 0007
-    INFILTRATE: KO
-    VISIT: KO
