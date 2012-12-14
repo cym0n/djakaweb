@@ -11,6 +11,7 @@ use DjakaWeb::Elements::Game;
 use DjakaWeb::Elements::User;
 
 use constant GAME_LOST => -1000;
+use constant CLICK_TIMEOUT => -102;
 use constant ACTION_ERROR => -101;
 use constant CLICK_ERROR => -100;
 use constant CLICK_DONE => 100;
@@ -265,7 +266,7 @@ sub click
 	}
 	else
 	{
-		return CLICK_ERROR;
+		return CLICK_TIMEOUT;
 	}
 }
 sub support_click
@@ -289,7 +290,7 @@ sub support_click
 	}
 	else
 	{
-		return CLICK_ERROR;
+		return CLICK_TIMEOUT;
 	}
 }
 

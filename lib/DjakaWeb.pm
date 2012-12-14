@@ -110,7 +110,7 @@ get '/game/do/:action/:element' => sub {
 };
 get '/game/help/:action_id/click' => sub {
 	my $result = DjakaWeb::Controllers::support_click(params->{action_id});
-	if($result == DjakaWeb::Controllers::CLICK_ERROR)
+	if($result == DjakaWeb::Controllers::CLICK_ERROR || $result == DjakaWeb::Controllers::CLICK_TIMEOUT)
 	{
 		redirect '/game/courtesy/bad_click';
 	}
@@ -130,7 +130,7 @@ get '/game/click' => sub {
 		redirect '/game/win';
 	
 	}
-	elsif($result == DjakaWeb::Controllers::CLICK_ERROR)
+	elsif($result == DjakaWeb::Controllers::CLICK_ERROR || $result == DjakaWeb::Controllers::CLICK_TIMEOUT)
 	{
 		redirect '/game/courtesy/bad_click';
 	}
