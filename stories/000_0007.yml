@@ -6,7 +6,8 @@ messages:
     RESEARCH: "{name} &egrave; stata realizzata con materiali reperibili in magazzini di chimica e assemblata con esperienza."
     TAKEN: "Abbiamo recuperato {name}."
 actions:
-    PICKUP: KO
+    PICKUP: 
+        ANY: KO
     INTEL:
         ANY:
             - TELL RESEARCH
