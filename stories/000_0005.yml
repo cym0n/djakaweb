@@ -46,10 +46,10 @@ actions:
         DEAD:
             - TELL RESEARCH
         BOSS:
-            - TELL PLAN
+            - TELL BOSS
             - ADD 0008
         ANGRY:
-            - TELL MOSQUE
+            - TELL ANGRY
     BRIBE:
         DEAD: KO 
         ANY:
