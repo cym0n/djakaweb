@@ -168,7 +168,7 @@ sub get_actions
         for(@already)
         {
             my $a = $_;
-            if($actions{$a->action()} && $actions{$a->action()}->{'real status'} eq $a->object_status)
+            if($actions{$a->action()} && $a->object_status && $actions{$a->action()}->{'real status'} eq $a->object_status)
             {
                 delete $actions{$a->action()};
             }
