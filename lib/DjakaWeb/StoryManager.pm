@@ -90,17 +90,21 @@ sub getAnyActions
 	{
 		my $a = $_;
 		my $a_with_status;
+        my $real_status;
 		if(! $actions_grid->{$a}->{$status})
 		{
-			$a_with_status = $actions_grid->{$a}->{'ANY'}
+			$a_with_status = $actions_grid->{$a}->{'ANY'};
+            $real_status = 'ANY';
 		}
 		else
 		{
 			$a_with_status = $actions_grid->{$a}->{$status};
+            $real_status = $status;
 		}
-		if(ref $a_with_status)
+		if(ref $a_with_status) #In YAML sintax '%action%: KO' makes this test return false
 		{
-			$actions{$a} = $a_with_status;
+			$actions{$a}->{'effects'} = $a_with_status;
+            $actions{$a}->{'real status'} = $real_status;
 		}
 	}
 	return %actions;

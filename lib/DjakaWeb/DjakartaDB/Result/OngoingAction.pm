@@ -52,6 +52,12 @@ __PACKAGE__->table("ONGOING_ACTIONS");
   data_type: 'integer'
   is_nullable: 1
 
+=head2 object_status
+
+  data_type: 'varchar'
+  is_nullable: 1
+  size: 30
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -67,12 +73,14 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_nullable => 1 },
   "clicks",
   { data_type => "integer", is_nullable => 1 },
+  "object_status",
+  { data_type => "varchar", is_nullable => 1, size => 30 },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-11-19 22:46:27
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FiciksgPdUIj4GIntx8Byg
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-16 12:13:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5n/EvM0KxGXR4RC4F602tg
 
 sub click
 {
@@ -98,7 +106,8 @@ sub add_action
 	my $game = shift;
 	my $object = shift;
 	my $action = shift;
-	$self->create({game_id => $game, object_code => $object, action => $action, active => 1, clicks => 0});
+	my $status = shift;
+	$self->create({game_id => $game, object_code => $object, object_status => $status, action => $action, active => 1, clicks => 0});
 }
 
 sub get_active_action
@@ -106,6 +115,13 @@ sub get_active_action
 	my $self = shift;
 	my $game = shift;
 	return $self->find({game_id => $game, active => 1});
+}
+sub already_used_actions
+{
+    my $self = shift;
+    my $game = shift;
+    my $object = shift;
+    return $self->search({game_id => $game, object_code => $object});
 }
 
 sub click

@@ -151,7 +151,7 @@ sub get_actions
 {
 	my $self = shift;
 	my $element = shift;
-	my $filter = shift;
+	my $filter = shift; #Exclude actions that only give informations or raise danger (only for test purpose
 	my $status = $self->get_status()->get_status($element);
 	if($status eq "NOT_FOUND")
 	{
@@ -164,7 +164,16 @@ sub get_actions
 	my %actions = $self->StoryManager()->getActions($element, $status);
 	if(! $filter)
 	{
-		return %actions;
+        my @already = $self->ActionsDB()->already_used_actions($self->id(), $element);
+        for(@already)
+        {
+            my $a = $_;
+            if($actions{$a->action()} && $actions{$a->action()}->{'real status'} eq $a->object_status)
+            {
+                delete $actions{$a->action()};
+            }
+        }
+        return %actions;
 	}
 	else
 	{
@@ -172,7 +181,7 @@ sub get_actions
 		for(keys %actions)
 		{
 			my $useful = 0;
-			for(@{$actions{$_}})
+			for(@{$actions{$_}->{'effects'}})
 			{
 				my @eff = split ' ', $_;
 				if(!($eff[0] =~ /TELL/) && !($eff[0] =~ /DANGER/))
@@ -211,7 +220,7 @@ sub do_action
 	{
 		return;
 	}
-	my $effects = $actions{$action};
+	my $effects = $actions{$action}->{'effects'};
 	for(@{$effects})
 	{
 		my @eff = split(' ', $_);
@@ -264,7 +273,9 @@ sub schedule_action
 	my $self = shift;
 	my $element = shift;
 	my $action = shift;
-	$self->ActionsDB->add_action($self->id(), $element, $action);
+    my $status = $self->get_status()->get_status($element);
+    my %actions = $self->StoryManager()->getActions($element, $status);
+	$self->ActionsDB->add_action($self->id(), $element, $action, $actions{$action}->{'real status'});
 }
 #Retrieve the action
 sub get_active_action
