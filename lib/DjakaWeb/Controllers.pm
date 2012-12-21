@@ -295,6 +295,18 @@ sub support_click
 		return CLICK_TIMEOUT;
 	}
 }
+sub victory
+{
+    my $end = shift;
+	my ($user, $game) = build_elements();
+    my %victory = $game->get_victory($end);
+    $game->victory();
+    my $score = $user->add_points($victory{'score'});
+    session 'game' => undef; 
+
+    return { message => $victory{'text'}, points => $victory{'score'}, result => $score };
+
+}
 
 
 sub build_elements

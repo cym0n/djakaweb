@@ -108,6 +108,13 @@ sub trace_click
 									    "type" => $type});
 }
 
+sub add_points
+{
+    my $self = shift;
+    my $points = shift;
+    return $self->UserDB()->add_points($points);
+}
+
 
 1;
 

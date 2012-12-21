@@ -5,9 +5,18 @@
 </div>
 <div class="central_body">
 	<div class="box red">
-		<div id="messages">
-			<% tag %>
-		</div>
+		<p>
+			<% message %>
+		</p>
+		<p>
+			Hai guadagnato <% points %> punti!
+		</p>
+		<p
+			I tuoi punti attuali sono <% result %>
+		</p>
+        <p>
+            <a href="/">Torna alla homepage</a>
+        </p>
 	</div>
 <div>
 <% INCLUDE footer.tt %>

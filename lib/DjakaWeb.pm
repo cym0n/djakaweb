@@ -96,7 +96,6 @@ get '/game/do/:action/:element' => sub {
 	elsif($result == DjakaWeb::Controllers::GAME_WON)
 	{
 		redirect '/game/win';
-	
 	}
 	elsif($result == DjakaWeb::Controllers::CLICK_ERROR)
 	{
@@ -145,6 +144,7 @@ get '/game/click' => sub {
 get '/game/gameover' => sub {
 	if(session('end') =~ /^__GAMEOVER__$/)
 	{
+        session 'end' => undef;
 		template 'gameover';
 	}
 	else
@@ -155,7 +155,8 @@ get '/game/gameover' => sub {
 get '/game/win' => sub {
 	if(session('end'))
 	{
-		template 'win' => { 'tag' => session('end')};
+        session end => undef;
+		template 'win' => DjakaWeb::Controllers::victory(session('end'));
 	}
 	else
 	{

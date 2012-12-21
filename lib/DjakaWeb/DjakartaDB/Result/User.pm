@@ -40,6 +40,11 @@ __PACKAGE__->table("USERS");
   data_type: 'timestamp'
   is_nullable: 1
 
+=head2 score
+
+  data_type: 'int'
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -51,12 +56,14 @@ __PACKAGE__->add_columns(
   { data_type => "timestamp", is_nullable => 1 },
   "last_support_done",
   { data_type => "timestamp", is_nullable => 1 },
+  "score",
+  { data_type => "int", is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-07-31 22:45:34
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1ZFqjzgqggh9krXgWIaCCQ
++# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-21 22:39:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aF/6uT2eW6JimcV3wN3b7g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -78,6 +85,15 @@ sub update_support_click_time
 	$self->update({'last_support_done' => DateTime->now()});
 	return $self->last_support_done();
 }
+sub add_points
+{
+    my $self = shift;
+    my $points = shift;
+    my $actual_points = $self->score();
+    $actual_points = 0 if ! $actual_points;
+    $self->update({'score' => $points + $actual_points});
+    return $self->score();
+}
 
 
 
@@ -91,7 +107,7 @@ sub newUser
 {
 	my $self = shift;
 	my $fb = shift;
-	my $user = $self->create({last_action_done => undef, facebook_id => $fb });
+	my $user = $self->create({last_action_done => undef, facebook_id => $fb, score => 0 });
 	return $user;
 }
 

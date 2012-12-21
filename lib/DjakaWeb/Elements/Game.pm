@@ -355,7 +355,7 @@ sub check_victory
 		my $check = 1;
 		for(keys %{$victories->{$tag}->{'condition'}})
 		{
-			my $status = $self->get_status($_);
+			my $status = $self->get_status()->get_status($_);
 			if(! ($status eq $victories->{$tag}->{'condition'}->{$_}))
 			{ 
 				$check = 0;
@@ -366,12 +366,24 @@ sub check_victory
 	}
 	return undef;
 }
+sub get_victory
+{
+    my $self = shift;
+    my $tag = shift;
+	my $victories = $self->StoryManager()->getVictory();	
+    return %{$victories->{$tag}};
+}
 
 
 sub defeat
 {
     my $self = shift;
     $self->get_game()->defeat();
+}
+sub victory
+{
+    my $self = shift;
+    $self->get_game()->victory();
 }
 
 #Danger management

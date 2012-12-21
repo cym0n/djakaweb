@@ -82,6 +82,11 @@ sub defeat
     my $self = shift;
     $self->update({active => -1});
 }
+sub victory
+{
+    my $self = shift;
+    $self->update({active => 2});
+}
 
 
 __PACKAGE__->resultset_class('DjakaWeb::DjakartaDB::Game::ResultSet');
