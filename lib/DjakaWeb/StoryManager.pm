@@ -35,7 +35,7 @@ sub allowed_stories
             push @stories, {code => $story, title => $yaml->[0]->{'title'}};
         }
     }
-    return \@stories;
+    return @stories;
 }
 
 

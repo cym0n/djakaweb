@@ -93,7 +93,26 @@ sub facebook_user
 
 sub get_missions
 {
-    return { 'stories' => DjakaWeb::Elements::Game::get_stories(config->{'stories_path'})};
+   	my ($user, $game) = build_elements(); #game will be null
+    my @stories = DjakaWeb::Elements::Game::get_stories(config->{'stories_path'});
+    my @available_stories;
+    my @completed_stories;
+    for(@stories)
+    {
+       if($user->story_completed($_->{'code'}))
+       {
+            push @completed_stories, $_;
+       }
+       else
+       {
+           my $s = $_;
+           $s->{'failures'} = $user->get_story_failures($_->{'code'});
+           push @available_stories, $s;
+       }
+    
+    
+    }
+    return { 'stories' => \@available_stories, 'completed' => \@completed_stories };
 }
 sub assign_mission
 {

@@ -114,7 +114,31 @@ sub add_points
     my $points = shift;
     return $self->UserDB()->add_points($points);
 }
-
+sub story_completed
+{
+    my $self = shift;
+    my $story_code = shift;
+    my @games =  $schema->resultset('Game')->search({"user_id" => $self->id,
+                                                  "mission_id" => $story_code,
+                                                  "active" => 2});
+    if(@games)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+sub get_story_failures
+{
+    my $self = shift;
+    my $story_code = shift;
+    my @games =  $schema->resultset('Game')->search({"user_id" => $self->id,
+                                                  "mission_id" => $story_code,
+                                                  "active" => -1});
+    return scalar(@games);
+}
 
 1;
 

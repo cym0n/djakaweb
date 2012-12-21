@@ -10,13 +10,19 @@
     <form method="post">
     <div class="mission_options">
     <% FOREACH s IN stories %>
-    <input type="radio" name="mission" value="<% s.code %>"/><span class="mission_option"><% s.title %><br />
+    <input type="radio" name="mission" value="<% s.code %>"/><span class="mission_option"><% s.title %> (fallita <% s.failures %> volte)</span><br />
     <% END %>
 </div>
     <input type="submit" value="Scegli..." />
     </form>
-
-
-
+    <hr />
+    <div>
+    <p>Qui le missioni che hai gi&agrave; portato a termine</p>
+    <ul>
+    <% FOREACH c IN completed %>
+        <% c.title %>
+    <% END %>
+    </ul>
+    </div>
 </div>
 <% INCLUDE footer.tt %>
