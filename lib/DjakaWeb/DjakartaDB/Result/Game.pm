@@ -77,6 +77,12 @@ sub write_danger
 	return $self->danger();
 }
 
+sub defeat
+{
+    my $self = shift;
+    $self->update({active => -1});
+}
+
 
 __PACKAGE__->resultset_class('DjakaWeb::DjakartaDB::Game::ResultSet');
 

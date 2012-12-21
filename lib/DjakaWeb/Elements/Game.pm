@@ -367,6 +367,13 @@ sub check_victory
 	return undef;
 }
 
+
+sub defeat
+{
+    my $self = shift;
+    $self->get_game()->defeat();
+}
+
 #Danger management
 sub set_danger
 {

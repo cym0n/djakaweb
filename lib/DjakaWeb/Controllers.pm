@@ -239,6 +239,8 @@ sub click
 			if($game->danger > config->{'danger_threshold'})
 			{
 				session 'end' => '__GAMEOVER__';
+				session 'game' => undef;
+                $game->defeat();
 				return GAME_LOST; 
 			}
 			else

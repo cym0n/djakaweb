@@ -13,7 +13,9 @@
 	<div class="box red">
 		<div id="messages">
 			Le tue azioni sconsiderate hanno esposto troppo la nostra organizzazione. I nostri nemici hanno reagito ai nostri goffi tentativi di fermarli e dei civili sono rimasti coinvolti.<br />
-			L'incarico ti viene tolto!
+			L'incarico ti viene tolto!<br />
+            <br />
+            <a href="/">Torna alla homepage</a>
 		</div>
 	</div>
 </div>

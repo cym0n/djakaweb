@@ -5,7 +5,10 @@ use DjakaWeb::Controllers;
 
 our $VERSION = '0.1';
 
-my @game_not_needed_path = (qr/^\/game\/help/, qr/^\/game\/missions/);
+my @game_not_needed_path = (qr/^\/game\/help/, 
+                            qr/^\/game\/missions/,
+                            qr/^\/game\/gameover/,
+                            );
 
 hook 'before' => sub {
 	#game navigations are only for logged users
