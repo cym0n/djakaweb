@@ -1,0 +1,27 @@
+name: Gunther Hex
+type: person
+description:
+    START: "{name} è un mercenario di alto profilo pronto a qualsiasi tipo di operazione. Lavora generalmente in oriente, ma è stato impiegato anche da diverse organizzazioni nostre alleate."
+messages:
+    INTEL: "Gunther Hex ha all'attivo missioni di vario genere in tutto il mondo. Non fa alcuna distinzione tra buoni e cattivi ed è uno dei migliori nel suo campo. Il suo ultimo indirizzo noto è {0006.name}."
+actions:
+    KILL:
+        ANY: KO
+    TAKE: 
+        ANY: KO
+    INTERROGATE: 
+        ANY: KO
+    INTEL: 
+        ANY:
+            - TELL INTEL
+            - ADD 0006
+    BRIBE: 
+        ANY: KO
+m2m:
+    DETECTED:
+            - TAG DETECTED
+
+#Se si cerca di rapire e uccidere Gunhter, oltre ad alzare il livello della tensione, lui ucciderà Rupert
+
+
+

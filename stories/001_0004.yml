@@ -1,0 +1,23 @@
+name: Rupert Marseil
+type: person
+description:
+    START: "{name} è u dirigente della {0003.name} molto importante. E' uno squalo della finanza in giro da parecchi anni. Ha anche importanti interessi economici nella {0000.name}"
+messages:
+    INTEL: "E' evidente che {name} è il motivo per cui la {0000.name} lavora per la {0002.name} con grande profitto, visto che lui ha le mani in pasta in entrambe le aziende. Sembra però avere anche grandi interessi nella Cina."
+    INTERROGATE: "{name} non ha idea di chi possa mai aver attaccato la {0000.name}. Teme che qualcuno abbia agito alle sue spalle coinvolgendo l'azienda in traffici poco puliti"
+    KILL4ME: "{name} non accetterà niente da noi, ma incredibilmente dice di avere informazioni importanti che ci darà a patto che uccideremo {0001.name}!"
+actions:
+    KILL:
+        ANY: KO
+    TAKE:
+        ANY: KO
+    INTERROGATE:
+        ANY:
+            - TELL INTERROGATE
+    INTEL:
+        ANY:
+            - TELL INTEL
+    BRIBE:
+        ANY: 
+            - TELL KILL4ME
+            - TAG CONTRACTOR

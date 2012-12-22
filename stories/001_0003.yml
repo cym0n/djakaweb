@@ -1,0 +1,25 @@
+name: Zhan-Locus
+type: place
+description:
+    START: "La {name} è una grossa azienda che offre consulenza ai media, all'alta finanza e alla politica. Ultimamente una grossa fetta dei suoi interessi sono in Cina e nell'area dell'estremo oriente." 
+messages:
+    INTEL: "La {name} è una grande azienda con importanti agganci anche nel governo. Le sue capacità si estendono ben oltre le capacità di una semplice azienda. {0004.name} è uno dei suoi dirigenti più importanti e tra le sue amicizie annovera diversi ministri vecchi e nuovi."
+    VISIT: "La {name} è troppo vasta per farsi un'idea di tutte le sue attività. Abbiamo parlato con chi era in contatto con la {0000.name}. Alcune persone sono preoccupate per {0001.name}, anche se tutti riferiscono che era una persona molto fredda e rigida, distaccata."
+    FAILINFILTRATION: "Appena abbiamo approntato l'operazione di infiltrazione ci sono giunte notizie che {0004.name} ci ha chiesto di desistere. Non ci è stato permesso procedere"
+actions:
+    INTEL:
+        ANY:
+            - TELL INTEL
+            - ADD 0004
+    ASSAULT:
+        ANY: KO
+    INFILTRATE:
+        ANY: 
+           - TELL FAILINFILTRATION
+           - DANGER 20
+    INSPECT:
+        ANY: KO
+    VISIT:
+        ANY:
+            - TELL VISIT
+

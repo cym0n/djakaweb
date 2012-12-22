@@ -1,0 +1,18 @@
+name: device custom
+type: object
+description:
+    START: "Un componente elettronico di origine sconosciuta. Sembra parte di una rete di oggetti più grande. Potrebbe essere adibito alla criptazione/decriptazione dati."
+messages: 
+    ANALYSIS: "L'oggetto sembra un dispositivo per comunicazioni protette. E' molto sofisticato, sicuramente più di quanto ci si possa aspettare da un'azienda come {0000.name}. Impossibile stabilire con chi comunicasse."
+    TAKEN: "Abbiamo recuperato {name}."
+actions:
+    PICKUP: 
+        ANY: 
+            - TELL TAKEN
+            - TAG TAKEN
+    ANALYSE:
+        ANY: KO
+        TAKEN:
+            - TELL ANALYSIS
+
+#UNa volta raggiunto un certo livello di conoscenza sul device il tizio in ospedale si riprende

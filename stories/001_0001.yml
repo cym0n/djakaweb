@@ -1,0 +1,29 @@
+name: Wilson Thamadriel
+type: person
+description:
+    START: "{name} è un analista matematico che lavora per {0000.name}. E' in fin di vita all'ospedale per le ferite ad arma da fuoco subite durante l'assalto alla società."
+    DEAD: "Attualmente è morto"
+messages:
+    INTEL: "{name} è un analista matematico, la sua laurea è stata finanziata dall'esercito, quando era arruolato nell'aeronautica. Ha lasciato le forze armate quando è stato assunto dalla {0000.name}. Date le sue qualifiche, però, potrebbe aspirare a un posto più prestigioso"
+    KILL: "{name} è stato ucciso. Tutti sono convinti che sia deceduto a seguito delle ferite riportate"
+    FAILTAKE: "{name} risulta a oggi troppo grave per essere spostato. Non c'è stato modo di prenderlo senza mettere a rischio la sua vita"
+    FAILINTERROGATE: "{name} sta troppo male per rispondere a qualsiasi domanda"
+actions:
+    KILL:
+        DEAD: KO 
+        ANY:
+            - TAG DEAD
+            - TELL KILL
+    TAKE:
+        DEAD: KO 
+        ANY:
+            - TELL FAILTAKE
+    INTERROGATE:
+        DEAD: KO
+        ANY:
+            - TELL FAILINTERROGATE
+    INTEL:
+        ANY:
+            - TELL INTEL
+    BRIBE:
+        ANY: KO

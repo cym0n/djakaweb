@@ -1,0 +1,7 @@
+title: La strage degli innocenti
+start_danger: 30
+briefing: "La {name} è una piccola società per le analisi statistiche con dieci dipendenti e la sede in un importante palazzo della città. L'altro giorno la sua sede è stata attaccata da un commando. Tutti i suoi dipendenti sono stati massacrati tranne {0001.name} che però giace in condizioni molto gravi in ospedale.<br />L'attacco appare insensato a meno che la {name} non abbia qualcosa da nascondere...<br />Uno degli assaltatori è stato individuato come {0002.name}, un mercenario.<br /><br />La nostra missione è scoprire chi ha compiuto il massacro e per quale motivo. "
+elements:
+    - 0000
+    - 0001
+    - 0002
