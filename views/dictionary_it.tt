@@ -1,6 +1,5 @@
 <% translate = {
 	BRIBE = 'Corrompere',
-	SPY = 'Sorvegliare',
 	TAKE = 'Rapire',
 	KILL = 'Uccidere',
 	INTERROGATE = 'Interrogare',
@@ -9,5 +8,8 @@
 	ASSAULT = 'Assaltare',
 	INSPECT = 'Ispezionare',
 	INFILTRATE = 'Infiltrare',
+    PICKUP = 'prendere',
+    ANALYSE = 'analizzare',
+    USE = 'usare'
 	}
 %>

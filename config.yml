@@ -76,3 +76,5 @@ clicks:
     VISIT: 3
     #objects
     PICKUP: 4
+    ANALYSE: 3
+    USE: 5

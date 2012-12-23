@@ -35,3 +35,21 @@ facebook:
     graph_domain: "djakarta"
     stubbed_cookie: "h6Y8Xf60Y5SxCEg6JbPfOqeLpdYHKVUhUOzx8EGLb58.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImNvZGUiOiIyLkFRRFBCbjZWdjRseWl0MHguMzYwMC4xMzUxOTU0ODAwLjEtMTQ1MjM5NDc4NnwxMzUxOTQ4Nzg2fDU3NFM3T1BNcXdsM2ZmT3lRam1DMEVIbHlkRSIsImlzc3VlZF9hdCI6MTM1MTk0ODQ4NiwidXNlcl9pZCI6IjE0NTIzOTQ3ODYifQ"
     stubbed: 0
+
+clicks:
+    #common
+    INTEL: 1
+    #people
+    KILL: 1
+    TAKE: 1
+    INTERROGATE: 1
+    BRIBE: 1
+    #places
+    ASSAULT: 1
+    INSPECT: 1
+    INFILTRATE: 1
+    VISIT: 1
+    #objects
+    PICKUP: 1
+    ANALYSE: 1
+    USE: 1
