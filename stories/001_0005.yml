@@ -16,7 +16,7 @@ actions:
         TAKEN:
             - TELL ANALYSIS
             - DO REVIVE 0001
-    USE:
+    USEIT:
         USABLE:
             - TELL OSIRIS
             - DO GUILTY 0004 

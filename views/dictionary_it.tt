@@ -10,6 +10,6 @@
 	INFILTRATE = 'Infiltrare',
     PICKUP = 'prendere',
     ANALYSE = 'analizzare',
-    USE = 'usare'
+    USEIT = 'usare'
 	}
 %>
