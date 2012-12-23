@@ -3,25 +3,44 @@ type: person
 description:
     START: "{name} è un mercenario di alto profilo pronto a qualsiasi tipo di operazione. Lavora generalmente in oriente, ma è stato impiegato anche da diverse organizzazioni nostre alleate."
 messages:
-    INTEL: "Gunther Hex ha all'attivo missioni di vario genere in tutto il mondo. Non fa alcuna distinzione tra buoni e cattivi ed è uno dei migliori nel suo campo. Il suo ultimo indirizzo noto è {0006.name}."
+    INTEL: "{name} ha all'attivo missioni di vario genere in tutto il mondo. Non fa alcuna distinzione tra buoni e cattivi ed è uno dei migliori nel suo campo. Il suo ultimo indirizzo noto è {0006.name}."
+    LITTLETALK: "Siamo riusciti a parlare con {name}, ma lui ci ha consigliato di stargli lontano."
+    FAILKILL: "{name} ha ucciso gli agenti che avevamo mandato per eliminarlo!"
+    FAILTAKE: "{name} ha ucciso gli agenti che avevamo mandato per catturarlo!"
+    FAILBRIBE: "{name} non accetta di trattare con noi dopo quello che abbiamo tentato."
 actions:
     KILL:
         ANY: KO
+        DETECTED:
+            - TELL FAILKILL
+            - DANGER 10 
+            - TAG ANGRY
+        ANGRY:
+            - TELL FAILKILL
+            - DANGER 10 
+            - DO KILL 0004
     TAKE: 
         ANY: KO
+        DETECTED:
+            - TELL FAILTAKE
+            - DANGER 10 
+            - TAG ANGRY
+        ANGRY:
+            - TELL FAILTAKE
+            - DANGER 10 
+            - DO KILL 0004
     INTERROGATE: 
         ANY: KO
+        DETECTED:
+            - TELL LITTLETALK
     INTEL: 
         ANY:
             - TELL INTEL
             - ADD 0006
     BRIBE: 
+        ANGRY:
+            - TELL FAILBRIBE
         ANY: KO
 m2m:
     DETECTED:
             - TAG DETECTED
-
-#Se si cerca di rapire e uccidere Gunhter, oltre ad alzare il livello della tensione, lui ucciderà Rupert
-
-
-

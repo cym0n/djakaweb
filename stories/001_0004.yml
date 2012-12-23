@@ -5,13 +5,22 @@ description:
 messages:
     INTEL: "E' evidente che {name} è il motivo per cui la {0000.name} lavora per la {0002.name} con grande profitto, visto che lui ha le mani in pasta in entrambe le aziende. Sembra però avere anche grandi interessi nella Cina."
     INTERROGATE: "{name} non ha idea di chi possa mai aver attaccato la {0000.name}. Teme che qualcuno abbia agito alle sue spalle coinvolgendo l'azienda in traffici poco puliti"
+    NOBRIBE: "Non sembra esserci modo di corrompere {name}"
     KILL4ME: "{name} non accetterà niente da noi, ma incredibilmente dice di avere informazioni importanti che ci darà a patto che uccideremo {0001.name}!"
+    KILLED: "{name} è stato assassinato. Crediamo che il colpevole sia {0002.name}"
+    PLEASED: "{name} ci ha comunicato che è molto soddisfatto del destino di {0001.name}"
+    CONFESSION: "{name} ci ha consegnato dei documenti da cui traspare che la {0000.name} era in realtà una base spionistica in combutta con un'organizzazione cinese. L'organizzazione, però, avrebbe deciso di annientarla dopo essere stata tradita.<br />{name} ci ha anche informato che una delle più importanti basi operative dell'organizzazione è {0006.name}"
+    GUILTY: "{name} è evidentemente parti di un complotto ai danni della nazione. Deve essere fermato"
+    COMPROMISED: "Il fatto di aver collaborato con {name} nell'omicidio di {0001.name} ci danneggia"
 actions:
     KILL:
         ANY: KO
     TAKE:
         ANY: KO
     INTERROGATE:
+        PLEASED:
+            - TELL CONFESSION
+            - ADD 0006
         ANY:
             - TELL INTERROGATE
     INTEL:
@@ -19,5 +28,31 @@ actions:
             - TELL INTEL
     BRIBE:
         ANY: 
+            DO CHECKALIVE 0001
+m2m:
+    IMDEAD:
+        ANY:
+            - TELL NOBRIBE
+    KILLME:
+        ANY:
             - TELL KILL4ME
             - TAG CONTRACTOR
+    ACCOMPLISHED:
+        ANY: KO
+        CONTRACTOR:
+            - TELL PLEASED
+            - TAG PLEASED
+    KILL:
+        DEAD: KO
+        ANY:
+            - TELL KILLED
+    GUILTY:
+        DEAD: 
+        PLEASED:
+            - TELL GUILTY
+            - TELL COMPROMISED
+            - DANGER 20
+            - TAG GUILTY
+        ANY: 
+            - TELL GUILTY
+            - TAG GUILTY

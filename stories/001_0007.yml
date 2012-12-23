@@ -1,0 +1,24 @@
+name: O.S.I.R.I.S.
+type: place
+description:
+    START: "{name} è una misteriosa organizzazione di cui non sappiamo nulla."
+messages:
+    INTEL: "Nonostante tutte le nostre informazioni non esiste alcunché su nulla chiamato {name}."
+actions:
+    INTEL:
+        ANY:
+            - TELL INTEL
+    ASSAULT: 
+        ANY: KO
+    INFILTRATE:
+        ANY: KO
+    INSPECT:
+        ANY: KO
+    VISIT: 
+        ANY: KO
+m2m:
+    UNCOVERED:
+        ANY:
+            - TAG UNCOVERED
+
+

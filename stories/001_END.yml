@@ -1,0 +1,10 @@
+END1:
+    condition:
+        0007: UNCOVERED
+        0004: DEAD
+    text: "La scoperta dell'esistenza dell'organizzazione {0007.name} è un fatto molto rilevante che sarà oggetto di ulteriori analisi. Purtroppo la morte di {0004.name} ci impedisce di usarlo per recuperare informazioni."
+END2:
+    condition:
+        0007: UNCOVERED
+        0004: TAKEN
+    text: "Abbiamo {0004.name} in pugno. Speriamo che questo ci aiuti a fare luce sulle attività della misteriosa organizzazione {0007.name}."

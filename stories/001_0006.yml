@@ -18,7 +18,7 @@ actions:
             - TAG ASSAULTED
             - DANGER 30
             - DO 0002 DETECTED
-        DETECTED: 
+        INFILTRATED: 
             - TELL GOODASSAULT
             - TAG ASSAULTED
             - DO 0002 DETECTED

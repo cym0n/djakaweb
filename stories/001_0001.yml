@@ -6,20 +6,35 @@ description:
 messages:
     INTEL: "{name} è un analista matematico, la sua laurea è stata finanziata dall'esercito, quando era arruolato nell'aeronautica. Ha lasciato le forze armate quando è stato assunto dalla {0000.name}. Date le sue qualifiche, però, potrebbe aspirare a un posto più prestigioso"
     KILL: "{name} è stato ucciso. Tutti sono convinti che sia deceduto a seguito delle ferite riportate"
+    BADKILL: "{name} è stato ucciso. Visto che si stava riprendendo la sua morte è vista con sospetto."
     FAILTAKE: "{name} risulta a oggi troppo grave per essere spostato. Non c'è stato modo di prenderlo senza mettere a rischio la sua vita"
     FAILINTERROGATE: "{name} sta troppo male per rispondere a qualsiasi domanda"
+    AWAKE: "Ci è giunta comunicazione dall'ospedale che {name} ha ripreso conoscenza."
+    CONFESSION: "{name} ha confessato che la {0000.name} in verità lavora per una misteriosa organizzazione chiamata {0007.name}. Si dice disposto ad aiutarci a contattarla e a scoprire tutto su di lei."
 actions:
     KILL:
         DEAD: KO 
+        AWAKE:
+            - TAG DEAD
+            - TELL BADKILL
+            - DO ACCOMPLISHED 0004
+            - DANGER 20
         ANY:
             - TAG DEAD
             - TELL KILL
+            - DO ACCOMPLISHED 0004
     TAKE:
         DEAD: KO 
         ANY:
             - TELL FAILTAKE
     INTERROGATE:
         DEAD: KO
+        AWAKE:
+            - TELL CONFESSION
+            - ADD 0007
+            - TAG HELPING
+            - DO USABLE 0005
+        HELPING: KO
         ANY:
             - TELL FAILINTERROGATE
     INTEL:
@@ -27,3 +42,14 @@ actions:
             - TELL INTEL
     BRIBE:
         ANY: KO
+m2m:
+    CHECKALIVE:
+        DEAD: 
+            - DO IMDEAD 004
+        ANY: 
+            - DO KILLME 004
+    REVIVE:
+        DEAD: KO
+        ANY: 
+            - TAG AWAKE
+            - TELL AWAKE

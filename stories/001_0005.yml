@@ -5,6 +5,7 @@ description:
 messages: 
     ANALYSIS: "L'oggetto sembra un dispositivo per comunicazioni protette. E' molto sofisticato, sicuramente più di quanto ci si possa aspettare da un'azienda come {0000.name}. Impossibile stabilire con chi comunicasse."
     TAKEN: "Abbiamo recuperato {name}."
+    OSIRIS: "Con le conoscenze di {0001.name} e lo strumento siamo riusciti a downloadare dati sull'organizzazione {0007.name}. Sembra che in essa sia implicato {0004.name}."
 actions:
     PICKUP: 
         ANY: 
@@ -14,5 +15,14 @@ actions:
         ANY: KO
         TAKEN:
             - TELL ANALYSIS
-
-#UNa volta raggiunto un certo livello di conoscenza sul device il tizio in ospedale si riprende
+            - DO REVIVE 0001
+    USE:
+        USABLE:
+            - TELL OSIRIS
+            - DO GUILTY 0004 
+            - DO UNCOVERED 0007
+        ANY: KO
+m2m:
+    USABLE:
+        ANY:
+            - TAG USABLE
