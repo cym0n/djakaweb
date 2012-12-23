@@ -5,14 +5,22 @@ description:
 messages:
     INTEL: "La {name} è una grande azienda con importanti agganci anche nel governo. Le sue capacità si estendono ben oltre le capacità di una semplice azienda. {0004.name} è uno dei suoi dirigenti più importanti e tra le sue amicizie annovera diversi ministri vecchi e nuovi."
     VISIT: "La {name} è troppo vasta per farsi un'idea di tutte le sue attività. Abbiamo parlato con chi era in contatto con la {0000.name}. Alcune persone sono preoccupate per {0001.name}, anche se tutti riferiscono che era una persona molto fredda e rigida, distaccata."
-    FAILINFILTRATION: "Appena abbiamo approntato l'operazione di infiltrazione ci sono giunte notizie che {0004.name} ci ha chiesto di desistere. Non ci è stato permesso procedere"
+    FAILINFILTRATION: "Appena abbiamo approntato l'operazione di infiltrazione ci sono giunte notizie che {0004.name} ci ha chiesto di desistere. Non ci è stato permesso procedere."
+    FAILASSAULT: "L'operazione di assalto è stata bloccata sul nascere da {0004.name}. Ne risultiamo danneggiati politicamente, in modo grave."
+    ASSAULT: "Visti i rapporti tra {name} e la {0007.name} l'assalto è stato autorizzato. I nostri uomini sono penetrati nella società nottetempo e hanno preso il controllo di tutti i centri rilevanti dell'azienda. Vista l'azione repentina speriamo di poter ottenere quanti più dati possibili su cosa stia facendo {0007.name}." 
 actions:
     INTEL:
         ANY:
             - TELL INTEL
             - ADD 0004
     ASSAULT:
-        ANY: KO
+        ANY: 
+            - TELL FAILASSAULT
+            - DANGER 30
+        GUILTY:
+            - TELL ASSAULT
+            - TAG ASSAULTED
+            - DANGER 10
     INFILTRATE:
         ANY: 
            - TELL FAILINFILTRATION
@@ -22,4 +30,8 @@ actions:
     VISIT:
         ANY:
             - TELL VISIT
+m2m:
+    GUILTY:
+        ANY:
+            TAG GUILTY
 

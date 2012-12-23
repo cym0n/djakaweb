@@ -26,3 +26,6 @@ m2m:
     USABLE:
         ANY:
             - TAG USABLE
+    UNUSABLE:
+        ANY:
+            - TAG UNUSABLE

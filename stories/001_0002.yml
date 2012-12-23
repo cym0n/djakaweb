@@ -8,6 +8,8 @@ messages:
     FAILKILL: "{name} ha ucciso gli agenti che avevamo mandato per eliminarlo!"
     FAILTAKE: "{name} ha ucciso gli agenti che avevamo mandato per catturarlo!"
     FAILBRIBE: "{name} non accetta di trattare con noi dopo quello che abbiamo tentato."
+    NOBRIBE: "{name} non vuole fare affari con noi."
+    CONFESSION: "Visto che abbiamo in mano {0008.name}, sua sorella, {name} ha deciso di collaborare. Ci ha detto che lo sterminio della {0000.name} è stato comandato dalla {0003.name}. La {0003.name} è infatti una componente di un'organizzazione più vasta chiamata {0007.name}, i cui intenti sono chiaramente ostili nei nostri confronti."
 actions:
     KILL:
         ANY: KO
@@ -38,9 +40,21 @@ actions:
             - TELL INTEL
             - ADD 0006
     BRIBE: 
+        DETECTED:
+            - TELL NOBRIBE
+        HOSTAGE:
+            - TELL CONFESSION
+            - ADD 0007
+            - DO GUILTY 0003
         ANGRY:
             - TELL FAILBRIBE
+            - DANGER 10
         ANY: KO
 m2m:
     DETECTED:
+        ANY:
             - TAG DETECTED
+    HOSTAGE:
+        ANGRY: KO
+        ANY: 
+            - TAG HOSTAGE

@@ -18,11 +18,13 @@ actions:
             - TAG DEAD
             - TELL BADKILL
             - DO ACCOMPLISHED 0004
+            - DO UNUSABLE 0005
             - DANGER 20
         ANY:
             - TAG DEAD
             - TELL KILL
             - DO ACCOMPLISHED 0004
+            - DO UNUSABLE 0005
     TAKE:
         DEAD: KO 
         ANY:
