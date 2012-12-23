@@ -6,6 +6,8 @@ messages:
     INTEL: "Nonostante tutte le nostre informazioni non esiste alcunché su nulla chiamato {name}."
 actions:
     INTEL:
+        UNCOVERED:
+            - TELL INTEL
         ANY:
             - TELL INTEL
     ASSAULT: 

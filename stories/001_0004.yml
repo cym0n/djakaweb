@@ -8,6 +8,8 @@ messages:
     NOBRIBE: "Non sembra esserci modo di corrompere {name}"
     KILL4ME: "{name} non accetterà niente da noi, ma incredibilmente dice di avere informazioni importanti che ci darà a patto che uccideremo {0001.name}!"
     KILLED: "{name} è stato assassinato. Crediamo che il colpevole sia {0002.name}"
+    KILLEDBYUS: "VIsto quello che abbiamo scoperto su {name}, ci è stato permesso giustiziarlo."
+    TAKEN: "VIsto quello che abbiamo scoperto su {name}, ci è stato permesso prelevarlo e portarlo nella nostra base."
     PLEASED: "{name} ci ha comunicato che è molto soddisfatto del destino di {0001.name}"
     CONFESSION: "{name} ci ha consegnato dei documenti da cui traspare che la {0000.name} era in realtà una base spionistica in combutta con un'organizzazione cinese. L'organizzazione, però, avrebbe deciso di annientarla dopo essere stata tradita.<br />{name} ci ha anche informato che una delle più importanti basi operative dell'organizzazione è {0006.name}"
     GUILTY: "{name} è evidentemente parti di un complotto ai danni della nazione. Deve essere fermato"
@@ -15,8 +17,14 @@ messages:
 actions:
     KILL:
         ANY: KO
+        GUILTY:
+            TELL KILLEDBYUS
+            TAG DEAD
     TAKE:
         ANY: KO
+        GUILTY:
+            TELL TAKEN
+            TAG TAKEN
     INTERROGATE:
         PLEASED:
             - TELL CONFESSION
@@ -28,7 +36,7 @@ actions:
             - TELL INTEL
     BRIBE:
         ANY: 
-            DO CHECKALIVE 0001
+            - DO CHECKALIVE 0001
 m2m:
     IMDEAD:
         ANY:
@@ -44,6 +52,7 @@ m2m:
             - TAG PLEASED
     KILL:
         DEAD: KO
+        TAKEN: KO
         ANY:
             - TELL KILLED
     GUILTY:

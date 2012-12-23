@@ -22,7 +22,7 @@ actions:
             - DANGER 30
     TAKE:
         DEAD: KO 
-        ALARM: 
+        ALARMED: 
             - TELL FAILTAKE
             - DANGER 30
         ANY:

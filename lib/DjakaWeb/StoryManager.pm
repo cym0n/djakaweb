@@ -193,5 +193,94 @@ sub getAttribute
 }
 
 
+sub testElement
+{
+    my $self = shift;
+    my $code = shift;
+    my $coherence = shift;
+    my $element = $self->openYAML($code);
+    my %status;
+    my @tags;
+    my @tells;
+    for(('actions', 'm2m'))
+    {
+        my $type = $_;
+        my $actions_grid = $element->[0]->{$type};
+        for(keys %{$actions_grid})
+        {
+            my $a = $_;
+            for(keys %{$actions_grid->{$a}})
+            {
+                my $s = $_;
+                $status{$s} = 1;
+                if(ref $actions_grid->{$a}->{$s})
+                {
+                    for(@{$actions_grid->{$a}->{$s}})
+                    {
+                        my $order = $_;
+                        if($order =~ /^TAG (.*)$/)
+                        {
+                            push @tags, $1;
+                        }
+                        if($order =~ /^TELL (.*)$/)
+                        {
+                            push @tells, $1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    delete $status{'ANY'};
+    my $all_status = 1;
+    my $all_tags = 1;
+    my $all_tells = 1;
+    for(@tags)
+    {
+        if(! $status{$_})
+        {
+            $all_tags = 0;
+        }
+        else
+        {
+            $status{$_} = 2;
+        }
+    }
+    for(keys %status)
+    {
+        if($status{$_} == 1)
+        {
+            $all_status = 0;
+        }
+    }
+    for(@tells)
+    {
+        if(! $element->[0]->{'messages'}->{$_})
+        {
+            $all_tells = 0;
+        }
+    }
+    if($coherence eq 'status')
+    {
+        return $all_status;
+    }
+    elsif($coherence eq 'tags')
+    {
+        return $all_tags;
+    }
+    elsif($coherence eq 'tells')
+    {
+        return $all_tells;
+    }
+    else
+    {
+        return $all_status && $all_tags && $all_tells;
+    }
+    
+
+}
+
+
+
 1;
 

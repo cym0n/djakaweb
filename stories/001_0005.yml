@@ -21,6 +21,7 @@ actions:
             - TELL OSIRIS
             - DO GUILTY 0004 
             - DO UNCOVERED 0007
+        UNUSABLE: KO
         ANY: KO
 m2m:
     USABLE:

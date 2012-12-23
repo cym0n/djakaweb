@@ -21,17 +21,20 @@ actions:
             - TELL ASSAULT
             - TAG ASSAULTED
             - DANGER 10
+        ASSAULTED: KO
     INFILTRATE:
+        ASSAULTED: KO
         ANY: 
            - TELL FAILINFILTRATION
            - DANGER 20
     INSPECT:
         ANY: KO
     VISIT:
+        ASSAULTED: KO
         ANY:
             - TELL VISIT
 m2m:
     GUILTY:
         ANY:
-            TAG GUILTY
+            - TAG GUILTY
 
