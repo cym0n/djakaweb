@@ -49,9 +49,9 @@ actions:
 m2m:
     CHECKALIVE:
         DEAD: 
-            - DO IMDEAD 004
+            - DO IMDEAD 0004
         ANY: 
-            - DO KILLME 004
+            - DO KILLME 0004
     REVIVE:
         DEAD: KO
         ANY: 

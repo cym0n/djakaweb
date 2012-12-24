@@ -199,6 +199,13 @@ sub testElement
     my $code = shift;
     my $coherence = shift;
     my $element = $self->openYAML($code);
+    
+    my $all_status = 1;
+    my $all_tags = 1;
+    my $all_tells = 1;
+    my $messages_syntax = 1;
+    my $do_syntax = 1;
+    
     my %status;
     my @tags;
     my @tells;
@@ -226,16 +233,21 @@ sub testElement
                         {
                             push @tells, $1;
                         }
+                        if($order =~ /^DO (.*)$/)
+                        {
+                            if($1 !~ /[A-Z]*? \d\d\d\d/)
+                            {
+                                $do_syntax = 0;
+                                print $1;
+                            }
+
+                        }
                     }
                 }
             }
         }
     }
     delete $status{'ANY'};
-    my $all_status = 1;
-    my $all_tags = 1;
-    my $all_tells = 1;
-    my $messages_syntax = 1;
     for(@tags)
     {
         if(! $status{$_})
@@ -288,9 +300,13 @@ sub testElement
     {
         return $messages_syntax;
     }
+    elsif($coherence eq 'do')
+    {
+        return $do_syntax;
+    }
     else
     {
-        return $all_status && $all_tags && $all_tells && $messages_syntax;
+        return $all_status && $all_tags && $all_tells && $messages_syntax && $do_syntax;
     }
     
 

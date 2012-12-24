@@ -1,4 +1,4 @@
-use Test::More import => ['!pass'], tests => 45;
+use Test::More import => ['!pass'], tests => 54;
 use Data::Dumper;
 use strict;
 use warnings;
@@ -17,4 +17,5 @@ for(@els)
     is $storymanager->testElement($_, 'status'), 1, "Every status of $_ has a TAG command that activate it";
     is $storymanager->testElement($_, 'tells'), 1, "Every TELL of $_ has a message";
     is $storymanager->testElement($_, 'messages'), 1, "Every token in every message in $_ has the right syntax";
+    is $storymanager->testElement($_, 'do'), 1, "Every do command in $_ has the right syntax";
 }
