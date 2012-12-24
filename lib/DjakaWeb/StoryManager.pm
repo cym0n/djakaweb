@@ -235,6 +235,7 @@ sub testElement
     my $all_status = 1;
     my $all_tags = 1;
     my $all_tells = 1;
+    my $messages_syntax = 1;
     for(@tags)
     {
         if(! $status{$_})
@@ -259,6 +260,17 @@ sub testElement
         {
             $all_tells = 0;
         }
+        else
+        {
+            for($element->[0]->{'messages'}->{$_} =~ /\{(.*?)\}/g)
+            {
+                my $token = $_;
+                if($token && $token !~ /^(\d\d\d\d\.)?name$/)
+                {
+                   $messages_syntax = 0; 
+                }
+            }
+        }
     }
     if($coherence eq 'status')
     {
@@ -272,9 +284,13 @@ sub testElement
     {
         return $all_tells;
     }
+    elsif($coherence eq 'messages')
+    {
+        return $messages_syntax;
+    }
     else
     {
-        return $all_status && $all_tags && $all_tells;
+        return $all_status && $all_tags && $all_tells && $messages_syntax;
     }
     
 

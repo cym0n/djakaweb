@@ -18,13 +18,13 @@ actions:
     KILL:
         ANY: KO
         GUILTY:
-            TELL KILLEDBYUS
-            TAG DEAD
+            - TELL KILLEDBYUS
+            - TAG DEAD
     TAKE:
         ANY: KO
         GUILTY:
-            TELL TAKEN
-            TAG TAKEN
+            - TELL TAKEN
+            - TAG TAKEN
     INTERROGATE:
         PLEASED:
             - TELL CONFESSION
