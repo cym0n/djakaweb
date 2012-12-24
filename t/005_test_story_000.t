@@ -1,4 +1,4 @@
-use Test::More import => ['!pass'], tests => 36;
+use Test::More import => ['!pass'], tests => 45;
 use Data::Dumper;
 use strict;
 use warnings;
