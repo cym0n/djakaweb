@@ -20,11 +20,11 @@ actions:
             - TELL ASSAULT
             - TAG ASSAULTED
             - DANGER 30
-            - DO 0002 DETECTED
+            - DO DETECTED 0002
         INFILTRATED: 
             - TELL GOODASSAULT
             - TAG ASSAULTED
-            - DO 0002 DETECTED
+            - DO DETECTED 0002
     INFILTRATE:
         ASSAULTED: KO
         ANY: 
