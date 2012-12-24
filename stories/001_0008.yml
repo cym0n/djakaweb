@@ -4,6 +4,8 @@ description:
     START: "{name} è una dipendente della {0003.name}. E' apparta molto scossa durante le nostre indaginim tanto da insospettirci."
     DEAD: "Attualmente è morta."
     SISTER: "E' la sorella di {0002.name}."
+    TAKEN: "Attualmente é detenuta presso di noi."
+    SISTERTAKEN: "E' la sorella di {0002.name}.<br />Attualmente é detenuta presso di noi."
 messages:
     INTEL: "Non ci sono dati rilevanti su {name}. Si tratta di un'impiegata di basso livello della {0003.name}, che oltretutto non ha rapporti con la {0000.name}. Anche le sue capacità non ci appaiono particolari."
     KILL: "{name} è stata uccisa."
@@ -19,6 +21,8 @@ actions:
             - DANGER 30
     TAKE:
         DEAD: KO 
+        TAKEN: KO
+        SISTERTAKEN: KO
         SISTER: 
             - TELL TAKEN
             - TAG SISTERTAKEN

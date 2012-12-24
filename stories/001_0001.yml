@@ -2,6 +2,8 @@ name: Wilson Thamadriel
 type: person
 description:
     START: "{name} è un analista matematico che lavora per {0000.name}. E' in fin di vita all'ospedale per le ferite ad arma da fuoco subite durante l'assalto alla società."
+    AWAKE: "L'ospedale ci comunica che ha ripreso conoscenza"
+    HELPING: "Ci ha confessato di essere un agente segreto e ha accettato di aiutarci a smascherare chi ha compiuto il massacro di {0000.name}."
     DEAD: "Attualmente è morto"
 messages:
     INTEL: "{name} è un analista matematico, la sua laurea è stata finanziata dall'esercito, quando era arruolato nell'aeronautica. Ha lasciato le forze armate quando è stato assunto dalla {0000.name}. Date le sue qualifiche, però, potrebbe aspirare a un posto più prestigioso"

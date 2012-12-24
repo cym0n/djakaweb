@@ -189,6 +189,39 @@ sub print_status
 		print $_->object_code() . " " . $_->object_type() . " " . $_->active() . " " . $status  . "\n";
 	}
 }
+sub snapshot
+{
+	my $self = shift;
+	my $game = shift;
+	my @els = $self->search({ game_id => $game});
+	return @els;
+}
+sub overwrite
+{
+	my $self = shift;
+	my $game = shift;
+	my $elements = shift;
+	my $danger;
+	$self->search({ game_id => $game })->delete;
+	for(@{$elements})
+	{
+		my $el = $_;
+		if(! ($el->object_code() =~ m/DANGER/))
+		{
+			$self->create({ game_id => $game, 
+					    	          object_code => $el->object_code(), 
+							          active => $el->active(),
+							          status => $el->status()  
+						            });
+		}
+		else
+		{
+			$danger = $el->status();
+		}
+	}
+	return $danger;
+}
+
 
 
 

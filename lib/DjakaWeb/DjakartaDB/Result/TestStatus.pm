@@ -94,7 +94,7 @@ sub saveSnapshot
 		my $el = $_;
 		$self->create({ status_id => $status_id, 
 					    object_code => $el->object_code(), 
-						object_type => $el->object_type(),
+						object_type => undef,
 						active => $el->active(),
 						status => $el->status()  
 					});

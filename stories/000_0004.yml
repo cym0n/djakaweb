@@ -2,6 +2,10 @@ name: Jamal Hakreniti
 type: person
 description:
     START: "Operaio della {0001.name}"
+    DEAD: "Attualmente è morto."
+    TAKEN: "Attualmente è detenuto presso di noi."
+    FRIEND: "Siamo riusciti ad avvicinarlo e a ottenere la sua collaborazione."
+    ANGRY: "Gli ultimi avvenimenti ce lo hanno reso ostile."
 messages: 
     MOSQUEACCESS: "{name} ha accettato il nostro uomo come amico e, parlandogli, gli ha promesso di farlo accedere alla Moschea."
     KILL: "L'omicidio di {name} &egrave; stato portato a termine."

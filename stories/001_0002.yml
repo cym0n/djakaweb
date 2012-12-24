@@ -2,6 +2,9 @@ name: Gunther Hex
 type: person
 description:
     START: "{name} è un mercenario di alto profilo pronto a qualsiasi tipo di operazione. Lavora generalmente in oriente, ma è stato impiegato anche da diverse organizzazioni nostre alleate."
+    DETECTED: "La sua posizione ci è nota."
+    ANGRY: "Siamo venuti in contatto con lui nel modo sbagliato. Ci è ormai ostile."
+    HOSTAGE: "Crediamo di avere una leva per costringerlo a collaborare."
 messages:
     INTEL: "{name} ha all'attivo missioni di vario genere in tutto il mondo. Non fa alcuna distinzione tra buoni e cattivi ed è uno dei migliori nel suo campo. Il suo ultimo indirizzo noto è {0006.name}."
     LITTLETALK: "Siamo riusciti a parlare con {name}, ma lui ci ha consigliato di stargli lontano."
@@ -55,6 +58,5 @@ m2m:
         ANY:
             - TAG DETECTED
     HOSTAGE:
-        ANGRY: KO
         ANY: 
             - TAG HOSTAGE

@@ -2,6 +2,9 @@ name: device custom
 type: object
 description:
     START: "Un componente elettronico di origine sconosciuta. Sembra parte di una rete di oggetti più grande. Potrebbe essere adibito alla criptazione/decriptazione dati."
+    TAKEN: "Lo abbiamo portato nella nostra base."
+    USABLE: "Grazie a {0001.name} possiamo provare a usarlo."
+    UNUSABLE: "Non abbiamo nessuno che possa dirci come usarlo."
 messages: 
     ANALYSIS: "L'oggetto sembra un dispositivo per comunicazioni protette. E' molto sofisticato, sicuramente più di quanto ci si possa aspettare da un'azienda come {0000.name}. Impossibile stabilire con chi comunicasse."
     TAKEN: "Abbiamo recuperato {name}."

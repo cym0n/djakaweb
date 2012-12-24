@@ -2,6 +2,10 @@ name: Rupert Marseil
 type: person
 description:
     START: "{name} è u dirigente della {0003.name} molto importante. E' uno squalo della finanza in giro da parecchi anni. Ha anche importanti interessi economici nella {0000.name}"
+    DEAD: "Attualmente è morto."
+    GUILTY: "Abbiamo stabilito che sta tramando ai danni del nostro paese per conto dell'organizzazione {0007.name}."
+    PLEASED: "Siamo riusciti a indurlo a collaborare facendo del lavoro sporco per lui."
+    CONTRACTOR: "Ci offre la sua collaborazione in cambio dell'omicidio di {0001.name}."
 messages:
     INTEL: "E' evidente che {name} è il motivo per cui la {0000.name} lavora per la {0002.name} con grande profitto, visto che lui ha le mani in pasta in entrambe le aziende. Sembra però avere anche grandi interessi nella Cina."
     INTERROGATE: "{name} non ha idea di chi possa mai aver attaccato la {0000.name}. Teme che qualcuno abbia agito alle sue spalle coinvolgendo l'azienda in traffici poco puliti"

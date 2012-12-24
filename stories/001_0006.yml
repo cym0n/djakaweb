@@ -2,6 +2,8 @@ name: Kuala Lumpur - Jaiha House
 type: place
 description:
     START: "{name} è una palazzina di due piani a Kuala Lumpur. Curiosamente appare ben sorvegliata."
+    INFILTRATED: "Dei nostri uomini stazionano in loco fornendoci una base d'appoggio."
+    ASSAULTED: "La palazzina è sotto il nostro controllo dopo una dura battaglia."
 messages:
     INTEL: "La palazzina sembra essere di proprietà di una società fantasma in cui però sospettiamo abbia interessi {0002.name}. I nostri analisti ipotizzano che sia lui il proprietario. Sembra l'unico edificio moderno della zona."
     INFILTRATE: "I nostri uomini sono riusciti a stabilire una base nei pressi"

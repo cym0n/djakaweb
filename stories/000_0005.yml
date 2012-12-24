@@ -2,6 +2,9 @@ name: Abdul Abdali
 type: person
 description:
     START: "Operaio della {0001.name}"
+    DEAD: "Attualmente è morto."
+    TAKEN: "Attualmente è detenuto presso di noi."
+    BOSS: "Sembra essere divenuto particolarmente nervoso ultimamente."
 messages: 
     KILL: "L'omicidio di {name} &egrave; stato portato a termine."
     TAKEN: "{name} ora si trova detenuto nella nostra base."

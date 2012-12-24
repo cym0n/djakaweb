@@ -2,9 +2,11 @@ name: Zhan-Locus
 type: place
 description:
     START: "La {name} è una grossa azienda che offre consulenza ai media, all'alta finanza e alla politica. Ultimamente una grossa fetta dei suoi interessi sono in Cina e nell'area dell'estremo oriente." 
+    GUILTY: "Abbiamo ormai le prove che l'azienda è coinvolta in un complotto per conto dell'organizzazione {0007.name}."
+    ASSAULTED: "L'azienda è ora sotto il controllo dei nostri uomini."
 messages:
     INTEL: "La {name} è una grande azienda con importanti agganci anche nel governo. Le sue capacità si estendono ben oltre le capacità di una semplice azienda. {0004.name} è uno dei suoi dirigenti più importanti e tra le sue amicizie annovera diversi ministri vecchi e nuovi."
-    VISIT: "La {name} è troppo vasta per farsi un'idea di tutte le sue attività. Abbiamo parlato con chi era in contatto con la {0000.name}. Alcune persone sono preoccupate per {0001.name}, anche se tutti riferiscono che era una persona molto fredda e rigida, distaccata."
+    VISIT: "La {name} è troppo vasta per farsi un'idea di tutte le sue attività. Abbiamo parlato con chi era in contatto con la {0000.name}. Alcune persone sono preoccupate per {0001.name}, anche se tutti riferiscono che era una persona molto fredda e rigida, distaccata.<br />Ha attirato la nostra attenzione {0003.name}, che è ci appare sconvolta dall'assalto alla {0000.name} nonostante non avesse nulla a che fare con l'azienda."
     FAILINFILTRATION: "Appena abbiamo approntato l'operazione di infiltrazione ci sono giunte notizie che {0004.name} ci ha chiesto di desistere. Non ci è stato permesso procedere."
     FAILASSAULT: "L'operazione di assalto è stata bloccata sul nascere da {0004.name}. Ne risultiamo danneggiati politicamente, in modo grave."
     ASSAULT: "Visti i rapporti tra {name} e la {0007.name} l'assalto è stato autorizzato. I nostri uomini sono penetrati nella società nottetempo e hanno preso il controllo di tutti i centri rilevanti dell'azienda. Vista l'azione repentina speriamo di poter ottenere quanti più dati possibili su cosa stia facendo {0007.name}." 
@@ -33,6 +35,7 @@ actions:
         ASSAULTED: KO
         ANY:
             - TELL VISIT
+            - ADD 0008
 m2m:
     GUILTY:
         ANY:

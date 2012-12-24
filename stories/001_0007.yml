@@ -2,6 +2,7 @@ name: O.S.I.R.I.S.
 type: place
 description:
     START: "{name} è una misteriosa organizzazione di cui non sappiamo nulla."
+    UNCOVERED: "Abbiamo recentemente ottenuto informazioni sull'organizzazione."
 messages:
     INTEL: "Nonostante tutte le nostre informazioni non esiste alcunché su nulla chiamato {name}."
 actions:

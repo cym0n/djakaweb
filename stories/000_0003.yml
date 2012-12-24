@@ -3,6 +3,8 @@ type: person
 description:
     START: "{name} appare come un fervente islamico. Si è messo a disposizione di {0000.name} in tutto e per tutto. Non ha famiglia né molti amici e vive di quello che la comunità gli dà per il suo lavoro alla moschea." 
     ALARMED: "Gli ultimi avvenimenti lo hanno scosso molto rendendolo nervoso."
+    DEAD: "Attualmente è morto."
+    TAKEN: "Attualmente è detenuto presso di noi."
 messages: 
     KILL: "{name} è stato eliminato."
     FAILTAKE: "{name} era pronto a riceverci e quindi è sfuggito al nostro tentativo di catturarlo."
