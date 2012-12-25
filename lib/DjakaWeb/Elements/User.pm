@@ -51,7 +51,7 @@ around BUILDARGS => sub {
 sub get_score
 {
     my $self = shift;
-    if($self->UserDB()->score()))
+    if($self->UserDB()->score())
     {
         return $self->UserDB()->score();
     }
