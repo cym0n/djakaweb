@@ -33,12 +33,14 @@ actions:
         PLEASED:
             - TELL CONFESSION
             - ADD 0006
+        DEAD: KO
         ANY:
             - TELL INTERROGATE
     INTEL:
         ANY:
             - TELL INTEL
     BRIBE:
+        DEAD: KO
         ANY: 
             - DO CHECKALIVE 0001
 m2m:
@@ -50,6 +52,7 @@ m2m:
             - TELL KILL4ME
             - TAG CONTRACTOR
     ACCOMPLISHED:
+        DEAD: KO
         ANY: KO
         CONTRACTOR:
             - TELL PLEASED
@@ -59,8 +62,10 @@ m2m:
         TAKEN: KO
         ANY:
             - TELL KILLED
+            - DANGER 10
+            - TAG DEAD
     GUILTY:
-        DEAD: 
+        DEAD: KO 
         PLEASED:
             - TELL GUILTY
             - TELL COMPROMISED

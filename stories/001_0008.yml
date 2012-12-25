@@ -27,9 +27,11 @@ actions:
             - TELL TAKEN
             - TAG SISTERTAKEN
             - DO HOSTAGE 0002
+            - DANGER 10
         ANY: 
             - TELL TAKEN
             - TAG TAKEN
+            - DANGER 10
     INTERROGATE:
         DEAD: KO
         SISTER: 

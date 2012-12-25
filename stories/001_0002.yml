@@ -8,6 +8,7 @@ description:
 messages:
     INTEL: "{name} ha all'attivo missioni di vario genere in tutto il mondo. Non fa alcuna distinzione tra buoni e cattivi ed è uno dei migliori nel suo campo. Il suo ultimo indirizzo noto è {0006.name}."
     LITTLETALK: "Siamo riusciti a parlare con {name}, ma lui ci ha consigliato di stargli lontano."
+    ANGRYTALK: "{name} ci ha minacciato esplicitamente."
     FAILKILL: "{name} ha ucciso gli agenti che avevamo mandato per eliminarlo!"
     FAILTAKE: "{name} ha ucciso gli agenti che avevamo mandato per catturarlo!"
     FAILBRIBE: "{name} non accetta di trattare con noi dopo quello che abbiamo tentato."
@@ -38,6 +39,8 @@ actions:
         ANY: KO
         DETECTED:
             - TELL LITTLETALK
+        ANGRY:
+            - TELL ANGRYTALK
     INTEL: 
         ANY:
             - TELL INTEL
