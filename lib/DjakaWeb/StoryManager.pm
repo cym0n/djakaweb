@@ -32,7 +32,7 @@ sub allowed_stories
         {
             my $story = $1;
             my $yaml = $self->openYAML_nostory($story, 'START');
-            push @stories, {code => $story, title => $yaml->[0]->{'title'}};
+            push @stories, {code => $story, title => $yaml->[0]->{'title'}, points => $yaml->[0]->{'needed_points'}};
         }
     }
     return @stories;

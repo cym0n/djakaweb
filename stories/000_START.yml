@@ -1,4 +1,5 @@
 title: La fabbrica dei soldati
+needed_points: 0
 start_danger: 30
 briefing: "Loose Bricks negli ultimi anni ha visto un forte aumento dell'immigrazione soprattutto mediorientale, grazie alla fabbrica {0001.name}, che ha assunto molti operai proprio tra le file degli extra-comunitati.<br />Il punto di riferimento della comunità è la moschea {0002.name}, dove tutte le persone di fede islamica si trovano regolarmente a pregare. Il suo imam è {0000.name}.<br />I nostri informatori ci hanno segnalato che qualcuno sta cercando di impiantare una cella terroristica a Loose Bricks e usarla per compiere un'attentato.<br /><br />La nostra missione è individuare chi sta organizzando la cella e sventare i suoi piani."
 elements:

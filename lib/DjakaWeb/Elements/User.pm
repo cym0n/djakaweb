@@ -48,6 +48,12 @@ around BUILDARGS => sub {
 	}
 };
 
+sub get_score
+{
+    my $self = shift;
+    return $self->UserDB()->score();
+}
+
 sub last_action_done
 {
 	my $self = shift;

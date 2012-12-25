@@ -105,12 +105,13 @@ sub get_missions
        }
        else
        {
-           my $s = $_;
-           $s->{'failures'} = $user->get_story_failures($_->{'code'});
-           push @available_stories, $s;
+           if($user->get_score() >= $_->{'points'})
+           {
+                my $s = $_;
+                $s->{'failures'} = $user->get_story_failures($_->{'code'});
+                push @available_stories, $s;
+           }
        }
-    
-    
     }
     return { 'stories' => \@available_stories, 'completed' => \@completed_stories };
 }
