@@ -51,7 +51,14 @@ around BUILDARGS => sub {
 sub get_score
 {
     my $self = shift;
-    return $self->UserDB()->score();
+    if($self->UserDB()->score()))
+    {
+        return $self->UserDB()->score();
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 sub last_action_done
