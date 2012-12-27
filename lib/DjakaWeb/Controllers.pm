@@ -8,7 +8,8 @@ use Data::Dumper;
 use Dancer ':syntax';
 use DjakaWeb;
 use DjakaWeb::Elements::Game;
-use DjakaWeb::Elements::User;
+#use DjakaWeb::Elements::User;
+use Dancer::Plugin::DBIC;
 
 use constant GAME_LOST => -1000;
 use constant CLICK_TIMEOUT => -102;
@@ -53,8 +54,7 @@ sub facebook_data
     {
         $facebook_id = config->{facebook}->{fake_id};
     }
-
-	my $user = DjakaWeb::Elements::User->new({'facebook_id' => $facebook_id});
+	my $user = get_user('facebook_id' => $facebook_id);
 	session 'user' => $user->id();
 	my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
 	if(! $game_id)
@@ -179,7 +179,7 @@ sub get_data_for_help
 	my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
 	if($ongoing_action)
 	{
-		my $user_to_help = DjakaWeb::Elements::User->new({'id' => $game_to_help->user});
+		my $user_to_help = get_user('id' => $game_to_help->user);
 		my $user_to_help_data = facebook_user($user_to_help->facebook_id());
 		my $errors = 'NONE';
 		if($ongoing_action->active == 0)
@@ -234,7 +234,6 @@ sub schedule_action
 	my $element = shift;
 	my $action = shift;
 	my $A = $game->get_active_action();
-    #print Dumper($A);
 	if($A->{'action'} =~ m/^NONE$/)
 	{
 		$game->schedule_action($element, $action);
@@ -332,6 +331,30 @@ sub victory
 
 }
 
+sub get_user
+{
+	my %params = @_;
+	if($params{'facebook_id'})
+	{
+        debug "FB ID: " . $params{'facebook_id'};
+		my $user = schema->resultset('User')->find({'facebook_id' => $params{'facebook_id'}});
+		if(! $user)
+		{
+            debug "User not found";
+			$user = schema->resultset('User')->newUser($params{'facebook_id'});
+		}
+        else
+        {
+            debug "User found: " . $user->id();
+        }
+		return $user;
+	}	
+	elsif($params{'id'})
+	{
+		my $user = schema->resultset('User')->find($params{'id'});
+		return $user;
+	}
+};
 
 sub build_elements
 {
@@ -346,7 +369,7 @@ sub build_elements
 	}
 	if(session('user'))
 	{
-		$user = DjakaWeb::Elements::User->new({'id' => session('user')});
+		$user = get_user('id' => session('user'));
 	}
 	else
 	{
@@ -354,6 +377,8 @@ sub build_elements
 	}
 	return ($user, $game);
 }
+
+
 
 
 

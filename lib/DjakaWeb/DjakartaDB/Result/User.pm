@@ -94,6 +94,79 @@ sub add_points
     $self->update({'score' => $points + $actual_points});
     return $self->score();
 }
+sub get_score
+{
+    my $self = shift;
+    if($self->score())
+    {
+        return $self->score();
+    }
+    else
+    {
+        return 0;
+    }
+}
+sub time_to_click
+{
+	my $self = shift;
+	my $waiting_time = shift;
+	my $timestamp = $self->last_action_done();
+	return -1 if (! $timestamp);
+	my $timestamp_e = $timestamp->epoch();
+	my $next_e = $timestamp_e + ($waiting_time * 60);
+	my $now = DateTime->now();
+	my $now_e = $now->epoch();
+	my $duration = $next_e - $now_e;
+	return $duration;
+}
+sub time_to_support_click
+{
+	my $self = shift;
+	my $waiting_time = shift;
+	my $timestamp = $self->last_support_done();
+	return -1 if (! $timestamp);
+	my $timestamp_e = $timestamp->epoch();
+	my $next_e = $timestamp_e + ($waiting_time * 60);
+	my $now = DateTime->now();
+	my $now_e = $now->epoch();
+	my $duration = $next_e - $now_e;
+	return $duration;
+}
+
+sub trace_click
+{
+	my $self = shift;
+	my $action = shift;
+	my $type = shift;
+	$self->result_source->schema->resultset('Click')->create({"user_id" => $self->id,
+		                                "action" => $action,
+									    "type" => $type});
+}
+sub story_completed
+{
+    my $self = shift;
+    my $story_code = shift;
+    my @games =  $self->result_source->schema->resultset('Game')->search({"user_id" => $self->id,
+                                                  "mission_id" => $story_code,
+                                                  "active" => 2});
+    if(@games)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+sub get_story_failures
+{
+    my $self = shift;
+    my $story_code = shift;
+    my @games =  $self->result_source->schema->resultset('Game')->search({"user_id" => $self->id,
+                                                  "mission_id" => $story_code,
+                                                  "active" => -1});
+    return scalar(@games);
+}
 
 
 
