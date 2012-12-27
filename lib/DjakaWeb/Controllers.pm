@@ -336,17 +336,11 @@ sub get_user
 	my %params = @_;
 	if($params{'facebook_id'})
 	{
-        debug "FB ID: " . $params{'facebook_id'};
 		my $user = schema->resultset('User')->find({'facebook_id' => $params{'facebook_id'}});
 		if(! $user)
 		{
-            debug "User not found";
 			$user = schema->resultset('User')->newUser($params{'facebook_id'});
 		}
-        else
-        {
-            debug "User found: " . $user->id();
-        }
 		return $user;
 	}	
 	elsif($params{'id'})

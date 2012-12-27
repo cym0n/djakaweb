@@ -4,10 +4,9 @@ use strict;
 use warnings;
 use v5.10;
 
-# the order is important
 use Dancer;
-use DjakaWeb;
 use Dancer::Test;
+use DjakaWeb;
 
 my $fake_facebook_id = 100;
 my $test_mission = '000';
@@ -61,7 +60,7 @@ sleep 60;
 response_redirect_location_is ['GET' => '/game/click'], 'http://localhost/game/dashboard';
 
 diag("Checks on user status");
-my $user = DjakaWeb::Elements::User->new({'facebook_id' => $fake_facebook_id});
+my $user = DjakaWeb::Controllers::get_user('facebook_id' => $fake_facebook_id);
 my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
 my $game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'stories_path' => config->{'stories_path'}});
 my $active_action = $game->get_active_action();
