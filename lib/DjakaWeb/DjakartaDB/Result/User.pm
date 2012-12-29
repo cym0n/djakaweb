@@ -23,6 +23,7 @@ __PACKAGE__->table("USERS");
 =head2 id
 
   data_type: 'integer'
+  is_auto_increment: 1
   is_nullable: 0
 
 =head2 facebook_id
@@ -32,38 +33,82 @@ __PACKAGE__->table("USERS");
 
 =head2 last_action_done
 
-  data_type: 'timestamp'
+  data_type: 'datetime'
+  datetime_undef_if_invalid: 1
   is_nullable: 1
 
 =head2 last_support_done
 
   data_type: 'timestamp'
-  is_nullable: 1
+  datetime_undef_if_invalid: 1
+  default_value: current_timestamp
+  is_nullable: 0
 
 =head2 score
 
-  data_type: 'int'
+  data_type: 'integer'
   is_nullable: 1
 
 =cut
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "facebook_id",
   { data_type => "integer", is_nullable => 1 },
   "last_action_done",
-  { data_type => "timestamp", is_nullable => 1 },
+  {
+    data_type => "datetime",
+    datetime_undef_if_invalid => 1,
+    is_nullable => 1,
+  },
   "last_support_done",
-  { data_type => "timestamp", is_nullable => 1 },
+  {
+    data_type => "timestamp",
+    datetime_undef_if_invalid => 1,
+    default_value => \"current_timestamp",
+    is_nullable => 0,
+  },
   "score",
-  { data_type => "int", is_nullable => 1 },
+  { data_type => "integer", is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key("id");
 
+=head1 RELATIONS
 
-+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-21 22:39:43
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aF/6uT2eW6JimcV3wN3b7g
+=head2 clicks
+
+Type: has_many
+
+Related object: L<DjakaWeb::DjakartaDB::Result::Click>
+
+=cut
+
+__PACKAGE__->has_many(
+  "clicks",
+  "DjakaWeb::DjakartaDB::Result::Click",
+  { "foreign.user_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 games
+
+Type: has_many
+
+Related object: L<DjakaWeb::DjakartaDB::Result::Game>
+
+=cut
+
+__PACKAGE__->has_many(
+  "games",
+  "DjakaWeb::DjakartaDB::Result::Game",
+  { "foreign.user_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-29 21:30:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RXEaNNCuAte+SbIH1kFpXA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

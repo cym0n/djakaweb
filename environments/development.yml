@@ -53,3 +53,14 @@ clicks:
     PICKUP: 1
     ANALYSE: 1
     USE: 1
+
+plugins:
+  DBIC:
+    default:
+      dsn: dbi:mysql:djakarta
+      schema_class: DjakaWeb::DjakartaDB
+      user: djakarta
+      pass: djakarta
+      options:
+        RaiseError: 1
+        PrintError: 1

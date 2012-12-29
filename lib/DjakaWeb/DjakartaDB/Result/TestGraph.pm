@@ -32,7 +32,7 @@ __PACKAGE__->table("TEST_GRAPH");
 
 =head2 element
 
-  data_type: 'object_code varchar'
+  data_type: 'varchar'
   is_nullable: 1
   size: 4
 
@@ -55,7 +55,7 @@ __PACKAGE__->add_columns(
   "start",
   { data_type => "integer", is_nullable => 1 },
   "element",
-  { data_type => "object_code varchar", is_nullable => 1, size => 4 },
+  { data_type => "varchar", is_nullable => 1, size => 4 },
   "action",
   { data_type => "varchar", is_nullable => 1, size => 60 },
   "finish",
@@ -64,8 +64,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-10-14 23:40:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dqpQRCCb2iMCWLye1fiWmw
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-29 21:30:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:YpSg5fTxROS5jEZEx6zEdw
 
 sub print
 {

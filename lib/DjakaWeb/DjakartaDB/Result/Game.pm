@@ -23,11 +23,13 @@ __PACKAGE__->table("GAMES");
 =head2 id
 
   data_type: 'integer'
+  is_auto_increment: 1
   is_nullable: 0
 
 =head2 user_id
 
   data_type: 'integer'
+  is_foreign_key: 1
   is_nullable: 1
 
 =head2 mission_id
@@ -50,9 +52,9 @@ __PACKAGE__->table("GAMES");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "user_id",
-  { data_type => "integer", is_nullable => 1 },
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
   "mission_id",
   { data_type => "varchar", is_nullable => 1, size => 3 },
   "danger",
@@ -62,9 +64,76 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("id");
 
+=head1 RELATIONS
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-10-14 23:40:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GCJsKE438ub+BSUracZn2g
+=head2 user
+
+Type: belongs_to
+
+Related object: L<DjakaWeb::DjakartaDB::Result::User>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "user",
+  "DjakaWeb::DjakartaDB::Result::User",
+  { id => "user_id" },
+  {
+    is_deferrable => 1,
+    join_type     => "LEFT",
+    on_delete     => "CASCADE",
+    on_update     => "CASCADE",
+  },
+);
+
+=head2 games_statuses
+
+Type: has_many
+
+Related object: L<DjakaWeb::DjakartaDB::Result::GamesStatus>
+
+=cut
+
+__PACKAGE__->has_many(
+  "games_statuses",
+  "DjakaWeb::DjakartaDB::Result::GamesStatus",
+  { "foreign.game_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 ongoing_actions
+
+Type: has_many
+
+Related object: L<DjakaWeb::DjakartaDB::Result::OngoingAction>
+
+=cut
+
+__PACKAGE__->has_many(
+  "ongoing_actions",
+  "DjakaWeb::DjakartaDB::Result::OngoingAction",
+  { "foreign.game_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 stories
+
+Type: has_many
+
+Related object: L<DjakaWeb::DjakartaDB::Result::Story>
+
+=cut
+
+__PACKAGE__->has_many(
+  "stories",
+  "DjakaWeb::DjakartaDB::Result::Story",
+  { "foreign.game_id" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-29 21:30:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Q2EZvqDP4LOeXtCEWUQeng
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

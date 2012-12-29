@@ -1,6 +1,6 @@
 # configuration file for development environment
 
-app_domain: "djaka.therabbit.it"
+app_domain: "djakarta-cymon.rhcloud.com"
 
 # the logger engine to use
 # console: log messages to STDOUT (your console where you started the

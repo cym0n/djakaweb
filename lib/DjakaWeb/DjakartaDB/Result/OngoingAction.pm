@@ -23,11 +23,13 @@ __PACKAGE__->table("ONGOING_ACTIONS");
 =head2 id
 
   data_type: 'integer'
+  is_auto_increment: 1
   is_nullable: 0
 
 =head2 game_id
 
   data_type: 'integer'
+  is_foreign_key: 1
   is_nullable: 1
 
 =head2 object_code
@@ -62,9 +64,9 @@ __PACKAGE__->table("ONGOING_ACTIONS");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "game_id",
-  { data_type => "integer", is_nullable => 1 },
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
   "object_code",
   { data_type => "varchar", is_nullable => 1, size => 4 },
   "action",
@@ -78,9 +80,61 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("id");
 
+=head1 RELATIONS
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-16 12:13:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5n/EvM0KxGXR4RC4F602tg
+=head2 clicks
+
+Type: has_many
+
+Related object: L<DjakaWeb::DjakartaDB::Result::Click>
+
+=cut
+
+__PACKAGE__->has_many(
+  "clicks",
+  "DjakaWeb::DjakartaDB::Result::Click",
+  { "foreign.action" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+=head2 game
+
+Type: belongs_to
+
+Related object: L<DjakaWeb::DjakartaDB::Result::Game>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "game",
+  "DjakaWeb::DjakartaDB::Result::Game",
+  { id => "game_id" },
+  {
+    is_deferrable => 1,
+    join_type     => "LEFT",
+    on_delete     => "CASCADE",
+    on_update     => "CASCADE",
+  },
+);
+
+=head2 stories
+
+Type: has_many
+
+Related object: L<DjakaWeb::DjakartaDB::Result::Story>
+
+=cut
+
+__PACKAGE__->has_many(
+  "stories",
+  "DjakaWeb::DjakartaDB::Result::Story",
+  { "foreign.parent_action" => "self.id" },
+  { cascade_copy => 0, cascade_delete => 0 },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-29 21:30:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:PZQ5mDiOdMf3SxKEdwuunw
 
 sub click
 {
