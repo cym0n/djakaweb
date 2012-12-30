@@ -2,11 +2,9 @@ package DjakaWeb::StoryManager;
 
 use Moose;
 use YAML::Tiny;
+use Dancer 'config';
 
 has 'story' => (
-      is     => 'ro',
-);
-has 'path' => (
       is     => 'ro',
 );
 
@@ -25,7 +23,7 @@ around BUILDARGS => sub {
 sub allowed_stories
 {
     my $self = shift;
-    opendir (my $DIR, $self->path()) or die $!;
+    opendir (my $DIR, config->{'stories_path'}) or die $!;
     my @stories;
     while (my $file = readdir($DIR)) {
         if($file =~ /^(.*?)_START.yml/)
@@ -114,7 +112,7 @@ sub openYAML
 	my $self = shift;
 	my $code = shift;
 	my $yaml = YAML::Tiny->new;
-	my $file = $self->path() . "/" . $self->story() . "_" . $code . ".yml";
+	my $file = config->{'stories_path'} . "/" . $self->story() . "_" . $code . ".yml";
 	print "$file\n" if($debug);
 	$yaml = YAML::Tiny->read($file);
 	return $yaml;
@@ -125,7 +123,7 @@ sub openYAML_nostory
     my $story = shift;
 	my $code = shift;
 	my $yaml = YAML::Tiny->new;
-	my $file = $self->path() . "/" . $story . "_" . $code . ".yml";
+	my $file = config->{'stories_path'} . "/" . $story . "_" . $code . ".yml";
 	print "$file\n" if($debug);
 	$yaml = YAML::Tiny->read($file);
 	return $yaml;
@@ -156,11 +154,11 @@ sub getDangerStory
 	my $level = shift;
 	if($level > 0)
 	{
-		return "Il livello di tensione si è alzato di " . $level . '.';
+		return "Il livello di tensione si &egrave; alzato di " . $level . '.';
 	}
 	else
 	{
-		return "Il livello di tensione si è abbassato di " . $level*-1 . '.';;
+		return "Il livello di tensione si &egrave; abbassato di " . $level*-1 . '.';;
 	}
 }
 sub getElementDescription

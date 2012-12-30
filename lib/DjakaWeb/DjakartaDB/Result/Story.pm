@@ -171,20 +171,4 @@ sub write_story
 	}
 }
 
-sub get_all_story
-{
-	my $self = shift;
-	my $order = shift;
-	my @story = $self->search(undef, {order_by => { -$order => 'timestamp' }});
-	return \@story;
-}
-
-
-
-
-
-
-
-
-
 1;

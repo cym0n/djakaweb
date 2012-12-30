@@ -61,8 +61,7 @@ response_redirect_location_is ['GET' => '/game/click'], 'http://localhost/game/d
 
 diag("Checks on user status");
 my $user = DjakaWeb::Controllers::get_user('facebook_id' => $fake_facebook_id);
-my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
-my $game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'stories_path' => config->{'stories_path'}});
+my $game = $user->get_active_game();
 my $active_action = $game->get_active_action();
 is $active_action->{object_code}, $test_object, "Object of the ongoing action correctly configured";
 is $active_action->{action}, $test_action, "Action of the ongoing action correctly configured";

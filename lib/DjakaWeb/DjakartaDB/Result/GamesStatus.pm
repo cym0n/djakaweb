@@ -102,7 +102,7 @@ sub active_only
 	{
 		push @out, $_->object_code();
 	}
-	return \@out;
+	return @out;
 }
 
 sub init

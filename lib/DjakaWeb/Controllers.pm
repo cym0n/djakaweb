@@ -7,7 +7,8 @@ use Digest::SHA 'hmac_sha256';
 use Data::Dumper;
 use Dancer ':syntax';
 use DjakaWeb;
-use DjakaWeb::Elements::Game;
+use DjakaWeb::StoryManager;
+#use DjakaWeb::Elements::Game;
 #use DjakaWeb::Elements::User;
 use Dancer::Plugin::DBIC;
 
@@ -56,19 +57,7 @@ sub facebook_data
     }
 	my $user = get_user('facebook_id' => $facebook_id);
 	session 'user' => $user->id();
-    #my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
-    my $game_id = $user->get_active_game();
-	if(! $game_id)
-	{
-		#At this time, when no game exists, a new one with mission 000 is created
-        #my $game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => '000', 'stories_path' => config->{'stories_path'}});
-        #session 'game' => $game->id();
-	}
-	else
-	{
-		my $game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'stories_path' => config->{'stories_path'}});
-		session 'game' => $game->id();
-	}
+    build_elements();
 	return 1;
 }
 
@@ -95,7 +84,8 @@ sub facebook_user
 sub get_missions
 {
    	my ($user, $game) = build_elements(); #game will be null
-    my @stories = DjakaWeb::Elements::Game::get_stories(config->{'stories_path'});
+    my $storymanager = DjakaWeb::StoryManager->new({'story' => undef});
+    my @stories = $storymanager->allowed_stories();
     my @available_stories;
     my @completed_stories;
     for(@stories)
@@ -124,15 +114,14 @@ sub assign_mission
     {
         return;
     }
-    $game = DjakaWeb::Elements::Game->new({'user' => $user->id(), 'mission' => $mission_code, 'stories_path' => config->{'stories_path'}});
-    session 'game' => $game->id();
+    $user->games->init($user->id(), $mission_code);
 }
 
 sub get_data_for_interface
 {
 	my ($user, $game) = build_elements();
 	my %elements = $game->get_elements();
-	my $story = $game->get_all_story();
+	my @story = $game->get_all_story();
 	my $active_A = $game->get_active_action();
 	my $ttc = $user->time_to_click(config->{'wait_to_click'});
 	my $last_action_class = session('action');
@@ -148,7 +137,7 @@ sub get_data_for_interface
 			'time_to_click' => $ttc,
 			'allowed_click' => ($ttc <= 0) ,
 		 	'elements' => \%elements,
-			'story' => $story,
+			'story' => \@story,
 			'danger' => $game->danger(),
 			'action' => $active_A,
 			'last_action_class' => $last_action_class
@@ -178,12 +167,10 @@ sub get_data_for_help
 		$ttc = -1;
 	}
     my $ongoing_action = schema->resultset('OngoingAction')->find($action);
-    my $game_to_help_db = $ongoing_action->game;
+    my $game_to_help = $ongoing_action->game;
     #my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
 	if($ongoing_action)
 	{
-        #TODO: Change the game_to_help instance with the model row
-        my $game_to_help = DjakaWeb::Elements::Game->new({'id' => $game_to_help_db->id, 'stories_path' => config->{'stories_path'}});
 		my $user_to_help = get_user('id' => $game_to_help->user);
 		my $user_to_help_data = facebook_user($user_to_help->facebook_id());
 		my $errors = 'NONE';
@@ -267,7 +254,6 @@ sub click
 			if($game->danger > config->{'danger_threshold'})
 			{
 				session 'end' => '__GAMEOVER__';
-				session 'game' => undef;
                 $game->defeat();
 				return GAME_LOST; 
 			}
@@ -304,8 +290,7 @@ sub support_click
 	my $action = shift;
 	my ($user, $game) = build_elements();
     my $ongoing_action = schema->resultset('OngoingAction')->find($action);
-    my $game_to_help_db = $ongoing_action->game;
-    my $game_to_help = DjakaWeb::Elements::Game->new({'id' => $game_to_help_db->id, 'stories_path' => config->{'stories_path'}});
+    my $game_to_help = $ongoing_action->game;
     if($user->time_to_support_click(config->{'wait_to_support_click'}) <= 0)
 	{
 		$user->update_support_click_time();
@@ -332,7 +317,6 @@ sub victory
     my %victory = $game->get_victory($end);
     $game->victory();
     my $score = $user->add_points($victory{'score'});
-    session 'game' => undef; 
 
     return { message => $victory{'text'}, points => $victory{'score'}, result => $score };
 
@@ -360,21 +344,23 @@ sub get_user
 sub build_elements
 {
 	my ($user, $game);
-	if(session('game'))
-	{
-		$game = DjakaWeb::Elements::Game->new({'id' => session('game'), 'stories_path' => config->{'stories_path'}});
-	}
-	else
-	{
-		$game = undef;
-	}
-	if(session('user'))
+    if(session('user'))
 	{
 		$user = get_user('id' => session('user'));
-	}
+        $game = $user->get_active_game();
+        if($game)
+        {
+            session 'game' => 1;
+        }
+        else
+        {
+            session 'game' => undef;
+        }
+    }
 	else
 	{
 		$user = undef;
+        $game = undef;
 	}
 	return ($user, $game);
 }

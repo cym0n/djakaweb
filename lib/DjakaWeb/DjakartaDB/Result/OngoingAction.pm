@@ -144,8 +144,15 @@ sub click
 	return $new_clicks;
 }
 
-
-
+sub to_hash
+{
+	my $self = shift;
+	return { id => $self->id(),
+             object_code => $self->object_code,
+	         object => $self->game->StoryManager()->getAttribute($self->object_code, 'name'),
+			 action => $self->action(),
+			 clicks => $self->clicks_done()}	
+}
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
@@ -170,12 +177,20 @@ sub get_active_action
 	my $game = shift;
 	return $self->find({game_id => $game, active => 1});
 }
+sub null_action
+{
+    return { id => -1,
+                 object_code => -1,
+			     object => 'NONE',
+			     action => 'NONE',
+			     clicks => 0}
+}
+
 sub already_used_actions
 {
     my $self = shift;
-    my $game = shift;
     my $object = shift;
-    return $self->search({game_id => $game, object_code => $object});
+    return $self->search({object_code => $object});
 }
 
 sub click

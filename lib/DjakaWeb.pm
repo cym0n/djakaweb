@@ -11,6 +11,7 @@ my @game_not_needed_path = (qr/^\/game\/help/,
                             );
 
 hook 'before' => sub {
+    DjakaWeb::Controllers::build_elements();
 	#game navigations are only for logged users
 	if(request->path_info =~ /^\/game/)
 	{
