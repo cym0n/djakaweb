@@ -3,6 +3,7 @@ package DjakaWeb::Elements::Game;
 use Moose;
 use DjakaWeb::StoryManager;
 use Dancer::Plugin::DBIC;
+use Data::Dumper;
 
 
 has 'id' => (
@@ -81,31 +82,15 @@ around BUILDARGS => sub {
 	return $class->$orig(%params);
 };
 
-#static method
-sub get_active_game
-{
-	my $user = shift;
-	return schema->resultset('Game')->get_active_game($user);
-}
-sub get_game_from_ongoing
-{
-	my $ongoing = shift;
-	my $stories_path = shift;
-	my $OA = schema->resultset('OngoingAction')->find($ongoing);
-	if(! $OA)
-	{
-		return (undef, undef);
-	}
-	my $game = DjakaWeb::Elements::Game->new({'id' => $OA->game_id, 'stories_path' => $stories_path});
-	return ($game, $OA);
-}
-
 #Method to retrieve DB data
+
+#Used only in proxy method... to be erased
 sub get_game
 {
 	my $self = shift;
 	return $self->GameDB()->find($self->id());
 }
+
 sub get_status
 {
 	my $self = shift;
@@ -281,7 +266,7 @@ sub schedule_action
 sub get_active_action
 {
 	my $self = shift;
-	my $AA = $self->ActionsDB->get_active_action($self->id());
+	my $AA = $self->GameDB->get_active_action($self->id());
 	return $self->get_action_data($AA);
 }
 sub get_action_data
@@ -294,7 +279,7 @@ sub get_action_data
                  object_code => $AA->object_code,
 			     object => $self->StoryManager()->getAttribute($AA->object_code, 'name'),
 				 action => $AA->action(),
-				 clicks => $AA->clicks()}	
+				 clicks => $AA->clicks_done()}	
 	}
 	else
 	{

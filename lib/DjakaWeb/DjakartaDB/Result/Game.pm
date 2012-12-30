@@ -138,6 +138,8 @@ __PACKAGE__->has_many(
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 
+
+
 sub write_danger
 {
 	my $self = shift;
@@ -188,5 +190,13 @@ sub get_active_game
 		return $game[0]->id();
 	}
 }
+
+sub get_active_action
+{
+	my $self = shift;
+	my $game = shift;
+	return $self->find($game)->ongoing_actions->find({active => 1});
+}
+
 
 1;

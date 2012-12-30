@@ -56,7 +56,8 @@ sub facebook_data
     }
 	my $user = get_user('facebook_id' => $facebook_id);
 	session 'user' => $user->id();
-	my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
+    #my $game_id = DjakaWeb::Elements::Game::get_active_game($user->id());
+    my $game_id = $user->get_active_game();
 	if(! $game_id)
 	{
 		#At this time, when no game exists, a new one with mission 000 is created
@@ -176,9 +177,13 @@ sub get_data_for_help
 	{
 		$ttc = -1;
 	}
-	my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
+    my $ongoing_action = schema->resultset('OngoingAction')->find($action);
+    my $game_to_help_db = $ongoing_action->game;
+    #my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
 	if($ongoing_action)
 	{
+        #TODO: Change the game_to_help instance with the model row
+        my $game_to_help = DjakaWeb::Elements::Game->new({'id' => $game_to_help_db->id, 'stories_path' => config->{'stories_path'}});
 		my $user_to_help = get_user('id' => $game_to_help->user);
 		my $user_to_help_data = facebook_user($user_to_help->facebook_id());
 		my $errors = 'NONE';
@@ -298,8 +303,10 @@ sub support_click
 {
 	my $action = shift;
 	my ($user, $game) = build_elements();
-	my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
-	if($user->time_to_support_click(config->{'wait_to_support_click'}) <= 0)
+    my $ongoing_action = schema->resultset('OngoingAction')->find($action);
+    my $game_to_help_db = $ongoing_action->game;
+    my $game_to_help = DjakaWeb::Elements::Game->new({'id' => $game_to_help_db->id, 'stories_path' => config->{'stories_path'}});
+    if($user->time_to_support_click(config->{'wait_to_support_click'}) <= 0)
 	{
 		$user->update_support_click_time();
 		$user->trace_click($action, 'SUPPORT');

@@ -49,7 +49,7 @@ __PACKAGE__->table("ONGOING_ACTIONS");
   data_type: 'integer'
   is_nullable: 1
 
-=head2 clicks
+=head2 clicks_done
 
   data_type: 'integer'
   is_nullable: 1
@@ -73,7 +73,7 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 1, size => 30 },
   "active",
   { data_type => "integer", is_nullable => 1 },
-  "clicks",
+  "clicks_done",
   { data_type => "integer", is_nullable => 1 },
   "object_status",
   { data_type => "varchar", is_nullable => 1, size => 30 },
@@ -133,14 +133,14 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-29 21:30:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:PZQ5mDiOdMf3SxKEdwuunw
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-30 11:45:06
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:iI3J9VM/wcItxzlHAdTGhw
 
 sub click
 {
 	my $self = shift;
-	my $new_clicks = $self->clicks() + 1;
-	$self->update({clicks => $new_clicks});
+	my $new_clicks = $self->clicks_done() + 1;
+	$self->update({clicks_done => $new_clicks});
 	return $new_clicks;
 }
 
@@ -161,7 +161,7 @@ sub add_action
 	my $object = shift;
 	my $action = shift;
 	my $status = shift;
-	$self->create({game_id => $game, object_code => $object, object_status => $status, action => $action, active => 1, clicks => 0});
+	$self->create({game_id => $game, object_code => $object, object_status => $status, action => $action, active => 1, clicks_done => 0});
 }
 
 sub get_active_action

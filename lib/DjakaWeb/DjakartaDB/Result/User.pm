@@ -118,6 +118,21 @@ __PACKAGE__->remove_column("last_support_done");
 __PACKAGE__->add_column("last_support_done", { data_type => "datetime", is_nullable => 1, timezone => "CET" });
 
 
+sub get_active_game
+{
+    my $self = shift;
+    my $game = $self->games->find({'active' => 1});
+    if($game)
+    {
+        return $game->id();
+    }
+    else
+    {
+        return undef;
+    }
+}
+
+
 sub update_click_time
 {
 	my $self = shift;
