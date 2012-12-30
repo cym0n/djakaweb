@@ -1,4 +1,4 @@
-use Test::More import => ['!pass'], tests => 23;
+use Test::More import => ['!pass'], tests => 24;
 use Data::Dumper;
 use strict;
 use warnings;
@@ -66,5 +66,9 @@ my $game = DjakaWeb::Elements::Game->new({'id' => $game_id, 'stories_path' => co
 my $active_action = $game->get_active_action();
 is $active_action->{object_code}, $test_object, "Object of the ongoing action correctly configured";
 is $active_action->{action}, $test_action, "Action of the ongoing action correctly configured";
+is $active_action->{clicks}, 2, "Clicks of the ongoing action correctly configured";
+
+#TODO
+#Costruire un caso di test per i click di supporto
 
 
