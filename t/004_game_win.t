@@ -1,4 +1,4 @@
-use Test::More import => ['!pass'], tests => 34;
+use Test::More import => ['!pass'], tests => 35;
 use Data::Dumper;
 use strict;
 use warnings;
@@ -108,13 +108,13 @@ diag("Waiting...");
     sleep 7;
 diag("Winning scenario");
     response_redirect_location_is ['GET' => '/game/click'], 'http://localhost/game/win';
+    response_status_is ['GET' => '/game/win'], 200;
     $game = schema->resultset("Game")->find($game->id);
     is $game->active, 2, "The game is in the correct win status";
     is $game->games_statuses->find({object_code => $test_object})->status, 'BRIBED', "$test_object is BRIBED";
     $active_action = $game->get_active_action();
     is $active_action->{'action'}, 'NONE', "No active action";
 
-print Dumper(read_logs);
 
 
 

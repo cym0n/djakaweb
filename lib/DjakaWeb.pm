@@ -73,7 +73,18 @@ post '/game/missions' => sub {
 get '/game/dashboard' => sub {
 	template 'interface' => DjakaWeb::Controllers::get_data_for_interface(), {'layout' => 'interface.tt'};
 };
-get '/share/help/:action_id' => sub {
+get '/game/help/:action_id/click' => sub {
+	my $result = DjakaWeb::Controllers::support_click(params->{action_id});
+	if($result == DjakaWeb::Controllers::CLICK_ERROR || $result == DjakaWeb::Controllers::CLICK_TIMEOUT)
+	{
+		redirect '/game/help/courtesy/bad_click';
+	}
+	else
+	{
+		redirect '/game/help/courtesy/good_click';
+	}
+};
+get '/game/help/:action_id' => sub {
 	my $data = DjakaWeb::Controllers::get_data_for_help(params->{action_id});
 	#if($data->{'errors'} eq 'BAD_ACTION')
 	#{
@@ -111,35 +122,27 @@ get '/game/do/:action/:element' => sub {
 	    redirect '/game/dashboard';
     }
 };
-get '/game/help/:action_id/click' => sub {
-	my $result = DjakaWeb::Controllers::support_click(params->{action_id});
-	if($result == DjakaWeb::Controllers::CLICK_ERROR || $result == DjakaWeb::Controllers::CLICK_TIMEOUT)
-	{
-		redirect '/game/courtesy/bad_click';
-	}
-	else
-	{
-		redirect '/game/courtesy/good_click';
-	}
-};
+
 get '/game/click' => sub {
 	my $result = DjakaWeb::Controllers::click();
 	if($result == DjakaWeb::Controllers::GAME_LOST)
 	{
 		redirect '/game/gameover';
+        return 0;
 	}
 	elsif($result == DjakaWeb::Controllers::GAME_WON)
 	{
 		redirect '/game/win';
-	
 	}
 	elsif($result == DjakaWeb::Controllers::CLICK_ERROR || $result == DjakaWeb::Controllers::CLICK_TIMEOUT)
 	{
 		redirect '/game/courtesy/bad_click';
+        return 0;
 	}
 	else
 	{
 		redirect '/game/dashboard';
+        return 0;
 	}
 };
 get '/game/gameover' => sub {
@@ -156,7 +159,6 @@ get '/game/gameover' => sub {
 get '/game/win' => sub {
 	if(session('end'))
 	{
-        session end => undef;
 		template 'win' => DjakaWeb::Controllers::victory(session('end'));
 	}
 	else
@@ -180,8 +182,11 @@ get '/courtesy/not_logged' => sub {
 get '/courtesy/login_failed' => sub {
 	template 'login_failed';
 };
-get '/game/courtesy/good_click' => sub {
+get '/game/help/courtesy/good_click' => sub {
 	template 'good_click';
+};
+get '/game/help/courtesy/bad_click' => sub {
+	template 'bad' => { 'message' => 'Il click non &egrave; andato a buon fine'};
 };
 get '/game/courtesy/bad_click' => sub {
 	template 'bad' => { 'message' => 'Il click non &egrave; andato a buon fine'};

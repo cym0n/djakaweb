@@ -171,7 +171,7 @@ sub get_data_for_help
     #my ($game_to_help, $ongoing_action) = DjakaWeb::Elements::Game::get_game_from_ongoing($action, config->{'stories_path'});
 	if($ongoing_action)
 	{
-		my $user_to_help = get_user('id' => $game_to_help->user);
+		my $user_to_help = $game_to_help->user;
 		my $user_to_help_data = facebook_user($user_to_help->facebook_id());
 		my $errors = 'NONE';
 		if($ongoing_action->active == 0)
@@ -187,7 +187,7 @@ sub get_data_for_help
 			    'app_call' => '/share/help/' . $ongoing_action->id,
 				'userid_to_help' => $user_to_help->facebook_id(),
 				'username_to_help' => $user_to_help_data->{'name'},
-				'action' => $game_to_help->get_action_data($ongoing_action),
+				'action' => $ongoing_action->to_hash(),
 				'errors' => $errors,
 				'time_to_click' => $ttc,
 				'allowed_click' => ($ttc <= 0) ,
