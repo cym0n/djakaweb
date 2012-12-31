@@ -1,0 +1,42 @@
+name: Kuala Lumpur - Jaiha House
+type: place
+description:
+    START: "{name} è una palazzina di due piani a Kuala Lumpur. Curiosamente appare ben sorvegliata."
+    INFILTRATED: "Dei nostri uomini stazionano in loco fornendoci una base d'appoggio."
+    ASSAULTED: "La palazzina è sotto il nostro controllo dopo una dura battaglia."
+messages:
+    INTEL: "La palazzina sembra essere di proprietà di una società fantasma in cui però sospettiamo abbia interessi {0002.name}. I nostri analisti ipotizzano che sia lui il proprietario. Sembra l'unico edificio moderno della zona."
+    INFILTRATE: "I nostri uomini sono riusciti a stabilire una base nei pressi"
+    VISIT: "Nonostante la palazzina sia abitata da persone, queste non hanno voluto parlare con noi."
+    ASSAULT: "Abbiamo dato l'assalto alla palazzina. Abbiamo incontrato forte resistenza da parte di persone molto organizzate. La metà della squadra è stata uccisa, ma alla fine abbiamo vinto. Con il materiale acquisot abbiamo individuato dove si trova {0002.name}"
+    GOODASSAULT: "Grazie ai nostri uomini in loco siamo riusciti ad avere la meglio sulle forze ostili senza fare rumore. La palazzina è in mano nostra. Con il materiale acquisot abbiamo individuato dove si trova {0002.name}"
+    DISCOVERY: "Analizzando quanto presente in {name} abbiamo fatto un'importante scoperta: {0008.name} è la sorella di {0002.name}." 
+actions:
+    INTEL:
+        ANY:
+            - TELL INTEL
+    ASSAULT:
+        ANY: 
+            - TELL ASSAULT
+            - TAG ASSAULTED
+            - DANGER 30
+            - DO DETECTED 0002
+        INFILTRATED: 
+            - TELL GOODASSAULT
+            - TAG ASSAULTED
+            - DO DETECTED 0002
+    INFILTRATE:
+        ASSAULTED: KO
+        ANY: 
+            - TELL INFILTRATE
+            - TAG INFILTRATED
+    INSPECT:
+        ANY: KO
+        ASSAULTED: 
+            - TELL DISCOVERY
+            - DO SISTER 0008
+    VISIT:
+        ASSAULTED: KO
+        ANY:
+            - TELL VISIT
+

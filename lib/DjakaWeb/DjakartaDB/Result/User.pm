@@ -39,10 +39,9 @@ __PACKAGE__->table("USERS");
 
 =head2 last_support_done
 
-  data_type: 'timestamp'
+  data_type: 'datetime'
   datetime_undef_if_invalid: 1
-  default_value: current_timestamp
-  is_nullable: 0
+  is_nullable: 1
 
 =head2 score
 
@@ -64,10 +63,9 @@ __PACKAGE__->add_columns(
   },
   "last_support_done",
   {
-    data_type => "timestamp",
+    data_type => "datetime",
     datetime_undef_if_invalid => 1,
-    default_value => \"current_timestamp",
-    is_nullable => 0,
+    is_nullable => 1,
   },
   "score",
   { data_type => "integer", is_nullable => 1 },
@@ -107,8 +105,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-29 21:30:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:RXEaNNCuAte+SbIH1kFpXA
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-30 23:18:03
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:QKRW4JaEaiUgp8HFkytA5A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -232,7 +230,7 @@ sub newUser
 {
 	my $self = shift;
 	my $fb = shift;
-	my $user = $self->create({last_action_done => undef, facebook_id => $fb, score => 0 });
+	my $user = $self->create({last_support_done => undef, last_action_done => undef, facebook_id => $fb, score => 0 });
 	return $user;
 }
 

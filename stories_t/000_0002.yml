@@ -1,0 +1,55 @@
+name: Al-Manaba 
+type: place
+description:
+    START: "{name} &egrave; la moschea di riferimento della comunit&agrave; islamica di Loose Bricks."
+messages: 
+    ASSAULT: "L'assalto alla {name} ha gettato la zona nel caos. {0001.name} &egrave; morto e tutti sono molto nervosi ora. E' stata aperta un'inchiesta per capire l'operato della squadra e la missione rischia di fallire."
+    SPY: "{name} &egrave; una moschea molto frequentata. Al di l&agrave; di {0000.name} sembra che sia gestita da {0003.name}. Abbiamo individuato anche alcuni operai che vi passano molto più tempo degli altri: {0004.name}, {0005.name}, {0006.name}"
+    RESEARCH: "Non ci sono informazioni rilevanti su {name}."
+    FAIL: "Infiltrarci in {name} risulta impossibile."
+    INSPECTION: "La moschea sembra avere un collegamento diretto a {0008.name}.<br />Sono state oltretutto trovate tracce che ricondurrebbero alla creazione di {0007.name} che però non si trova qui."
+    INFILTRATED: "Ci siamo infiltrati nella moschea! Ora abbiamo l'elenco completo dei potenziali terroristi e dati su come possono essere organizzati gli attentati."
+actions:
+    ASSAULT:
+        ANY:
+            - TAG ASSAULTED
+            - DO KILL 0000
+            - DO ANGRY 0004
+            - DO ANGRY 0005
+            - DO ANGRY 0006
+            - DO ALARM 0003
+            - DO MOVE 0007
+            - TELL ASSAULT    
+            - DANGER 60
+    SPY:
+        ANY:
+            - TELL SPY
+            - ADD 0003
+            - ADD 0004
+            - ADD 0005
+            - ADD 0006
+    INTEL:
+        ANY:
+            - TELL RESEARCH
+    INSPECT:
+        INFILTRATED:
+            - TELL INSPECTION
+            - ADD 0008
+            - ADD 0007
+        ANY: KO
+    INFILTRATE:
+        FRIEND: 
+            - TELL INFILTRATED
+            - TAG INFILTRATED
+            - ADD 0003
+            - ADD 0004
+            - ADD 0005
+            - ADD 0006
+        ANY:
+            - TELL FAIL
+            - DANGER 10
+m2m:
+    FRIEND:
+        ASSAULTED: KO
+        ANY:
+            - TAG FRIEND

@@ -1,0 +1,35 @@
+name: device custom
+type: object
+description:
+    START: "Un componente elettronico di origine sconosciuta. Sembra parte di una rete di oggetti più grande. Potrebbe essere adibito alla criptazione/decriptazione dati."
+    TAKEN: "Lo abbiamo portato nella nostra base."
+    USABLE: "Grazie a {0001.name} possiamo provare a usarlo."
+    UNUSABLE: "Non abbiamo nessuno che possa dirci come usarlo."
+messages: 
+    ANALYSIS: "L'oggetto sembra un dispositivo per comunicazioni protette. E' molto sofisticato, sicuramente più di quanto ci si possa aspettare da un'azienda come {0000.name}. Impossibile stabilire con chi comunicasse."
+    TAKEN: "Abbiamo recuperato {name}."
+    OSIRIS: "Con le conoscenze di {0001.name} e lo strumento siamo riusciti a downloadare dati sull'organizzazione {0007.name}. Sembra che in essa sia implicato {0004.name}."
+actions:
+    PICKUP: 
+        ANY: 
+            - TELL TAKEN
+            - TAG TAKEN
+    ANALYSE:
+        ANY: KO
+        TAKEN:
+            - TELL ANALYSIS
+            - DO REVIVE 0001
+    USEIT:
+        USABLE:
+            - TELL OSIRIS
+            - DO GUILTY 0004 
+            - DO UNCOVERED 0007
+        UNUSABLE: KO
+        ANY: KO
+m2m:
+    USABLE:
+        ANY:
+            - TAG USABLE
+    UNUSABLE:
+        ANY:
+            - TAG UNUSABLE

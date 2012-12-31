@@ -1,0 +1,3 @@
+alter table USERS 
+change  LAST_SUPPORT_DONE LAST_SUPPORT_DONE datetime NULL DEFAULT NULL;
+

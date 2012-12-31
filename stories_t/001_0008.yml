@@ -1,0 +1,56 @@
+name: Laura Dorth
+type: person
+description:
+    START: "{name} è una dipendente della {0003.name}. E' apparta molto scossa durante le nostre indaginim tanto da insospettirci."
+    DEAD: "Attualmente è morta."
+    SISTER: "E' la sorella di {0002.name}."
+    TAKEN: "Attualmente é detenuta presso di noi."
+    SISTERTAKEN: "E' la sorella di {0002.name}.<br />Attualmente é detenuta presso di noi."
+messages:
+    INTEL: "Non ci sono dati rilevanti su {name}. Si tratta di un'impiegata di basso livello della {0003.name}, che oltretutto non ha rapporti con la {0000.name}. Anche le sue capacità non ci appaiono particolari."
+    KILL: "{name} è stata uccisa."
+    TAKEN: "{name} è presso di noi, detenuta"
+    INTERROGATE: "{name} nega di essere sconvolta dall'assalto alla {0000.name} anche perché non ha niente a che fare con la compagnia."
+    SISINTERROGATE: "{name} ha ammesso di essere la sorella di {0002.name} e di aver riconosciuto la sua foto. E' il motivo per cui è rimasta sconvolta. Purtroppo però non ha praticamente più rapporti col fratello. Non riusciamo a stabilire se la sua presenza nella {0003.name} sia un caso o no."
+actions:
+    KILL:
+        DEAD: KO 
+        ANY:
+            - TAG DEAD
+            - TELL KILL
+            - DANGER 30
+    TAKE:
+        DEAD: KO 
+        TAKEN: KO
+        SISTERTAKEN: KO
+        SISTER: 
+            - TELL TAKEN
+            - TAG SISTERTAKEN
+            - DO HOSTAGE 0002
+            - DANGER 10
+        ANY: 
+            - TELL TAKEN
+            - TAG TAKEN
+            - DANGER 10
+    INTERROGATE:
+        DEAD: KO
+        SISTER: 
+            - TELL SISINTERROGATE
+        SISTERTAKEN: 
+            - TELL SISINTERROGATE
+        ANY: 
+            - TELL INTERROGATE
+    INTEL:
+        ANY:
+            - TELL INTEL
+    BRIBE:
+        ANY: KO
+m2m:
+    SISTER:
+        DEAD: KO 
+        TAKEN:
+            - TAG SISTERTAKEN
+            - DO HOSTAGE 0002
+        SISTER: KO
+        ANY:
+            - TAG SISTER

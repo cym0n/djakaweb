@@ -1,0 +1,74 @@
+name: Ibn Helamel
+type: person
+description:
+    START: "Operaio della {0001.name}"
+    DEAD: "Attualmente è morto."
+    TAKEN: "Attualmente è detenuto presso di noi."
+    FRIEND: "Siamo riusciti ad avvicinarlo e a ottenere la sua collaborazione."
+    ANGRY: "Gli ultimi avvenimenti ce lo hanno reso ostile."
+messages: 
+    MOSQUEACCESS: "{name} ha accettato il nostro uomo come amico e, parlandogli, gli ha promesso di farlo accedere alla Moschea."
+    KILL: "L'omicidio di {name} è stato portato a termine."
+    TAKEN: "{name} ora si trova detenuto nella nostra base."
+    CONFESSION: "{name} dice di essere completamente estraneo a qualsiasi attività terroristica, ma {0005.name} una volta lo ha avvicinato per parlargli di un'operazione segreta e pericolosa."
+    NOTHING: "{name} non sembra sapere niente di eventuali attentati."
+    NOTHINGSPY: "{name}, sorvegliato, non ha avuto comportamenti sospetti."
+    ANGRYSPY: "{name} si è rifiutato di parlare con noi."
+    ANGRYBRIBE: "{name} ha rifiutato i nostri soldi."
+    RESEARCH: "Nessuna notizia rilevante su {name}"
+    BRIBED: "{name} ha accettato una nostra offerta in denaro per collaborare alle indagini."
+    PROVOKED: "Dopo gli ultimi accadimenti {name} è molto nervoso e arrabbiato. Spesso lo si vede chiedere consiglio a {0005.name} che comincia ad avere una certa influenza su di lui..."
+actions:
+    KILL:
+        DEAD: KO 
+        ANY:
+            - TAG DEAD
+            - TELL KILL
+            - DANGER 30
+    TAKE:
+        DEAD: KO 
+        ANY:
+            - TAG TAKEN
+            - TELL TAKEN
+            - DANGER 15
+    INTERROGATE:
+        DEAD: KO
+        TAKEN:
+            - TELL CONFESSION
+            - ADD 0005
+        FRIEND:
+            - DO FRIEND 0002
+            - TELL MOSQUEACCESS
+        ANGRY:
+            - TELL ANGRYSPY
+            - DANGER 10
+        ANY:
+            - TELL NOTHING
+    INTEL:
+        ANY:
+            - TELL RESEARCH
+    BRIBE:
+        DEAD: KO 
+        ANGRY:
+            - TELL ANGRYBRIBE
+            - DANGER 20
+        ANY:
+            - TAG FRIEND
+            - TELL BRIBED
+            - DANGER 5
+    SPY:
+        DEAD: KO 
+        ANGRY:
+            - TELL PROVOKED
+        ANY:
+            - TELL NOTHINGSPY
+m2m:
+    FRIEND:
+        DEAD: KO
+        ANGRY: KO
+        ANY:
+            - TAG FRIEND
+    ANGRY:
+        DEAD: KO
+        ANY:
+            - TAG ANGRY

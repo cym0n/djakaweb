@@ -1,0 +1,17 @@
+END1:
+    condition:
+        0007: UNCOVERED
+        0004: DEAD
+    text: "Il massacro di {0000.name} è stata un'azione svolta dalla {0007.name} con la conniventa della {0003.name}. Evidentemente la {0000.name} ha minacciato di tradire il segreto che lega le tre società e sono state prese misure drastiche.<br /><br />La scoperta dell'esistenza dell'organizzazione {0007.name} è un fatto molto rilevante che sarà oggetto di ulteriori analisi. Purtroppo la morte di {0004.name} ci impedisce di usarlo per recuperare informazioni."
+    score: 50
+END2:
+    condition:
+        0007: UNCOVERED
+        0004: TAKEN
+    text: "Il massacro di {0000.name} è stata un'azione svolta dalla {0007.name} con la conniventa della {0003.name}. Evidentemente la {0000.name} ha minacciato di tradire il segreto che lega le tre società e sono state prese misure drastiche.<br /><br />Abbiamo {0004.name} in pugno. Speriamo che questo ci aiuti a fare luce sulle attività della misteriosa organizzazione {0007.name}."
+    score: 100
+END3:
+    condition: 
+        0003: ASSAULTED
+    text: "Il massacro di {0000.name} è stata un'azione svolta dalla {0007.name} con la conniventa della {0003.name}. Evidentemente la {0000.name} ha minacciato di tradire il segreto che lega le tre società e sono state prese misure drastiche.<br /><br />L'assalto alla {0003.name} è stata una misura drastica, ma necessaria. Ci sarà molto lavoro da svolgere per coprire l'operazione, ma era importante agire prontamente."
+    score: 75

@@ -1,0 +1,59 @@
+name: Wilson Thamadriel
+type: person
+description:
+    START: "{name} è un analista matematico che lavora per {0000.name}. E' in fin di vita all'ospedale per le ferite ad arma da fuoco subite durante l'assalto alla società."
+    AWAKE: "L'ospedale ci comunica che ha ripreso conoscenza"
+    HELPING: "Ci ha confessato di essere un agente segreto e ha accettato di aiutarci a smascherare chi ha compiuto il massacro di {0000.name}."
+    DEAD: "Attualmente è morto"
+messages:
+    INTEL: "{name} è un analista matematico, la sua laurea è stata finanziata dall'esercito, quando era arruolato nell'aeronautica. Ha lasciato le forze armate quando è stato assunto dalla {0000.name}. Date le sue qualifiche, però, potrebbe aspirare a un posto più prestigioso"
+    KILL: "{name} è stato ucciso. Tutti sono convinti che sia deceduto a seguito delle ferite riportate"
+    BADKILL: "{name} è stato ucciso. Visto che si stava riprendendo la sua morte è vista con sospetto."
+    FAILTAKE: "{name} risulta a oggi troppo grave per essere spostato. Non c'è stato modo di prenderlo senza mettere a rischio la sua vita"
+    FAILINTERROGATE: "{name} sta troppo male per rispondere a qualsiasi domanda"
+    AWAKE: "Ci è giunta comunicazione dall'ospedale che {name} ha ripreso conoscenza."
+    CONFESSION: "{name} ha confessato che la {0000.name} in verità lavora per una misteriosa organizzazione chiamata {0007.name}. Si dice disposto ad aiutarci a contattarla e a scoprire tutto su di lei."
+actions:
+    KILL:
+        DEAD: KO 
+        AWAKE:
+            - TAG DEAD
+            - TELL BADKILL
+            - DO ACCOMPLISHED 0004
+            - DO UNUSABLE 0005
+            - DANGER 20
+        ANY:
+            - TAG DEAD
+            - TELL KILL
+            - DO ACCOMPLISHED 0004
+            - DO UNUSABLE 0005
+    TAKE:
+        DEAD: KO 
+        ANY:
+            - TELL FAILTAKE
+    INTERROGATE:
+        DEAD: KO
+        AWAKE:
+            - TELL CONFESSION
+            - ADD 0007
+            - TAG HELPING
+            - DO USABLE 0005
+        HELPING: KO
+        ANY:
+            - TELL FAILINTERROGATE
+    INTEL:
+        ANY:
+            - TELL INTEL
+    BRIBE:
+        ANY: KO
+m2m:
+    CHECKALIVE:
+        DEAD: 
+            - DO IMDEAD 0004
+        ANY: 
+            - DO KILLME 0004
+    REVIVE:
+        DEAD: KO
+        ANY: 
+            - TAG AWAKE
+            - TELL AWAKE

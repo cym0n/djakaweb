@@ -1,0 +1,65 @@
+name: Gunther Hex
+type: person
+description:
+    START: "{name} è un mercenario di alto profilo pronto a qualsiasi tipo di operazione. Lavora generalmente in oriente, ma è stato impiegato anche da diverse organizzazioni nostre alleate."
+    DETECTED: "La sua posizione ci è nota."
+    ANGRY: "Siamo venuti in contatto con lui nel modo sbagliato. Ci è ormai ostile."
+    HOSTAGE: "Crediamo di avere una leva per costringerlo a collaborare."
+messages:
+    INTEL: "{name} ha all'attivo missioni di vario genere in tutto il mondo. Non fa alcuna distinzione tra buoni e cattivi ed è uno dei migliori nel suo campo. Il suo ultimo indirizzo noto è {0006.name}."
+    LITTLETALK: "Siamo riusciti a parlare con {name}, ma lui ci ha consigliato di stargli lontano."
+    ANGRYTALK: "{name} ci ha minacciato esplicitamente."
+    FAILKILL: "{name} ha ucciso gli agenti che avevamo mandato per eliminarlo!"
+    FAILTAKE: "{name} ha ucciso gli agenti che avevamo mandato per catturarlo!"
+    FAILBRIBE: "{name} non accetta di trattare con noi dopo quello che abbiamo tentato."
+    NOBRIBE: "{name} non vuole fare affari con noi."
+    CONFESSION: "Visto che abbiamo in mano {0008.name}, sua sorella, {name} ha deciso di collaborare. Ci ha detto che lo sterminio della {0000.name} è stato comandato dalla {0003.name}. La {0003.name} è infatti una componente di un'organizzazione più vasta chiamata {0007.name}, i cui intenti sono chiaramente ostili nei nostri confronti."
+actions:
+    KILL:
+        ANY: KO
+        DETECTED:
+            - TELL FAILKILL
+            - DANGER 10 
+            - TAG ANGRY
+        ANGRY:
+            - TELL FAILKILL
+            - DANGER 10 
+            - DO KILL 0004
+    TAKE: 
+        ANY: KO
+        DETECTED:
+            - TELL FAILTAKE
+            - DANGER 10 
+            - TAG ANGRY
+        ANGRY:
+            - TELL FAILTAKE
+            - DANGER 10 
+            - DO KILL 0004
+    INTERROGATE: 
+        ANY: KO
+        DETECTED:
+            - TELL LITTLETALK
+        ANGRY:
+            - TELL ANGRYTALK
+    INTEL: 
+        ANY:
+            - TELL INTEL
+            - ADD 0006
+    BRIBE: 
+        DETECTED:
+            - TELL NOBRIBE
+        HOSTAGE:
+            - TELL CONFESSION
+            - ADD 0007
+            - DO GUILTY 0003
+        ANGRY:
+            - TELL FAILBRIBE
+            - DANGER 10
+        ANY: KO
+m2m:
+    DETECTED:
+        ANY:
+            - TAG DETECTED
+    HOSTAGE:
+        ANY: 
+            - TAG HOSTAGE

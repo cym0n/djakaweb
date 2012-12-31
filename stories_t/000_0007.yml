@@ -1,0 +1,34 @@
+name: Bomba artigianale 
+type: object
+description:
+    START: "Una bomba artigianale, ma molto potente."
+    FINDFACTORY: "Si trova all'interno della fabbrica."
+    FINDWAREHOUSE: "Si trova all'interno del magazzino abbandonato."
+    TAKEN: "E' in nostro possesso."
+messages: 
+    RESEARCH: "{name} &egrave; stata realizzata con materiali reperibili in magazzini di chimica e assemblata con esperienza."
+    TAKEN: "Abbiamo recuperato {name}."
+actions:
+    PICKUP: 
+        ANY: KO
+    INTEL:
+        ANY:
+            - TELL RESEARCH
+m2m:
+    MOVE:
+        TAKEN: KO
+        ANY:
+            - TAG MOVED
+    FINDFACTORY:
+        MOVED: KO
+        ANY:
+            - ADD 0007
+            - TAG TAKEN
+            - TELL TAKEN
+    FINDWAREHOUSE:
+        MOVED:
+            - ADD 0007
+            - TAG TAKEN
+            - TELL TAKEN
+        ANY: KO
+

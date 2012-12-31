@@ -5,7 +5,6 @@ package DjakaWeb::DjakartaDB::Result::Game;
 
 use strict;
 use warnings;
-use DjakaWeb::StoryManager;
 
 use base 'DBIx::Class::Core';
 
@@ -138,6 +137,9 @@ __PACKAGE__->has_many(
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
+
+use DjakaWeb::StoryManager;
+
 
 sub StoryManager
 {

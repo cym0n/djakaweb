@@ -46,3 +46,27 @@ plugins:
       options:
         RaiseError: 1
         PrintError: 1
+
+wait_to_click: 0.1
+wait_to_support_click: 0.1
+
+stories_path: /home/web/DjakaWeb/stories_t
+
+clicks:
+    #common
+    INTEL: 3
+    #people
+    KILL: 7
+    TAKE: 7
+    INTERROGATE: 5
+    BRIBE: 4
+    #places
+    ASSAULT: 8
+    INSPECT: 5
+    INFILTRATE: 6
+    VISIT: 3
+    #objects
+    PICKUP: 4
+    ANALYSE: 3
+    USE: 5
+

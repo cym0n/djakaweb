@@ -1,0 +1,69 @@
+name: Abdul Abdali 
+type: person
+description:
+    START: "Operaio della {0001.name}"
+    DEAD: "Attualmente è morto."
+    TAKEN: "Attualmente è detenuto presso di noi."
+    BOSS: "Sembra essere divenuto particolarmente nervoso ultimamente."
+messages: 
+    KILL: "L'omicidio di {name} &egrave; stato portato a termine."
+    TAKEN: "{name} ora si trova detenuto nella nostra base."
+    SUICIDE: "{name}, quando ha visto di essere in trappola, si &egrave; suicidato, portando con s&egrave; due dei nostri uomini."
+    CONFESSION: "{name} ha confessato di far parte di una organizzazione terroristica capeggiata da {0003.name}. Ha anche parlato di un nascondiglio: {0008.name}"
+    RESEARCH: "Ricerche su {name} non hanno rilevato niente di interessante."
+    NOBRIBE: "{name} non accetta denaro da noi."
+    NOTHING: "{name} dice di non sapere niente sugli attentati."
+    ANGRY: "Il pedinamento di {name} ci ha fatto notare che ultimamente va molto spesso alla moschea, per sfogare la sua rabbia. Si incontra con {0000.name} e {0003.name}"
+    BOSS: "Abbiamo seguito {name} fino a {0008.name} dove sembra stia tramando qualcosa."
+actions:
+    KILL:
+        DEAD: KO 
+        ANY:
+            - TAG DEAD
+            - DO ALARM 0003
+            - TELL KILL
+            - DANGER 20
+    TAKE:
+        DEAD: KO 
+        BOSS:
+            - TAG DEAD
+            - TELL SUICIDE
+            - DO ALARM 0003
+            - DANGER 40
+        ANY:
+            - TAG TAKEN
+            - DO ALARM 0003
+            - TELL TAKEN
+            - DANGER 20
+    INTERROGATE:
+        DEAD: KO
+        TAKEN:
+            - TELL CONFESSION
+            - ADD 0003
+            - ADD 0008
+        ANY:
+            - TELL NOTHING
+    INTEL:
+        ANY:
+            - TELL RESEARCH
+        DEAD:
+            - TELL RESEARCH
+        BOSS:
+            - TELL BOSS
+            - ADD 0008
+        ANGRY:
+            - TELL ANGRY
+    BRIBE:
+        DEAD: KO 
+        ANY:
+            - TELL NOBRIBE
+m2m:
+    ANGRY:
+        DEAD: KO
+        BOSS: KO
+        ANY:
+            - TAG ANGRY    
+    BOSS:
+        DEAD: KO
+        ANY:
+            - TAG BOSS

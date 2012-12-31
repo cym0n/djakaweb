@@ -1,0 +1,26 @@
+name: Tic-Toe Limited
+type: place
+description:
+    START: "La {name} ha una piccola sede in un palazzo del quartiere finanziario. Appare un'azienda modesta, senza grandi capacit&agrave;. Si occupa di analisi statistiche."
+messages:
+    INTEL: "Nonostante sia un'azienda non particolarmente grande. {name} ha numerosi clienti. Gran parte del suo fatturato però viene dalle commissioni della {0003.name}. {0004.name}, dirigente della {0003.name} &egrave; anche uno dei principali investitori dell'azienda"
+    INSPECTION: "La polizia ci ha passato tutti i rilevamenti della scena del crimine. Non abbiamo individuato nessun dato rilevante per l'indagine. Nella sala server della societ&agrave;, però, abbiamo trovato {0005.name}." 
+    VISIT: "Interrogando le persone nel palazzo non abbiamo rilevato nessun movimento strano. Nessuno si &egrave; accorto dell'assalto del commando finch&egrave; non si &egrave; cominciato a sparare"
+actions:
+    INTEL:
+        ANY:
+            - TELL INTEL
+            - ADD 0003
+            - ADD 0004
+    ASSAULT:
+        ANY: KO
+    INFILTRATE:
+        ANY: KO
+    INSPECT:
+        ANY:
+            - TELL INSPECTION
+            - ADD 0005
+    VISIT:
+        ANY:
+            - TELL VISIT
+
