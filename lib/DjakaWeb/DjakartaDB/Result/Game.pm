@@ -171,7 +171,7 @@ sub get_all_story
 sub get_active_action
 {
 	my $self = shift;
-	my $AA = $self->ongoing_actions->find({active => 1});
+	my $AA = $self->ongoing_actions->get_active_action();
     if($AA)
     {
 	    return $AA->to_hash();
@@ -257,7 +257,7 @@ sub click
 	my $AA = $self->get_active_action();
 	return -1 if($AA->{'id'} == -1);
 	my $limit = $limits->{$AA->{'action'}};
-	my $clicks = $self->ongoing_actions->find({active => 1})->click();
+	my $clicks = $self->ongoing_actions->get_active_action()->click();
 	if($clicks == $limit)
 	{
 		$self->do_active_action;
@@ -271,7 +271,7 @@ sub click
 sub do_active_action
 {
 	my $self = shift;
-	my $AA = $self->ongoing_actions->find({active => 1});
+	my $AA = $self->ongoing_actions->get_active_action();
 	if($AA)
 	{
 		$self->do_action($AA->object_code, $AA->action(), 'human');
@@ -327,7 +327,7 @@ sub do_action
 				if($self->games_statuses->get_active($element) == 1)
 				{
 					my $story = $self->StoryManager()->getElementStory($element, $eff[1]);
-					my $AA = $self->ongoing_actions->find({active => 1});
+					my $AA = $self->ongoing_actions->get_active_action();
 					$self->stories->write_story($self->id(), $story, $AA, $self->get_element_name($AA->object_code()), $AA->id());
 				}
             #}
@@ -345,7 +345,7 @@ sub do_action
                 #if(! ($self->flags()->{'notell'}))
                 #{
 					my $story = $self->StoryManager()->getDangerStory($eff[1]);
-					my $AA = $self->ongoing_actions->find({active => 1});
+					my $AA = $self->ongoing_actions->get_active_action();
 					$self->stories->write_story($self->id(), $story, $AA, $self->get_element_name($AA->object_code()), $AA->id());
                     #}
             #}
@@ -453,13 +453,5 @@ sub get_active_game
 		return $game[0]->id();
 	}
 }
-
-sub get_active_action
-{
-	my $self = shift;
-	my $game = shift;
-	return $self->find($game)
-}
-
 
 1;

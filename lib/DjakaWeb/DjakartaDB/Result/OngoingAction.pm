@@ -174,8 +174,7 @@ sub add_action
 sub get_active_action
 {
 	my $self = shift;
-	my $game = shift;
-	return $self->find({game_id => $game, active => 1});
+	return $self->find({active => 1});
 }
 sub null_action
 {
@@ -192,15 +191,5 @@ sub already_used_actions
     my $object = shift;
     return $self->search({object_code => $object});
 }
-
-sub click
-{
-	my $self = shift;
-	my $game = shift;
-	my $action = $self->get_active_action($game);
-	return $action->click();
-
-}
-
 
 1;
