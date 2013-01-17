@@ -1,0 +1,2 @@
+alter table GAMES_STATUS 
+ADD SUSPECT int(11) DEFAULT 0;
