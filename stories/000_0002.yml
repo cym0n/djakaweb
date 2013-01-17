@@ -20,7 +20,7 @@ actions:
             - DO ALARM 0003
             - DO MOVE 0007
             - TELL ASSAULT    
-            - DANGER 60
+            - DANGER 50
     SPY:
         ANY:
             - TELL SPY
@@ -47,7 +47,6 @@ actions:
             - ADD 0006
         ANY:
             - TELL FAIL
-            - DANGER 10
 m2m:
     FRIEND:
         ASSAULTED: KO

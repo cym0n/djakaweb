@@ -21,17 +21,17 @@ actions:
             - TAG DEAD
             - TELL KILL
             - DO BOSS 0005
-            - DANGER 30
+            - DANGER 20
     TAKE:
         DEAD: KO 
         ALARMED: 
             - TELL FAILTAKE
-            - DANGER 30
+            - DANGER 20
         ANY:
             - TELL TAKEN
             - TAG TAKEN
             - DO BOSS 0005
-            - DANGER 20
+            - DANGER 10
     INTERROGATE:
         DEAD: KO
         TAKEN:
@@ -44,7 +44,6 @@ actions:
         DEAD: KO 
         ANY:
             - TELL FAILBRIBE
-            - DANGER 10
     INTEL:
         DEAD: KO 
         ALARMED:

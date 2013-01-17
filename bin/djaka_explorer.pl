@@ -3,14 +3,32 @@
 use Dancer;
 use Dancer::Plugin::DBIC;
 use DjakaWeb;
+use DjakaWeb::Controllers;
 use Data::Dumper;
 
-my $mission = '001';
+my $mission = '000';
 my $user_id = 999;
 
 my @types = ('person', 'place', 'object');
 
-my $game = DjakaWeb::Elements::Game->new({'user' => $user_id, 'mission' => $mission, 'stories_path' => config->{'stories_path'}});
+#my $game = DjakaWeb::Elements::Game->new({'user' => $user_id, 'mission' => $mission, 'stories_path' => config->{'stories_path'}});
+
+schema->resultset("TestStatus")->delete_all();
+schema->resultset("TestGraph")->delete_all();
+schema->resultset("Click")->delete_all();
+schema->resultset("GamesStatus")->delete_all();
+schema->resultset("Story")->delete_all();
+schema->resultset("OngoingAction")->delete_all();
+schema->resultset("Game")->delete_all();
+schema->resultset("User")->delete_all();
+
+
+my $user = DjakaWeb::Controllers::get_user('facebook_id' => $user_id);
+session 'user' => $user->id();
+my $game = DjakaWeb::Controllers::assign_mission($mission);
+
+
+
 
 my $game_id = $game->id();
 my $analyse_cursor = 0;
@@ -48,6 +66,7 @@ while(1)
         $game->schedule_action($element, $action);
         $game->do_active_action();
         my $danger = $game->danger();
+        $danger = $danger ? $danger : 0;
         if($danger >= 100)
         {
             #GAME OVER

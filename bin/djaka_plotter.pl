@@ -17,6 +17,9 @@ else
     my $win = shift @wins;
     $node = $win;
 }
+my $danger_row = schema->resultset('TestStatus')->find({ status_id => $node->start(), 'object_code' => 'DANGER'});
+print "Danger for the final state is: " . $danger_row->status() . "\n";
+print "Path:\n";
 while($node->start() != 0)
 {
     $node->print();

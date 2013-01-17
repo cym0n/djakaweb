@@ -24,13 +24,13 @@ actions:
         ANY:
             - TAG DEAD
             - TELL KILL
-            - DANGER 30
+            - DANGER 20
     TAKE:
         DEAD: KO 
         ANY:
             - TAG TAKEN
             - TELL TAKEN
-            - DANGER 15
+            - DANGER 5
     INTERROGATE:
         DEAD: KO
         TAKEN:
@@ -41,7 +41,6 @@ actions:
             - TELL MOSQUEACCESS
         ANGRY:
             - TELL ANGRYSPY
-            - DANGER 10
         ANY:
             - TELL NOTHING
     INTEL:
@@ -51,7 +50,7 @@ actions:
         DEAD: KO 
         ANGRY:
             - TELL ANGRYBRIBE
-            - DANGER 20
+            - DANGER 10
         ANY:
             - TAG FRIEND
             - TELL BRIBED

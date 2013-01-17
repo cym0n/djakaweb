@@ -19,7 +19,7 @@ actions:
             - DO ALARM 0003
             - DO MOVE 0007
             - TELL ASSAULT    
-            - DANGER 60
+            - DANGER 50
     INTEL:
         ANY:
             - TELL SEARCH

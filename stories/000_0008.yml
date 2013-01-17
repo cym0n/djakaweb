@@ -11,7 +11,7 @@ actions:
         ANY:
             - TELL ASSAULT
             - DO FINDWAREHOUSE 0007
-            - DANGER 20
+            - DANGER 10
     INTEL: 
         ANY:
             - TELL SPY

@@ -114,7 +114,7 @@ sub assign_mission
     {
         return;
     }
-    $user->games->init($user->id(), $mission_code);
+    return $user->games->init($user->id(), $mission_code);
 }
 
 sub get_data_for_interface

@@ -22,19 +22,19 @@ actions:
             - TAG DEAD
             - DO ALARM 0003
             - TELL KILL
-            - DANGER 20
+            - DANGER 10
     TAKE:
         DEAD: KO 
         BOSS:
             - TAG DEAD
             - TELL SUICIDE
             - DO ALARM 0003
-            - DANGER 40
+            - DANGER 30
         ANY:
             - TAG TAKEN
             - DO ALARM 0003
             - TELL TAKEN
-            - DANGER 20
+            - DANGER 10
     INTERROGATE:
         DEAD: KO
         TAKEN:
