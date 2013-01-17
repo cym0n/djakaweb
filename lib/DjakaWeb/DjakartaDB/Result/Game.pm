@@ -338,18 +338,23 @@ sub do_action
 		}
 		elsif($eff[0] =~ /^DANGER$/)
 		{
+            my $danger = $eff[1 + $self->games_statuses->get_suspect($element)];
             #TODO: manage flags
             #if(! ($self->flags()->{'nodanger'}))
             #{
-				$self->modify_danger($eff[1]);		
+				$self->modify_danger($danger);		
                 #if(! ($self->flags()->{'notell'}))
                 #{
-					my $story = $self->StoryManager()->getDangerStory($eff[1]);
+					my $story = $self->StoryManager()->getDangerStory($danger);
 					my $AA = $self->ongoing_actions->get_active_action();
 					$self->stories->write_story($self->id(), $story, $AA, $self->get_element_name($AA->object_code()), $AA->id());
                     #}
             #}
 		}
+        elsif($eff[0] =~ /^SUSPECT$/)
+        {
+            $self->games_statuses->raise_suspect($element);
+        }
 	}
 }
 sub check_victory

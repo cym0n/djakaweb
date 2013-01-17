@@ -158,6 +158,37 @@ sub get_active
 		return $els[0]->active();
 	}
 }
+sub get_suspect
+{
+	my $self = shift;
+	my $element = shift;
+	my @els = $self->search({object_code => $element});
+	if($#els == -1)
+	{
+		return 0;
+	}
+	else
+	{
+		return $els[0]->suspect();
+	}
+}
+sub raise_suspect
+{
+	my $self = shift;
+	my $element = shift;
+	my @els = $self->search({object_code => $element});
+	if($#els == -1)
+	{
+		return 0;
+	}
+	else
+	{
+		if($els[0]->suspect() < 2)
+        {
+            $els[0]->update({suspect => $els[0]->suspect() + 1});
+        }
+	}
+}
 
 sub tag
 {

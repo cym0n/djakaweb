@@ -16,7 +16,7 @@ actions:
         ANY:
             - TAG DEAD
             - DO ALARM 0003
-            - DANGER 40
+            - DANGER 40 30 20
     TAKE:
         DEAD: KO 
         TAKEN: KO

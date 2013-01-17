@@ -38,6 +38,7 @@ actions:
             - TELL CONFESSION
             - ADD 0008
         ANY:
+            - SUSPECT
             - TAG ALARMED
             - TELL FAILINTERROGATION
     BRIBE:
@@ -52,6 +53,7 @@ actions:
             - ADD 0008
         ANY:
             - TELL RESEARCH
+            - SUSPECT
 m2m:
     ALARM:
         DEAD: KO
