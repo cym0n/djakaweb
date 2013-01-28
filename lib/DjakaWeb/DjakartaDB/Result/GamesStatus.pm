@@ -45,6 +45,12 @@ __PACKAGE__->table("GAMES_STATUS");
   is_nullable: 1
   size: 30
 
+=head2 suspect
+
+  data_type: 'integer'
+  default_value: 0
+  is_nullable: 1
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -61,6 +67,8 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_nullable => 1 },
   "status",
   { data_type => "varchar", is_nullable => 1, size => 30 },
+  "suspect",
+  { data_type => "integer", default_value => 0, is_nullable => 1 },
 );
 __PACKAGE__->set_primary_key("game_id", "object_code");
 
@@ -82,8 +90,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-29 21:30:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qi6WRNQrnEQQs4oqofrt4w
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2013-01-18 00:21:12
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:0PkpdTXjo6VBqv+8BDHG9Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -97,12 +105,7 @@ sub active_only
 {
 	my $self = shift;
 	my @out;
-	my @els = $self->search({active => 1});
-	for(@els)
-	{
-		push @out, $_->object_code();
-	}
-	return @out;
+	return $self->search({active => 1});
 }
 
 sub init
@@ -148,6 +151,37 @@ sub get_active
 	else
 	{
 		return $els[0]->active();
+	}
+}
+sub get_suspect
+{
+	my $self = shift;
+	my $element = shift;
+	my @els = $self->search({object_code => $element});
+	if($#els == -1)
+	{
+		return 0;
+	}
+	else
+	{
+		return $els[0]->suspect();
+	}
+}
+sub raise_suspect
+{
+	my $self = shift;
+	my $element = shift;
+	my @els = $self->search({object_code => $element});
+	if($#els == -1)
+	{
+		return 0;
+	}
+	else
+	{
+		if($els[0]->suspect() < 2)
+        {
+            $els[0]->update({suspect => $els[0]->suspect() + 1});
+        }
 	}
 }
 

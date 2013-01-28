@@ -16,7 +16,7 @@ actions:
         ANY:
             - TAG DEAD
             - DO ALARM 0003
-            - DANGER 30
+            - DANGER 40 
     TAKE:
         DEAD: KO 
         TAKEN: KO
@@ -31,6 +31,7 @@ actions:
             - TELL WEEPING
         ANY:
             - TELL INTERROGATE
+            - DANGER 10 10 10
     INTEL:
         ANY:
             - TELL WATCH

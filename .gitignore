@@ -1,7 +1,8 @@
 DB/
 perl/
+perl5.16/
 sessions/
 logs/
-perl_sandbox
+perl_sandbox*
 docs/
 custom_scripts/

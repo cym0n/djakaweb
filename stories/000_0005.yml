@@ -10,9 +10,9 @@ messages:
     TAKEN: "{name} ora si trova detenuto nella nostra base."
     SUICIDE: "{name}, quando ha visto di essere in trappola, si &egrave; suicidato, portando con s&egrave; due dei nostri uomini."
     CONFESSION: "{name} ha confessato di far parte di una organizzazione terroristica capeggiata da {0003.name}. Ha anche parlato di un nascondiglio: {0008.name}"
-    RESEARCH: "Ricerche su {name} non hanno rilevato niente di interessante."
+    RESEARCH: "{name} &egrave; molto legato a {0003.name}."
     NOBRIBE: "{name} non accetta denaro da noi."
-    NOTHING: "{name} dice di non sapere niente sugli attentati."
+    BITGUILTY: "{name} dice di non conoscere terroristi, ma l'argomento lo infervora in modo anomalo."
     ANGRY: "Il pedinamento di {name} ci ha fatto notare che ultimamente va molto spesso alla moschea, per sfogare la sua rabbia. Si incontra con {0000.name} e {0003.name}"
     BOSS: "Abbiamo seguito {name} fino a {0008.name} dove sembra stia tramando qualcosa."
 actions:
@@ -41,17 +41,23 @@ actions:
             - TELL CONFESSION
             - ADD 0003
             - ADD 0008
+            - SUSPECT 0003
         ANY:
-            - TELL NOTHING
+            - TELL BITGUILTY
+            - SUSPECT
     INTEL:
         ANY:
             - TELL RESEARCH
+            - ADD 0003
         DEAD:
             - TELL RESEARCH
+            - ADD 0003
         BOSS:
             - TELL BOSS
+            - SUSPECT
             - ADD 0008
         ANGRY:
+            - SUSPECT
             - TELL ANGRY
     BRIBE:
         DEAD: KO 

@@ -148,7 +148,7 @@ sub getElementStory
 	my $yaml = $self->openYAML($code);
 	return $self->processText($yaml->[0]->{'messages'}->{$tag}, $code);
 }
-sub getDangerStory
+sub get_danger_story
 {
 	my $self = shift;
 	my $level = shift;
@@ -160,6 +160,13 @@ sub getDangerStory
 	{
 		return "Il livello di tensione si &egrave; abbassato di " . $level*-1 . '.';;
 	}
+}
+sub get_suspect_story
+{
+    my $self = shift;
+    my $element = shift;
+    my $element_name = $self->getAttribute($element, 'name');
+    return "Il sospetto nei confronti di " . $element_name . " si &egrave; alzato.";
 }
 sub getElementDescription
 {

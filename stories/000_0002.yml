@@ -2,6 +2,7 @@ name: Al-Manaba
 type: place
 description:
     START: "{name} &egrave; la moschea di riferimento della comunit&agrave; islamica di Loose Bricks."
+    ASSAULTED: "Ha subito un assalto da parte nostra che le ha arrecato gravi danni"
 messages: 
     ASSAULT: "L'assalto alla {name} ha gettato la zona nel caos. {0001.name} &egrave; morto e tutti sono molto nervosi ora. E' stata aperta un'inchiesta per capire l'operato della squadra e la missione rischia di fallire."
     SPY: "{name} &egrave; una moschea molto frequentata. Al di l&agrave; di {0000.name} sembra che sia gestita da {0003.name}. Abbiamo individuato anche alcuni operai che vi passano molto più tempo degli altri: {0004.name}, {0005.name}, {0006.name}"
