@@ -89,12 +89,21 @@
 				<img src="/res/images/<% portraits.$t %>" />
 				<div class="element_content" id="<% p.id %>">
 					<h1><% p.name %></h1>
+                    <% counter = 0 %>
+                    <% WHILE counter < p.suspect %>
+                    <% counter = counter + 1 %>
+                    <img style="width:15px; height:15px" src="/res/images/exclamation_point.png" />
+                    <% END %>
+                    <% IF p.suspect > 0 %>
+                    <br />
+                    <% END %>
 					<% IF action.action == 'NONE' %>
 						<a  class="actions_trigger" href="#">ACTIONS</a>
 					<% ELSE %>
 						<% p.name %>
 					<% END %>
 					<br /><a class="info_trigger" href="#">INFO</a>
+                    <br />
 				</div>
 			</div>
 			<% END %>

@@ -23,6 +23,7 @@ __PACKAGE__->table("TEST_STATUS");
 =head2 id
 
   data_type: 'integer'
+  is_auto_increment: 1
   is_nullable: 0
 
 =head2 status_id
@@ -34,7 +35,7 @@ __PACKAGE__->table("TEST_STATUS");
 
   data_type: 'varchar'
   is_nullable: 1
-  size: 4
+  size: 12
 
 =head2 object_type
 
@@ -57,11 +58,11 @@ __PACKAGE__->table("TEST_STATUS");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "status_id",
   { data_type => "integer", is_nullable => 1 },
   "object_code",
-  { data_type => "varchar", is_nullable => 1, size => 4 },
+  { data_type => "varchar", is_nullable => 1, size => 12 },
   "object_type",
   { data_type => "varchar", is_nullable => 1, size => 10 },
   "active",
@@ -72,8 +73,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2011-10-14 23:40:18
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Z2MrsWiL2KSOoscn5jYhig
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2013-01-18 00:21:12
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XkmRXh39AoRGp3AaH/vdPw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

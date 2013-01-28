@@ -21,35 +21,34 @@ actions:
             - TAG DEAD
             - TELL KILL
             - DO BOSS 0005
-            - DANGER 30
+            - DANGER 40 30 10
     TAKE:
         DEAD: KO 
         ALARMED: 
             - TELL FAILTAKE
-            - DANGER 30
+            - DANGER 30 20 10
         ANY:
             - TELL TAKEN
             - TAG TAKEN
             - DO BOSS 0005
-            - DANGER 20
+            - DANGER 20 0 0
     INTERROGATE:
         DEAD: KO
         TAKEN:
             - TELL CONFESSION
             - ADD 0008
         ANY:
-            - SUSPECT
             - TAG ALARMED
             - TELL FAILINTERROGATION
     BRIBE:
         DEAD: KO 
         ANY:
             - TELL FAILBRIBE
-            - DANGER 10
     INTEL:
         DEAD: KO 
         ALARMED:
             - TELL HIDEOUSE
+            - SUSPECT
             - ADD 0008
         ANY:
             - TELL RESEARCH
@@ -57,6 +56,7 @@ actions:
 m2m:
     ALARM:
         DEAD: KO
+        TAKEN: KO
         ALARMED:
             - DO MOVE 0007
         ANY:

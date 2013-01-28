@@ -154,11 +154,12 @@ sub get_elements
 	my @els = $self->games_statuses->active_only();
 	for(@els)
 	{
-		my $el = $_;
+		my $el = $_->object_code();
 		my $el_name = $self->StoryManager()->getAttribute($el, 'name');
 		my $el_type = $self->StoryManager()->getAttribute($el, 'type');
 		my $el_data = { 'id' => $el,
-			            'name' => $el_name};
+			            'name' => $el_name,
+                        'suspect' => $_->suspect()};
 		push @{$out{$el_type}}, $el_data;
 	}
 	return %out;
@@ -338,22 +339,24 @@ sub do_action
 		}
 		elsif($eff[0] =~ /^DANGER$/)
 		{
-            my $danger = $eff[1 + $self->games_statuses->get_suspect($element)];
-            #TODO: manage flags
-            #if(! ($self->flags()->{'nodanger'}))
-            #{
-				$self->modify_danger($danger);		
-                #if(! ($self->flags()->{'notell'}))
-                #{
-					my $story = $self->StoryManager()->getDangerStory($danger);
-					my $AA = $self->ongoing_actions->get_active_action();
-					$self->stories->write_story($self->id(), $story, $AA, $self->get_element_name($AA->object_code()), $AA->id());
-                    #}
-            #}
-		}
+            my $suspect_for_element = $self->games_statuses->get_suspect($element);
+            my $danger_to_add = $eff[1 + $suspect_for_element] ? $eff[1 + $suspect_for_element] : $eff[1];
+            if($danger_to_add > 0)
+            {
+                #TODO: manage flags
+				$self->modify_danger($danger_to_add);		
+   				my $story = $self->StoryManager()->get_danger_story($danger_to_add);
+				my $AA = $self->ongoing_actions->get_active_action();
+				$self->stories->write_story($self->id(), $story, $AA, $self->get_element_name($AA->object_code()), $AA->id());
+            }
+    	}
         elsif($eff[0] =~ /^SUSPECT$/)
         {
-            $self->games_statuses->raise_suspect($element);
+            my $element_to_suspect = $eff[1] ? $eff[1] : $element;
+            $self->games_statuses->raise_suspect($element_to_suspect);
+    		my $story = $self->StoryManager()->get_suspect_story($element_to_suspect);
+			my $AA = $self->ongoing_actions->get_active_action();
+			$self->stories->write_story($self->id(), $story, $AA, $self->get_element_name($AA->object_code()), $AA->id());
         }
 	}
 }

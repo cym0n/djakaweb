@@ -23,6 +23,7 @@ __PACKAGE__->table("TEST_GRAPH");
 =head2 id
 
   data_type: 'integer'
+  is_auto_increment: 1
   is_nullable: 0
 
 =head2 start
@@ -51,7 +52,7 @@ __PACKAGE__->table("TEST_GRAPH");
 
 __PACKAGE__->add_columns(
   "id",
-  { data_type => "integer", is_nullable => 0 },
+  { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "start",
   { data_type => "integer", is_nullable => 1 },
   "element",
@@ -64,8 +65,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07010 @ 2012-12-29 21:30:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:YpSg5fTxROS5jEZEx6zEdw
+# Created by DBIx::Class::Schema::Loader v0.07010 @ 2013-01-18 00:21:12
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:UJ1jR3Rm7LuRfSrA+//lHw
 
 sub print
 {

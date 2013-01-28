@@ -105,7 +105,7 @@ body
 {
 	padding: 5px;
 	clear: both;
-	height: 70px;
+	height: 80px;
 }
 .element_badge img
 {
@@ -134,17 +134,6 @@ body
 }
 
 
-/* OVERLAY STYLE */
-.simple_overlay {
-	display:none;
-	
-	z-index:10000;
-	
-	background-color:#FFF;
-	
-	width:1:75px;	
-	border:1px solid #666;
-}
 
 #actions ul
 {

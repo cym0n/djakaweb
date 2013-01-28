@@ -105,12 +105,7 @@ sub active_only
 {
 	my $self = shift;
 	my @out;
-	my @els = $self->search({active => 1});
-	for(@els)
-	{
-		push @out, $_->object_code();
-	}
-	return @out;
+	return $self->search({active => 1});
 }
 
 sub init
