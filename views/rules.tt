@@ -1,0 +1,13 @@
+<% INCLUDE header.tt %>
+<h2>Cos'&egrave; Djakarta</h2>
+<div>Djakarta &egrave; un dipartimento segreto, svincolato da tutti gli altri servizi segreti gi&agrave; esistenti che agisce per la sicurezza nazionale nelle situazioni pi&ugrave; delicate. E' stato creato per essere completamente autonomo, infatti dispone di analisti, sistemi di raccolta informazioni, ma anche di una piccola squadra dei corpi speciali per i momenti in cui &egrave; necessario agire con la forza.</div>
+<h2>Scopo</h2>
+<div>Lo scopo del gioco &egrave; portare a termine la missione assegnata agendo sugli elementi disponibili nel modo che si crede più opportuno.</div>
+<h2>Azioni</h2>
+<div>Si pu&ograve; intervenire su ogni elemento del gioco tramite le azioni disponibil. Ogni volta che si seleziona un'azione viene richiesto, perch&egrave;  venga portata a termine, un certo numero di &quot;click&quot;. Non &egrave; possibile per&ograve; cliccare di continuo, &egrave; invece necessario aspettare ogni volta il tempo prefissato. Una volta raggiunto il numero di click necessario, l'azione viene eseguita e se ne vede l'esito.</div>
+<h2>Tensione</h2>
+<div>Djakarta &egrave; un'organizzazione segreta che non pu&ograve; permettersi di avere troppa visibilit&agrave;. Tutte le volte che un'azione si dimostrer&agrave; troppo palese, troppo violenta o semplicemente render&agrave; nervosii nemici di Djakarta, il livello di tensione complessivo si alzer&agrave;. Se il livello di tensione supera il valore massimo possibile la missione si considera fallita.</div>
+<h2>Sospetto</h2>
+<div>Tutte le volte che verranno rilevate informazioni compromettenti su un elemento il suo livello di sospetto si alzer&agrave;. Sebbene questo non voglia necessariamente dire che l'elemento sia in qualche modo colpevole (si potrebbe essere di fronte a un depistaggio) comunque azioni sull'elemento comporteranno un minor innalzamento del livello di tensione, anche quando decise.</div>
+
+</div>
