@@ -277,4 +277,24 @@ body
     font-size: 12px;
     margin-bottom: 12px;
 }
+.secondlevel li
+{
+    display: inline;
+    list-style-type: none; 
+    padding: 5px;
+    background: #1AA;
+}
+.left
+{
+    float: left;
+}
+.clear
+{
+    clear: both;
+}
+.navmenu
+{
+    padding-top: 10px;
+}
+
 

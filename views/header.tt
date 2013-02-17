@@ -1,4 +1,13 @@
 <div class="header">
+    <div class="left">
 	<h1>The DJAKARTA GAME</h1>
     <div class="littlepush">Pre-alpha version. <a target="_blank" href="http://cym0n.tumblr.com">Segui il diario di sviluppo</a></div>
+    </div>
+    <div class="navmenu left">
+        <ul class="secondlevel">
+            <li><a href="/game/dashboard">Gioco</a></li>
+            <li><a href="/info/description">Come funziona</a></li>
+        </ul>
+    </div>
+    <div class="clear"></div>
 </div>

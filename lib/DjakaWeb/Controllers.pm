@@ -140,9 +140,10 @@ sub get_data_for_interface
 			'story' => \@story,
 			'danger' => $game->danger(),
 			'action' => $active_A,
+            'needed_clicks' => config->{'clicks'}->{$active_A->{'action'}},
 			'last_action_class' => $last_action_class
 		};
-}
+};
 sub get_data_for_badge
 {
 	my ($user, $game) = build_elements();
