@@ -1,0 +1,12 @@
+ND1:
+    condition:
+        0001: DEAD
+        0002: DEAD
+    text: ""
+    score: 50
+END2:
+    condition:
+        0001: TAKEN
+        0002: TAKEN
+    text: ""
+    score: 100

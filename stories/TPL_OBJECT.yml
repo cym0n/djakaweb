@@ -1,0 +1,19 @@
+name:
+type: object
+description:
+    START: ""
+messages: 
+    INTEL: ""
+actions:
+    INTEL: 
+        ANY: 
+            - 
+    PICKUP: 
+        ANY: 
+            - 
+    ANALYSE:
+        ANY: 
+            -
+    USEIT:
+        ANY: 
+            -

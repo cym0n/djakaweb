@@ -1,0 +1,22 @@
+name:
+type: place
+description:
+    START: ""
+messages: 
+    INTEL: ""
+actions:
+    ASSAULT:
+        ANY:
+            - 
+    INTEL:
+        ANY:
+            - 
+    INSPECT:
+        ANY:
+            - 
+    INFILTRATE:
+        ANY:
+            - 
+    VISIT:
+        ANY:
+            - 

@@ -1,0 +1,31 @@
+name:
+type: person
+description:
+    START: ""
+    TAKEN: "Attualmente &egrave; detenuto nella nostra base."
+    DEAD: "Attualmente &egrave; morto"
+messages: 
+    INTEL: ""
+actions:
+    KILL:
+        DEAD: KO 
+        ANY:
+            - TAG DEAD
+    TAKE:
+        DEAD: KO 
+        TAKEN: KO
+        ANY:
+            - TAG TAKEN
+    INTERROGATE:
+        DEAD: KO
+        TAKEN: 
+            - 
+        ANY:
+            - 
+    INTEL:
+        ANY:
+            - 
+    BRIBE:
+        DEAD: KO 
+        ANY:
+            -
