@@ -1,55 +1,56 @@
-name: Al-Manaba 
-type: place
+name: Abdul Sarafa
+type: person
 description:
-    START: "{name} &egrave; la moschea di riferimento della comunit&agrave; islamica di Loose Bricks."
-    ASSAULTED: "Ha subito un assalto da parte nostra che le ha arrecato gravi danni"
+    START: "{name} &egrave; il capo della moschea {0001.name}. E' molto giovane per la sua posizione, ma appare comunque un musulmano devoto e intransigente. Non vede di buon occhio le ingerenze del governo nei suoi affari."
+    TAKEN: "Attualmente &egrave; detenuto nella nostra base."
+    DEAD: "Attualmente &egrave; morto"
+    ACCUSED: "{0003.name} dice che in giovent&ugrave; ha avuto rapporti con milizie irregolari"
+    T_ACCUSED: "{0003.name} dice che in giovent&ugrave; ha avuto rapporti con milizie irregolari"
+    DENY: "{0003.name} lo ha accusato di connivenza coi terroristi, ma ha dimostrato di essere innocente."
 messages: 
-    ASSAULT: "L'assalto alla {name} ha gettato la zona nel caos. {0001.name} &egrave; morto e tutti sono molto nervosi ora. E' stata aperta un'inchiesta per capire l'operato della squadra e la missione rischia di fallire."
-    SPY: "{name} &egrave; una moschea molto frequentata. Al di l&agrave; di {0000.name} sembra che sia gestita da {0003.name}. Abbiamo individuato anche alcuni operai che vi passano molto più tempo degli altri: {0004.name}, {0005.name}, {0006.name}"
-    RESEARCH: "Non ci sono informazioni rilevanti su {name}."
-    FAIL: "Infiltrarci in {name} risulta impossibile."
-    INSPECTION: "La moschea sembra avere un collegamento diretto a {0008.name}.<br />Sono state oltretutto trovate tracce che ricondurrebbero alla creazione di {0007.name} che però non si trova qui."
-    INFILTRATED: "Ci siamo infiltrati nella moschea! Ora abbiamo l'elenco completo dei potenziali terroristi e dati su come possono essere organizzati gli attentati."
+    INTEL: "Non sono sorte informazioni rilevanti su {name}."
+    INTERROGATE: "{name} dice assurda la possibilit&agrave; che la sua comunit&agrave; nasconda dei terroristi e si rifiuta di dare informazioni su chiunque."
+    T_INTERROGATE: "Anche sfruttando le nostre tecniche  qui alla base ci &egrave; stato impossibile ricavare informazioni da {name}."
+    LIAR: "{name} smentisce categoricamente le accuse che gli sono state mosse da {0003.name}. Ci ha consegnato informazioni che ci permettono di dire che ha ragione."
+    NOBRIBE: "{name} &egrave; risultato offeso dal nostro tentativo di corruzione."
 actions:
-    ASSAULT:
+    KILL:
+        DEAD: KO 
         ANY:
-            - TAG ASSAULTED
-            - DO KILL 0000
-            - DO ANGRY 0004
-            - DO ANGRY 0005
-            - DO ANGRY 0006
-            - DO ALARM 0003
-            - DO MOVE 0007
-            - TELL ASSAULT    
-            - DANGER 50
-    SPY:
+            - TAG DEAD
+            - DANGER 30 10
+    TAKE:
+        DEAD: KO 
+        TAKEN: KO
         ANY:
-            - TELL SPY
-            - ADD 0003
-            - ADD 0004
-            - ADD 0005
-            - ADD 0006
+            - DANGER 30 10
+            - TAG TAKEN
+    INTERROGATE:
+        DEAD: KO
+        ACCUSED: 
+            - TELL LIAR
+            - TAG DENY
+            - SUSPECT 0003
+        T_ACCUSED: 
+            - TELL LIAR
+            - TAG DENY
+            - SUSPECT 0003
+        TAKEN: 
+            - TELL T_INTERROGATE
+        ANY:
+            - TELL INTERROGATE 
     INTEL:
         ANY:
-            - TELL RESEARCH
-    INSPECT:
-        INFILTRATED:
-            - TELL INSPECTION
-            - ADD 0008
-            - ADD 0007
-        ANY: KO
-    INFILTRATE:
-        FRIEND: 
-            - TELL INFILTRATED
-            - TAG INFILTRATED
-            - ADD 0003
-            - ADD 0004
-            - ADD 0005
-            - ADD 0006
+            - TELL INTEL 
+    BRIBE:
+        DEAD: KO 
         ANY:
-            - TELL FAIL
+            - TELL NOBRIBE
 m2m:
-    FRIEND:
-        ASSAULTED: KO
+    ACCUSE:
+        DEAD: KO
+        DENY: KO
+        TAKEN: 
+            - TAG T_ACCUSED
         ANY:
-            - TAG FRIEND
+            - TAG ACCUSED 

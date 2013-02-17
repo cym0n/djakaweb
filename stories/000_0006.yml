@@ -1,73 +1,65 @@
-name: Ibn Helamel
+name: Abdul Abdali
 type: person
 description:
-    START: "Operaio della {0001.name}"
-    DEAD: "Attualmente è morto."
-    TAKEN: "Attualmente è detenuto presso di noi."
-    FRIEND: "Siamo riusciti ad avvicinarlo e a ottenere la sua collaborazione."
-    ANGRY: "Gli ultimi avvenimenti ce lo hanno reso ostile."
+    START: "Operaio della {0000.name}, assiduo frequentatore della moschea {0001.name}"
+    ALARMED: "Appare molto nervoso."
+    TAKEN: "Attualmente &egrave; detenuto nella nostra base."
+    DEAD: "Attualmente &egrave; morto"
 messages: 
-    MOSQUEACCESS: "{name} ha accettato il nostro uomo come amico e, parlandogli, gli ha promesso di farlo accedere alla Moschea."
-    KILL: "L'omicidio di {name} è stato portato a termine."
-    TAKEN: "{name} ora si trova detenuto nella nostra base."
-    CONFESSION: "{name} dice di essere completamente estraneo a qualsiasi attività terroristica, ma {0005.name} una volta lo ha avvicinato per parlargli di un'operazione segreta e pericolosa."
-    NOTHING: "{name} non sembra sapere niente di eventuali attentati."
-    NOTHINGSPY: "{name}, sorvegliato, non ha avuto comportamenti sospetti."
-    ANGRYSPY: "{name} si è rifiutato di parlare con noi."
-    ANGRYBRIBE: "{name} ha rifiutato i nostri soldi."
-    RESEARCH: "Nessuna notizia rilevante su {name}"
-    BRIBED: "{name} ha accettato una nostra offerta in denaro per collaborare alle indagini."
-    PROVOKED: "Dopo gli ultimi accadimenti {name} è molto nervoso e arrabbiato. Spesso lo si vede chiedere consiglio a {0005.name} che comincia ad avere una certa influenza su di lui..."
+    INTEL: "{name} appare un fervente musulmano oltre che un ottimo lavotore della {0000.name}. Non abbiamo rilevato niente sul suo passato o il suo presente che lo renda interessante."
+    KILL: "Abbiamo ucciso {name}."
+    TAKE: "Abbiamo rapito {name}, che ora si trova nella nostra base."
+    ALARMED: "{name} appare particolarmente nervoso e lo abbiamo visto fare alcune chiamate sospette a numeri di telefono che non siamo riusciti a rintracciare."
+    NOBRIBE: "Non ci &egrave; stato possibile corrompere {name}."
+    BADREACTION: "{name} ha reagito malissimo la nostro tentativo di corruzione, facendo un gran baccano e esponendoci."
+    CONFESSION: "{name} ha confessato di far parte di una cella terroristica che pianificava un attacco dinamitardo alla citt&agrave;. Non abbiamo avuto modo per&ograve; di farci dire chi siano i suoi complici."
+    INTERROGATE: "{name} non ci ha saputo dire niente n&egrave; su {0000.name} n&egrave; su {0001.name}."
 actions:
     KILL:
         DEAD: KO 
         ANY:
             - TAG DEAD
             - TELL KILL
-            - DANGER 20
+            - DANGER 40 20 0
+            - DO ALARM 0003
+            - DO MOVE 0008
+            - DO BOMBSTORED 0005
     TAKE:
         DEAD: KO 
+        TAKEN: KO
         ANY:
             - TAG TAKEN
-            - TELL TAKEN
-            - DANGER 5
+            - TELL TAKE
+            - DANGER 40 20 0
+            - DO ALARM 0003
+            - DO MOVE 0008
+            - DO BOMBSTORED 0005
     INTERROGATE:
         DEAD: KO
-        TAKEN:
-            - TELL CONFESSION
-            - ADD 0005
-        FRIEND:
-            - DO FRIEND 0002
-            - TELL MOSQUEACCESS
-        ANGRY:
-            - TELL ANGRYSPY
+        TAKEN: 
+            - TELL CONFESSION 
         ANY:
-            - TELL NOTHING
+            - TELL INTERROGATE 
     INTEL:
+        ALARMED:
+            - TELL ALARMED
+            - SUSPECT
         ANY:
-            - TELL RESEARCH
+            - TELL INTEL 
     BRIBE:
         DEAD: KO 
-        ANGRY:
-            - TELL ANGRYBRIBE
+        ALARMED:
+            - TELL BADREACTION
             - DANGER 10
         ANY:
-            - TAG FRIEND
-            - TELL BRIBED
-            - DANGER 5
-    SPY:
-        DEAD: KO 
-        ANGRY:
-            - TELL PROVOKED
-        ANY:
-            - TELL NOTHINGSPY
+            - TELL NOBRIBE
 m2m:
-    FRIEND:
+    ALARM:
         DEAD: KO
-        ANGRY: KO
+        TAKEN: KO
         ANY:
-            - TAG FRIEND
-    ANGRY:
-        DEAD: KO
-        ANY:
-            - TAG ANGRY
+            - TAG ALARMED
+            - DO MOVE 0008
+            - DO BOMBSTORED 0005
+
+

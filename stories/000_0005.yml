@@ -1,75 +1,31 @@
-name: Abdul Abdali 
-type: person
+name: Magazzino Wilson
+type: place
 description:
-    START: "Operaio della {0001.name}"
-    DEAD: "Attualmente è morto."
-    TAKEN: "Attualmente è detenuto presso di noi."
-    BOSS: "Sembra essere divenuto particolarmente nervoso ultimamente."
+    START: "Un capanno fatiscente."
 messages: 
-    KILL: "L'omicidio di {name} &egrave; stato portato a termine."
-    TAKEN: "{name} ora si trova detenuto nella nostra base."
-    SUICIDE: "{name}, quando ha visto di essere in trappola, si &egrave; suicidato, portando con s&egrave; due dei nostri uomini."
-    CONFESSION: "{name} ha confessato di far parte di una organizzazione terroristica capeggiata da {0003.name}. Ha anche parlato di un nascondiglio: {0008.name}"
-    RESEARCH: "{name} &egrave; molto legato a {0003.name}."
-    NOBRIBE: "{name} non accetta denaro da noi."
-    BITGUILTY: "{name} dice di non conoscere terroristi, ma l'argomento lo infervora in modo anomalo."
-    ANGRY: "Il pedinamento di {name} ci ha fatto notare che ultimamente va molto spesso alla moschea, per sfogare la sua rabbia. Si incontra con {0000.name} e {0003.name}"
-    BOSS: "Abbiamo seguito {name} fino a {0008.name} dove sembra stia tramando qualcosa."
+    INTEL: "{name} &egrave; formalmente di propriet&agrave; della {0000.name}, ma &egrave; abbandonato da molti anni e nessuno gli ha trovato una nuova destinazione. Per motivi che non ci sono chiari sembra che le chiavi siano in mano a {0006.name} e {0004.name} sebbene nessuno dei due ne sia responsabile. Troviamo questo sospetto."
+    INSIDE: "Il magazzino &egrave; completamente vuoto, ma diversi segnali indicano che &egrave; stato usato di recente per fare qualcosa."
+    ASSAULT: "Abbiamo fatto molto chiasso per penetrare in un magazzino vuoto!<br />Il magazzino &egrave; completamente vuoto, ma diversi segnali indicano che &egrave; stato usato di recente per fare qualcosa."
 actions:
-    KILL:
-        DEAD: KO 
-        ANY:
-            - TAG DEAD
-            - DO ALARM 0003
-            - TELL KILL
-            - DANGER 10
-    TAKE:
-        DEAD: KO 
-        BOSS:
-            - TAG DEAD
-            - TELL SUICIDE
-            - DO ALARM 0003
-            - DANGER 30
-        ANY:
-            - TAG TAKEN
-            - DO ALARM 0003
-            - TELL TAKEN
-            - DANGER 10
-    INTERROGATE:
-        DEAD: KO
-        TAKEN:
-            - TELL CONFESSION
-            - ADD 0003
-            - ADD 0008
-            - SUSPECT 0003
-        ANY:
-            - TELL BITGUILTY
-            - SUSPECT
+    ASSAULT:
+        ANY: 
+            - TELL ASSAULT
+            - DANGER 20
+            - DO FINDWAREHOUSE 0008
     INTEL:
         ANY:
-            - TELL RESEARCH
-            - ADD 0003
-        DEAD:
-            - TELL RESEARCH
-            - ADD 0003
-        BOSS:
-            - TELL BOSS
-            - SUSPECT
-            - ADD 0008
-        ANGRY:
-            - SUSPECT
-            - TELL ANGRY
-    BRIBE:
-        DEAD: KO 
+            - TELL INTEL
+            - SUSPECT 0006
+            - SUSPECT 0004
+    INSPECT:
         ANY:
-            - TELL NOBRIBE
+            - TELL INSIDE
+            - DO FINDWAREHOUSE 0008
+    INFILTRATE:
+        ANY: KO
+    VISIT:
+        ANY: KO
 m2m:
-    ANGRY:
-        DEAD: KO
-        BOSS: KO
+    BOMBSTORED:
         ANY:
-            - TAG ANGRY    
-    BOSS:
-        DEAD: KO
-        ANY:
-            - TAG BOSS
+            - TAG BOMB

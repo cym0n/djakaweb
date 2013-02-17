@@ -1,21 +1,37 @@
-name: Magazzino Wilson 
-type: place
+name: bomba artigianale
+type: object
 description:
-    START: "Il {name} è solo un vecchio magazzino proprio dietro la moschea."
+    START: "Un ordigno fatto in casa usando componenti chimici facilmente recuperabili."
+    TAKEN: "E' nelle nostre mani."
 messages: 
-    ASSAULT: "Le nostre squadre speciali hanno proceduto ad attaccare {name}, prendendolo con facilità, non avendo alcuna difesa."
-    SPY: "{name} sembra non avere nessun uso a oggi."
-    INSPECT: "Siamo riusciti a fare una perquisizione di {name}."
+    INTEL: "La bomba &egrave; composta di elementi semplici da recuperare. E' stata costruite secondo tecniche che vengono insegnate nei campi di addestramento dei terroristi. Pu&ograve; fare gravi danni."
+    PICKUP: "Abbiamo recuperato l'ordigno"
+    FIND: "Abbiamo trovato {name}!"
 actions:
-    ASSAULT:
-        ANY:
-            - TELL ASSAULT
-            - DO FINDWAREHOUSE 0007
-            - DANGER 10
     INTEL: 
+        ANY: 
+            - TELL INTEL
+    PICKUP: 
+        ANY: 
+            - TELL PICKUP
+            - TAG TAKEN
+    ANALYSE:
+        ANY: KO 
+    USEIT:
+        ANY: KO
+m2m:
+    FINDFACTORY:
+        MOVED: KO
         ANY:
-            - TELL SPY
-    INSPECT:
-        ANY:
-            - TELL INSPECT
-            - DO FINDWAREHOUSE 0007
+            - TELL FIND
+            - ADD 0008
+    MOVE:
+        TAKEN: KO
+        ANY: 
+            - TAG MOVED
+    FINDWAREHOUSE:
+        MOVED:
+            - TELL FIND
+            - ADD 0008
+        ANY: KO
+        

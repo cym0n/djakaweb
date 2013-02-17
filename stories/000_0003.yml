@@ -1,64 +1,54 @@
-name: Yosuf Tristan 
+name: Yousuf Tristan
 type: person
 description:
-    START: "{name} appare come un fervente islamico. Si è messo a disposizione di {0000.name} in tutto e per tutto. Non ha famiglia né molti amici e vive di quello che la comunità gli dà per il suo lavoro alla moschea." 
-    ALARMED: "Gli ultimi avvenimenti lo hanno scosso molto rendendolo nervoso."
-    DEAD: "Attualmente è morto."
-    TAKEN: "Attualmente è detenuto presso di noi."
+    START: "{name} &egrave; il braccio destro di {0002.name}. Vive alla moschea di {0001.name} e ne amministra le risorse. Molti lo considerano un punto di riferimento anche pi&ugrave; di {0003.name}."
+    TAKEN: "Attualmente &egrave; detenuto nella nostra base."
+    DEAD: "Attualmente &egrave; morto"
 messages: 
-    KILL: "{name} è stato eliminato."
-    FAILTAKE: "{name} era pronto a riceverci e quindi è sfuggito al nostro tentativo di catturarlo."
-    FAILBRIBE: "{name} ha rifiutato una nostra offerta di denaro per collaborare."
-    FAILINTERROGATION: "{name} non ci ha dato informazioni interessanti su eventuali terroristi nella sua comunità. Ha però confessato che ultimamente {0000.name} riceve ingenti somme di denaro da fonti che lui non conosce."
-    TAKEN: "{name} è detenuto presso la nostra base."
-    CONFESSION: "{name} ha confessato di essere a capo della cellula terroristica. Ha anche parlato di una base operativa in {0008.name}. Si è però rifiutato di far sapere i nomi dei suoi complici e i suoi piani."
-    HIDEOUSE: "{name} sembra che da giovane abbia frequentato, in patria, dei circoli di estremisti e che abbia anche avuto un addestramento paramilitare.<br />Esistono sue foto in mezzo alla guardia di alcuni noti capi del terrorismo mediorientale.<br /><br />Oggi come oggi passa gran parte del tempo alla moschea, sia per organizzare le funzioni religiose che per parlare con i fedeli.<br />Nell'ultimo periodo ha fatto visita spesso a {0008.name} anche se, per quello che ci è noto, non ne avrebbe motivo. "
-    RESEARCH: "{name} sembra che da giovane abbia frequentato, in patria, dei circoli di estremisti e che abbia anche avuto un addestramento paramilitare.<br />Esistono sue foto in mezzo alla guardia di alcuni noti capi del terrorismo mediorientale.<br /><br />Oggi come oggi passa gran parte del tempo alla moschea, sia per organizzare le funzioni religiose che per parlare con i fedeli."
+    INTEL: "{name} &egrave; famoso per le sue grandi capacit&agrave; oratorie e per la sua intransigenza. Sembra aver ricevuto in passato addestramento militare."
+    KILL: "Siamo riusciti a portare a termine l'omicidio di {name}."
+    TAKE: "Siamo riusciti a rapire {name} e a portarlo nella nostra base."
+    BRIBE: "{name} ha accettato di collaborare con noi per una forte somma di denaro e ci ha procurato documenti secondo cui {0002.name} &egrave; stato in passato in una milizia irregolare del suo paese."
+    INTERROGATE: "{name} non crede possibile che la moschea sia un covo di terroristi. Ci ha per&ograve; indicato un operaio della {0004.name}, {0004.name}, come persona che conosce un po' tutti..."
+    CONFESSION: "{name} ha confessato di essere a capo di una cellula terroristica! Abbiamo capito che ha almeno un complice, sebbene si sia rifiutato di dirci chi sia, ma ha indicato {0005.name} come sua base operativa."
 actions:
     KILL:
         DEAD: KO 
         ANY:
             - TAG DEAD
             - TELL KILL
-            - DO BOSS 0005
-            - DANGER 40 30 10
+            - DANGER 40 20 0
+            - DO ALARM 0006
     TAKE:
         DEAD: KO 
-        ALARMED: 
-            - TELL FAILTAKE
-            - DANGER 30 20 10
+        TAKEN: KO
         ANY:
-            - TELL TAKEN
             - TAG TAKEN
-            - DO BOSS 0005
-            - DANGER 20 0 0
+            - TELL TAKE
+            - DANGER 40 20 0
+            - DO ALARM 0006
     INTERROGATE:
         DEAD: KO
-        TAKEN:
-            - TELL CONFESSION
-            - ADD 0008
+        TAKEN: 
+            - TELL CONFESSION 
         ANY:
-            - TAG ALARMED
-            - TELL FAILINTERROGATION
+            - TELL INTERROGATE 
+            - ADD 0004
+    INTEL:
+        ANY:
+            - TELL INTEL 
     BRIBE:
         DEAD: KO 
         ANY:
-            - TELL FAILBRIBE
-    INTEL:
-        DEAD: KO 
-        ALARMED:
-            - TELL HIDEOUSE
-            - SUSPECT
-            - ADD 0008
-        ANY:
-            - TELL RESEARCH
-            - SUSPECT
+            - TELL BRIBE
+            - SUSPECT 0002
+            - DO ACCUSE 0002
 m2m:
     ALARM:
         DEAD: KO
         TAKEN: KO
-        ALARMED:
-            - DO MOVE 0007
         ANY:
             - TAG ALARMED
+            - DO MOVE 0008
+            - DO BOMBSTORED 0005
 

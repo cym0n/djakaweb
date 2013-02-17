@@ -1,71 +1,44 @@
-name: Jamal Hakreniti 
+name: Ibn Kazim
 type: person
 description:
-    START: "Operaio della {0001.name}"
-    DEAD: "Attualmente è morto."
-    TAKEN: "Attualmente è detenuto presso di noi."
-    FRIEND: "Siamo riusciti ad avvicinarlo e a ottenere la sua collaborazione."
-    ANGRY: "Gli ultimi avvenimenti ce lo hanno reso ostile."
+    START: "Operaio della {0000.name}"
+    TAKEN: "Attualmente &egrave; detenuto nella nostra base."
+    DEAD: "Attualmente &egrave; morto"
 messages: 
-    MOSQUEACCESS: "{name} ha accettato il nostro uomo come amico e, parlandogli, gli ha promesso di farlo accedere alla Moschea."
-    KILL: "L'omicidio di {name} &egrave; stato portato a termine."
-    TAKEN: "{name} ora si trova detenuto nella nostra base."
-    CONFESSION: "{name} dice di essere completamente estraneo a qualsiasi attivit&agrave; terroristica, ma {0005.name} una volta lo ha avvicinato per parlargli di un'operazione segreta e pericolosa."
-    NOTHING: "{name} non sembra sapere niente di eventuali attentati."
-    ANGRYSPY: "{name} si &egrave; rifiutato di parlare con noi."
-    ANGRYBRIBE: "{name} ha rifiutato i nostri soldi."
-    RESEARCH: "Nessuna notizia rilevante su {name}"
-    BRIBED: "{name} ha accettato una nostra offerta in denaro per collaborare alle indagini."
-    PROVOKED: "Dopo gli ultimi accadimenti {name} &egrave; molto nervoso e arrabbiato. Spesso lo si vede chiedere consiglio a {0005.name} che comincia ad avere una certa influenza su di lui."
+    INTEL: "{name} &egrave; nel nostro paese da molti anni. La {0000.name} ha collaborato con lui quando ha cominciato a cercare operai nella comunit&agrave; musulmana. Conosce tutti e ha un certo ascendente, tanto da essere entrato in contrasto con {0002.name}."
+    CASUALTY: "{name} &egrave; morto."
+    KILL: "Abbiamo ucciso {name}."
+    TAKE: "Abbiamo rapito {name} e lo abbiamo portato alla nostra base."
+    NOBRIBE: "{name} risulta troppo sospettoso nei nostri confronti per accettare soldi."
+    USELESS: "Nonostante tutto {name} sembra non avere informazioni utili alle indagini. Quello che ci ha raccontato della struttura sociale del quartiere ci era gi&agrave; noto per altre vie."
 actions:
     KILL:
         DEAD: KO 
         ANY:
             - TAG DEAD
             - TELL KILL
-            - DANGER 20
+            - DANGER 30 20 20
     TAKE:
         DEAD: KO 
+        TAKEN: KO
         ANY:
             - TAG TAKEN
-            - TELL TAKEN
-            - DANGER 5
+            - TELL TAKE
+            - DANGER 30 20 20
     INTERROGATE:
         DEAD: KO
-        TAKEN:
-            - TELL CONFESSION
-            - ADD 0005
-        FRIEND:
-            - DO FRIEND 0002
-            - TELL MOSQUEACCESS
-        ANGRY:
-            - TELL ANGRYSPY
         ANY:
-            - TELL NOTHING
+            - TELL USELESS 
     INTEL:
         ANY:
-            - TELL RESEARCH
-        ANGRY:
-            - TELL PROVOKED
+            - TELL INTEL 
     BRIBE:
         DEAD: KO 
-        ANGRY:
-            - TELL ANGRYBRIBE
-            - DANGER 10
         ANY:
-            - TAG FRIEND
-            - TELL BRIBED
-            - DANGER 5
+            - TELL NOBRIBE
 m2m:
     KILL:
+        DEAD: KO
         ANY:
+            - TELL CASUALTY
             - TAG DEAD
-    FRIEND:
-        DEAD: KO
-        ANGRY: KO
-        ANY:
-            - TAG FRIEND
-    ANGRY:
-        DEAD: KO
-        ANY:
-            - TAG ANGRY

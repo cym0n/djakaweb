@@ -1,47 +1,50 @@
-name: Abdul Sarafa
-type: person
+name: Schollen Enterprise
+type: place
 description:
-    START: "Imam della comunit&agrave; di Loose Bricks, &egrave; la massima autorit&agrave; islamica del luogo e ha il pieno controllo della moschea."
-    TAKEN: "Attualmente &egrave; detenuto nella nostra base."
-    DEAD: "Attualmente &egrave; morto"
+    START: "Una fabbrica di grandi dimensioni che da molti anni recupera la sua manodopera tra gli immigrati."
+    FRIENDLY: "Abbiamo dei contatti all'interno che possono aiutarci nelle indagini."
 messages: 
-    WATCH: "{name} non sembra avere contatti con gruppi terroristici noti.<br />Il suo braccio destro è {0003.name}." 
-    TAKEN: "{name} &egrave; stato portato cella della nostra base."
-    WEEPING: "Abbiamo interrogato {name} nella nostra sede, ma a causa del panico non &egrave; stato possibile ottenere informazioni."
-    INTERROGATE: "Interrogato, {name} si &egrave; dichiarato estraneo a qualsiasi atto di terrorismo e ha accusato i nostri uomini di razzismo."
-    BRIBE: "{name} ha rifiutato sdegnato qualsiasi offerta in denaro."
+    INTEL: "{name} &egrave; un'azienda molto antica, fondata sul finire dell'ottocento. Ha subito molte trasformazioni ed &egrave; entrata in crisi negli anni 70. Risollevata da capitali stranieri ora vive un buon periodo. La sua politica di assumere principalmente immigrati ha suscitato molte polemiche."
+    VISIT: "Una visita alla {name} ci ha permesso di individuare in tre operai i pi&ugrave; probabili oggetti del reclutamento della cellula terroristica. Sono {0004.name}, {0006.name} e {0007.name}"
+    FAILINFILTRATE: "Il nostro tentativo di infiltrarci in {name} &egrave; miseramente fallito e i nostri agenti sono stati scoperti."
+    INFILTRATED: "Grazie ai nostri contatti all'interno di {name} siamo riusciti a infiltrarci nella fabbrica. Abbiamo scoperto ce &egrave; collegata in qualche modo a {0005.name}. Le chiavi di {0005.name} sono in possesso di {0006.name} che vi si aggira intorno in modo sospetto."
+    INSPECT: "La fabbrica &egrave; molto grande. Non possiamo fare molto nelle condizioni attuali e allo stato delle cose non abbiamo rilevato niente di interessante."
+    INSPECTINFILTRATED: "Grazie ai nostri contatti all'interno della fabbrica le ricerche di informazioni sono state pi&ugrave; facili."
+    ASSAULT: "L'assalto a {0000.name} &egrave; stato un disastro. Nel panico alcuni operai hanno reagito e sono stati scambiati per dei terroristi. Si &egrave; venuta a creare una situazione di crisi."
 actions:
-    KILL:
-        DEAD: KO 
+    ASSAULT:
         ANY:
-            - TAG DEAD
+            - TELL ASSAULT 
+            - DANGER 50
+            - DO KILL 0004
             - DO ALARM 0003
-            - DANGER 40 
-    TAKE:
-        DEAD: KO 
-        TAKEN: KO
-        ANY:
-            - TAG TAKEN
-            - TELL TAKEN
-            - DO ALARM 0003
-            - DANGER 30
-    INTERROGATE:
-        DEAD: KO
-        TAKEN: 
-            - TELL WEEPING
-        ANY:
-            - TELL INTERROGATE
-            - DANGER 10 10 10
+            - DO ALARM 0006
     INTEL:
         ANY:
-            - TELL WATCH
-            - ADD 0003
-    BRIBE:
-        DEAD: KO 
+            - TELL INTEL 
+    INSPECT:
+        INFILTRATED:
+            - TELL INSPECTINFILTRATED
+            - DO FINDFACTORY 0008
         ANY:
-            - TELL BRIBE
+            - TELL INSPECT 
+    INFILTRATE:
+        FRIENDLY:
+            - TAG INFILTRATED
+            - TELL INFILTRATED
+            - ADD 0005
+            - ADD 0006
+            - SUSPECT 0006
+        ANY:
+            - TELL FAILINFILTRATE
+            - DANGER 10
+    VISIT:
+        ANY:
+            - TELL VISIT
+            - ADD 0004
+            - ADD 0006
+            - ADD 0007 
 m2m:
-    KILL:
-        DEAD: KO
+    FRIENDLY:
         ANY:
-            - TAG DEAD
+            - TAG FRIENDLY
