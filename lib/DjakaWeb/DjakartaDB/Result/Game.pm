@@ -240,7 +240,7 @@ sub get_element_description
 	my $self = shift;
 	my $id = shift;
 	my $el = $self->games_statuses->find({'object_code' => $id});
-    return $self->StoryManager()->getElementDescription($id, $el->{'status'});
+    return $self->StoryManager()->getElementDescription($id, $el->status);
 }
 sub schedule_action
 {

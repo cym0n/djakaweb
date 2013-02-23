@@ -30,7 +30,7 @@
 			<% writetitle = 0 %>
 			<% FOREACH s IN story %>
 				<% IF s.action %>
-					<% IF s.parent_action != writetitle %>
+					<% IF s.parent_action.id != writetitle %>
 						<% IF writetitle != 0 %>
 							</p>
 							----<br />
@@ -40,9 +40,10 @@
 						<% END %>
 
 						<span class="action_done"><% translate.${s.action} %> <% s.object_name %>:</span><br />
-						<% writetitle = s.parent_action %>
+						<% writetitle = s.parent_action.id %>
 					<% END %>
 				<% ELSE %>
+                    <!-- Inizial brief -->
 					<% IF writetitle != 0 %>
 						</p>
 						----<br />

@@ -1,0 +1,31 @@
+END1:
+    condition:
+        0003: DEAD
+        0006: DEAD
+    text: "I due terroristi sono morti scongiurando il pericolo di attentati. Purtroppo per&ograve; non siamo riusciti a recuperare informazioni su chi ha organizzato la cellula."
+    score: 50
+END2:
+    condition:
+        0003: TAKEN
+        0006: TAKEN
+    text: "Abbiamo catturato entrambi i terroristi risolvendo la situazione senza uccidere nessuno. Ora oltretutto potremo ottenere utili informazioni su chi si trova dietro questo tentativo di attentato."
+    score: 100
+END3:
+    condition:
+        0003: TAKEN
+        0006: TAKEN
+        0008: TAKEN
+    text: "Abbiamo catturato entrambi i terroristi risolvendo la situazione senza uccidere nessuno. Ora oltretutto potremo ottenere utili informazioni su chi si trova dietro questo tentativo di attentato.<br />Recuperare anche l'ordigno che stavano preparando è stata una mossa brillante."
+    score: 125
+END4:
+    condition:
+        0003: DEAD
+        0006: TAKEN
+    text: "La morte di {0003.name} ha decapitato l'organizzazione, ma {0006.name} sembra essere all'oscuro della macchina che ha portato alla realizzazione della cellula e non potr&agrave; esserci utile nel proseguo delle indagini."
+    score: 60
+END5:
+    condition:
+        0003: TAKEN
+        0006: DEAD
+    text: "La cattura di {0003.name} &egrave; un passo fondamentale per scongiurare il terrorismo. Certo, la morte di {0006.name} ci dannegger&agrave;, ma possiamo gestire la cosa."
+    score: 75

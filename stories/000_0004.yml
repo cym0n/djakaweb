@@ -10,7 +10,7 @@ messages:
     KILL: "Abbiamo ucciso {name}."
     TAKE: "Abbiamo rapito {name} e lo abbiamo portato alla nostra base."
     NOBRIBE: "{name} risulta troppo sospettoso nei nostri confronti per accettare soldi."
-    USELESS: "Nonostante tutto {name} sembra non avere informazioni utili alle indagini. Quello che ci ha raccontato della struttura sociale del quartiere ci era gi&agrave; noto per altre vie."
+    USELESS: "Nonostante tutto {name} sembra non avere informazioni utili alle indagini. Quello che ci ha raccontato della struttura sociale del quartiere ci era gi&agrave; noto per altre vie. Ci ha indicato pe&ograve; i nomi di due operai: {0006.name} e {0007.name}."
 actions:
     KILL:
         DEAD: KO 
@@ -29,6 +29,8 @@ actions:
         DEAD: KO
         ANY:
             - TELL USELESS 
+            - ADD 0006
+            - ADD 0007
     INTEL:
         ANY:
             - TELL INTEL 

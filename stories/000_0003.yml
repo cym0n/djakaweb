@@ -9,7 +9,7 @@ messages:
     KILL: "Siamo riusciti a portare a termine l'omicidio di {name}."
     TAKE: "Siamo riusciti a rapire {name} e a portarlo nella nostra base."
     BRIBE: "{name} ha accettato di collaborare con noi per una forte somma di denaro e ci ha procurato documenti secondo cui {0002.name} &egrave; stato in passato in una milizia irregolare del suo paese."
-    INTERROGATE: "{name} non crede possibile che la moschea sia un covo di terroristi. Ci ha per&ograve; indicato un operaio della {0004.name}, {0004.name}, come persona che conosce un po' tutti..."
+    INTERROGATE: "{name} non crede possibile che la moschea sia un covo di terroristi. Ci ha per&ograve; indicato un operaio della {0000.name}, {0004.name}, come persona che conosce un po' tutti..."
     CONFESSION: "{name} ha confessato di essere a capo di una cellula terroristica! Abbiamo capito che ha almeno un complice, sebbene si sia rifiutato di dirci chi sia, ma ha indicato {0005.name} come sua base operativa."
 actions:
     KILL:
@@ -17,7 +17,7 @@ actions:
         ANY:
             - TAG DEAD
             - TELL KILL
-            - DANGER 40 20 0
+            - DANGER 55 20 0
             - DO ALARM 0006
     TAKE:
         DEAD: KO 
@@ -25,12 +25,13 @@ actions:
         ANY:
             - TAG TAKEN
             - TELL TAKE
-            - DANGER 40 20 0
+            - DANGER 55 20 0
             - DO ALARM 0006
     INTERROGATE:
         DEAD: KO
         TAKEN: 
             - TELL CONFESSION 
+            - ADD 0005
         ANY:
             - TELL INTERROGATE 
             - ADD 0004

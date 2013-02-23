@@ -9,6 +9,7 @@ description:
     DENY: "{0003.name} lo ha accusato di connivenza coi terroristi, ma ha dimostrato di essere innocente."
 messages: 
     INTEL: "Non sono sorte informazioni rilevanti su {name}."
+    KILL: "Abbiamo portato a termine l'omicidio di {name}."
     INTERROGATE: "{name} dice assurda la possibilit&agrave; che la sua comunit&agrave; nasconda dei terroristi e si rifiuta di dare informazioni su chiunque."
     T_INTERROGATE: "Anche sfruttando le nostre tecniche  qui alla base ci &egrave; stato impossibile ricavare informazioni da {name}."
     LIAR: "{name} smentisce categoricamente le accuse che gli sono state mosse da {0003.name}. Ci ha consegnato informazioni che ci permettono di dire che ha ragione."
@@ -17,6 +18,7 @@ actions:
     KILL:
         DEAD: KO 
         ANY:
+            - TELL KILL
             - TAG DEAD
             - DANGER 30 10
     TAKE:

@@ -174,11 +174,10 @@ sub getElementDescription
 	my $code = shift;
 	my $status = shift;
 	my $yaml = $self->openYAML($code);
-	my $description = $self->processText($yaml->[0]->{'description'}->{'START'}, $code);
-	$description .= "\n";
+	my $description = "<p>" .$self->processText($yaml->[0]->{'description'}->{'START'}, $code) . "</p>";
 	if($status)
 	{
-		$description .= $self->processText($yaml->[0]->{'description'}->{$status}, $code);
+		$description .= "<p>" . $self->processText($yaml->[0]->{'description'}->{$status}, $code) . "</p>";
 	}
 	return $description;
 }

@@ -20,7 +20,7 @@ actions:
         ANY:
             - TAG DEAD
             - TELL KILL
-            - DANGER 40 20 0
+            - DANGER 55 20 0
             - DO ALARM 0003
             - DO MOVE 0008
             - DO BOMBSTORED 0005
@@ -30,7 +30,7 @@ actions:
         ANY:
             - TAG TAKEN
             - TELL TAKE
-            - DANGER 40 20 0
+            - DANGER 55 20 0
             - DO ALARM 0003
             - DO MOVE 0008
             - DO BOMBSTORED 0005
